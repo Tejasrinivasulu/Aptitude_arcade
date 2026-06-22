@@ -1,0 +1,15 @@
+/**
+ * Copy this file to `firebase.local.config.js` and paste your Firebase web config.
+ * Firebase Console → Project Settings → Your apps → Web app → SDK setup and configuration
+ *
+ * Used for local dev when .env is not set. For Vercel, use Environment Variables instead.
+ */
+export default {
+  apiKey: 'PASTE_YOUR_API_KEY_HERE',
+  authDomain: 'aptitudearcade.firebaseapp.com',
+  projectId: 'aptitudearcade',
+  storageBucket: 'aptitudearcade.firebasestorage.app',
+  messagingSenderId: 'PASTE_YOUR_SENDER_ID',
+  appId: 'PASTE_YOUR_APP_ID',
+  measurementId: '',
+};

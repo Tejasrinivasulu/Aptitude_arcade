@@ -3,7 +3,7 @@ import {
   Search, ChevronRight, Users, Clock, AlertTriangle, Key, Ban, Trash2, RotateCcw, LifeBuoy,
 } from 'lucide-react';
 import { formatIST, getTotalViolations, DAY_TOPICS, filterStudents } from '../../utils/adminData';
-import { grantStudentRetake, resetStudentAttempt } from '../../services/adminService';
+import { grantStudentRetake, resetStudentAttempt, deleteStudentCompletely } from '../../services/adminService';
 
 const PER_PAGE = 10;
 
@@ -57,6 +57,26 @@ export default function AdminRescueTab({
     }
   };
 
+  const handleDeleteStudent = async (student) => {
+    const label = student.fullName || student.rollNumber || student.email;
+    if (!window.confirm(`Permanently delete ${label}?\n\nThis removes their profile, exam results, progress, and help requests from Firebase.`)) return;
+    const typed = window.prompt(`Type DELETE to confirm removal of ${label}:`);
+    if (typed !== 'DELETE') {
+      alert('Delete cancelled.');
+      return;
+    }
+    setBusy(true);
+    try {
+      await deleteStudentCompletely(student.id);
+      if (selectedUser?.id === student.id) setSelectedUser(null);
+      alert('Student deleted from Firebase.');
+    } catch (err) {
+      alert(`Delete failed: ${err.message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-[700px]">
@@ -77,18 +97,32 @@ export default function AdminRescueTab({
             <p className="text-center text-gray-500 text-sm py-8">No students found.</p>
           ) : (
             current.map((u) => (
-              <button
+              <div
                 key={u.id}
-                type="button"
-                onClick={() => setSelectedUser(u)}
-                className={`w-full text-left p-3 rounded-xl flex items-center justify-between transition-all ${selectedUser?.id === u.id ? 'bg-black text-white shadow-md' : 'hover:bg-gray-50'}`}
+                className={`flex items-center gap-1 rounded-xl transition-all ${selectedUser?.id === u.id ? 'bg-black text-white shadow-md' : 'hover:bg-gray-50'}`}
               >
-                <div>
-                  <p className="text-sm font-bold">{u.rollNumber || 'No Roll'}</p>
-                  <p className={`text-xs mt-0.5 ${selectedUser?.id === u.id ? 'text-gray-300' : 'text-gray-500'}`}>{u.fullName || u.email}</p>
-                </div>
-                <ChevronRight size={16} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedUser(u)}
+                  className="flex-1 text-left p-3 flex items-center justify-between min-w-0"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold truncate">{u.rollNumber || 'No Roll'}</p>
+                    <p className={`text-xs mt-0.5 truncate ${selectedUser?.id === u.id ? 'text-gray-300' : 'text-gray-500'}`}>{u.fullName || u.email}</p>
+                  </div>
+                  <ChevronRight size={16} className="shrink-0" />
+                </button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={(e) => { e.stopPropagation(); handleDeleteStudent(u); }}
+                  className={`shrink-0 p-2 mr-1 rounded-lg transition-colors ${selectedUser?.id === u.id ? 'text-red-300 hover:bg-red-500/20' : 'text-red-500 hover:bg-red-50'}`}
+                  title="Delete student"
+                  aria-label={`Delete ${u.fullName || u.rollNumber}`}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
             ))
           )}
         </div>
@@ -101,7 +135,7 @@ export default function AdminRescueTab({
             <EmptySelect />
           ) : (
             <>
-              <div className="flex justify-between items-start mb-6 pb-6 border-b border-gray-100">
+              <div className="flex justify-between items-start mb-6 pb-6 border-b border-gray-100 gap-4">
                 <div>
                   <h2 className="text-2xl font-black">{selectedUser.fullName || 'No Name'}</h2>
                   <p className="text-sm text-gray-500 mt-1">{selectedUser.rollNumber} • {selectedUser.email}</p>
@@ -109,11 +143,21 @@ export default function AdminRescueTab({
                     Current Day: {studentProgress?.currentDay || selectedUser.currentDay || 1}
                   </p>
                 </div>
-                {selectedUser.suspended ? (
-                  <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-lg">SUSPENDED</span>
-                ) : (
-                  <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-lg">ACTIVE</span>
-                )}
+                <div className="flex flex-col items-end gap-2">
+                  {selectedUser.suspended ? (
+                    <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-lg">SUSPENDED</span>
+                  ) : (
+                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-lg">ACTIVE</span>
+                  )}
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => handleDeleteStudent(selectedUser)}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-60"
+                  >
+                    <Trash2 size={14} /> Delete Student
+                  </button>
+                </div>
               </div>
 
               <section className="mb-8">

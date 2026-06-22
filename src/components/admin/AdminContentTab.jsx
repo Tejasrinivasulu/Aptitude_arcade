@@ -29,7 +29,8 @@ export default function AdminContentTab() {
 
   useEffect(() => {
     if (selectedDay !== '1' || day1AutoPublished.current || !bank) return;
-    if (bank.lastPublishedAt || (bank.questions?.length || 0) >= 30) return;
+    const versionMismatch = bank.questionBankVersion !== DAY1_QUESTION_BANK.questionBankVersion;
+    if (!versionMismatch && bank.lastPublishedAt && (bank.questions?.length || 0) >= 30) return;
     day1AutoPublished.current = true;
     publishQuestionBank('1', DAY1_QUESTION_BANK).catch(() => {
       day1AutoPublished.current = false;

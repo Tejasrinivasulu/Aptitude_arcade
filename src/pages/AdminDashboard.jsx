@@ -1,18 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
-  Shield, Lock, Users, Activity, Terminal, Eye, FileText, ClipboardList, RotateCcw, LifeBuoy, Trash2,
+  Shield, Lock, Users, Activity, Eye, FileText, ClipboardList, RotateCcw, LifeBuoy,
 } from 'lucide-react';
 import {
   listenToOverviewMetrics,
-  listenToSystemLogs,
   listenToUsers,
   listenToResults,
   listenToUserResults,
   listenToHelpRequests,
   listenToStudentProgress,
-  rescheduleStudentTest,
   grantStudentRetake,
-  purgeAllPlatformData,
 } from '../services/adminService';
 import { signInWithEmailAndPassword, signOut, getIdTokenResult, onAuthStateChanged } from 'firebase/auth';
 import { auth, isFirebaseReady, getFirebaseSetupHint } from '../utils/firebase';
@@ -20,7 +17,6 @@ import { DEFAULT_ADMIN_EMAIL, isAdminAccount } from '../utils/adminAuth';
 import { clearLocalProgressCache, filterExamResults, enrichExamResults, enrichHelpRequests } from '../utils/adminData';
 import AdminOverviewTab from '../components/admin/AdminOverviewTab';
 import AdminRescueTab from '../components/admin/AdminRescueTab';
-import AdminLogsTab from '../components/admin/AdminLogsTab';
 import AdminExamResultsTab from '../components/admin/AdminExamResultsTab';
 import AdminContentTab from '../components/admin/AdminContentTab';
 import AdminQueriesTab from '../components/admin/AdminQueriesTab';
@@ -28,7 +24,6 @@ import AdminQueriesTab from '../components/admin/AdminQueriesTab';
 const TABS = [
   { id: 'overview', label: 'Overview Dashboard', icon: Activity },
   { id: 'rescue', label: 'Rescue Desk & Overrides', icon: Users },
-  { id: 'logs', label: 'System Logs & Flags', icon: Terminal },
   { id: 'results', label: 'Exam Results', icon: ClipboardList },
   { id: 'content', label: 'Content Manager', icon: FileText },
   { id: 'queries', label: 'Student Queries', icon: LifeBuoy },
@@ -63,10 +58,7 @@ export default function AdminDashboard() {
   const [metricsData, setMetricsData] = useState({
     heatmap: [], activity: [], isLive: false, liveSessions: 0, averageScore: 0, flaggedCount: 0,
   });
-  const [systemLogs, setSystemLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [purgeStatus, setPurgeStatus] = useState('');
-  const [isPurging, setIsPurging] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
@@ -99,7 +91,6 @@ export default function AdminDashboard() {
     if (!isAuthenticated) return undefined;
     const unsubs = [
       listenToOverviewMetrics(setMetricsData),
-      listenToSystemLogs(setSystemLogs),
       listenToUsers(setUsers),
       listenToResults(setAllResults),
       listenToHelpRequests(setHelpRequests),
@@ -159,31 +150,6 @@ export default function AdminDashboard() {
     if (!window.confirm('Clear all local aptitude_progress_* cache on this browser?')) return;
     clearLocalProgressCache();
     alert('Local progress cache cleared.');
-  };
-
-  const handlePurgeAllData = async () => {
-    const confirmed = window.confirm(
-      'DELETE ALL DATA?\n\nThis permanently removes all students, exam results, help queries, sessions, and logs from Firebase.\n\nThe admin account will be kept. This cannot be undone.'
-    );
-    if (!confirmed) return;
-    const typed = window.prompt('Type DELETE ALL to confirm:');
-    if (typed !== 'DELETE ALL') {
-      alert('Purge cancelled.');
-      return;
-    }
-
-    setIsPurging(true);
-    setPurgeStatus('Starting purge…');
-    try {
-      const stats = await purgeAllPlatformData((msg) => setPurgeStatus(msg));
-      setSelectedUser(null);
-      alert(`All data deleted.\n\n${JSON.stringify(stats, null, 2)}`);
-    } catch (err) {
-      alert(`Purge failed: ${err.message}`);
-    } finally {
-      setIsPurging(false);
-      setPurgeStatus('');
-    }
   };
 
   const handleRescheduleFromOverview = async (student) => {
@@ -248,14 +214,6 @@ export default function AdminDashboard() {
             )}
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handlePurgeAllData}
-              disabled={isPurging}
-              className="flex items-center gap-2 px-4 py-2 text-xs font-bold bg-red-50 text-red-700 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-60"
-            >
-              <Trash2 size={14} /> {isPurging ? 'Deleting…' : 'Delete All Data'}
-            </button>
             <button type="button" onClick={handleFactoryReset} className="flex items-center gap-2 px-4 py-2 text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200 rounded-lg hover:bg-orange-100">
               <RotateCcw size={14} /> Factory Reset
             </button>
@@ -265,12 +223,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </header>
-
-      {purgeStatus && (
-        <div className="bg-red-50 border-b border-red-200 px-6 py-2 text-center text-xs font-bold text-red-700">
-          {purgeStatus}
-        </div>
-      )}
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {isLoading ? (
@@ -308,7 +260,6 @@ export default function AdminDashboard() {
                 studentProgress={studentProgress}
               />
             )}
-            {activeTab === 'logs' && <AdminLogsTab systemLogs={systemLogs} />}
             {activeTab === 'results' && <AdminExamResultsTab allResults={enrichedResults} />}
             {activeTab === 'content' && <AdminContentTab />}
             {activeTab === 'queries' && <AdminQueriesTab helpRequests={enrichedHelpRequests} />}

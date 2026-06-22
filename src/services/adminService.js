@@ -377,6 +377,43 @@ export async function resetStudentAttempt(uid, testKey) {
   return { success: true };
 }
 
+/** Delete a student and all related Firestore records (profile, results, progress, help). */
+export async function deleteStudentCompletely(uid) {
+  if (!isFirebaseReady() || !db) throw new Error('Firebase not configured');
+  if (!uid) throw new Error('Student id required');
+
+  const userSnap = await getDoc(doc(db, 'users', uid));
+  if (!userSnap.exists()) throw new Error('Student not found');
+  if (isProtectedUser(userSnap.data())) throw new Error('Cannot delete admin account');
+
+  for (const coll of ['results', 'exam_results']) {
+    const snap = await getDocs(query(collection(db, coll), where('uid', '==', uid)));
+    for (let i = 0; i < snap.docs.length; i += 500) {
+      const batch = writeBatch(db);
+      snap.docs.slice(i, i + 500).forEach((d) => batch.delete(d.ref));
+      await batch.commit();
+    }
+  }
+
+  for (const key of ['1', '2', '3', '4', '5', '6', '7', 'finale']) {
+    await deleteDoc(doc(db, 'results', `${key}_${uid}`)).catch(() => {});
+    await deleteDoc(doc(db, 'exam_results', `${key}_${uid}`)).catch(() => {});
+  }
+
+  const helpSnap = await getDocs(query(collection(db, 'help_requests'), where('uid', '==', uid)));
+  for (let i = 0; i < helpSnap.docs.length; i += 500) {
+    const batch = writeBatch(db);
+    helpSnap.docs.slice(i, i + 500).forEach((d) => batch.delete(d.ref));
+    await batch.commit();
+  }
+
+  await deleteDoc(doc(db, 'users', uid));
+  await deleteDoc(doc(db, 'student_progress', uid)).catch(() => {});
+  await deleteDoc(doc(db, 'exam_sessions', uid)).catch(() => {});
+
+  return { success: true, uid };
+}
+
 export async function grantStudentRetake({ uid, testKey, helpRequestId }) {
   await resetStudentAttempt(uid, testKey);
   await rescheduleStudentTest({ uid, testKey, helpRequestId });

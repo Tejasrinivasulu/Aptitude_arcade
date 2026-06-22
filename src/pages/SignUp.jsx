@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Loader2, User, Lock, Mail, Phone, Hash } from 'lucide-react';
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import {
   collection,
@@ -200,11 +200,11 @@ export default function SignUp() {
       return;
     }
 
-    // 3. Auto-sign-in so the student doesn't have to type credentials again.
+    // 3. Sign out so the student must log in from the login page.
     try {
-      await signInWithEmailAndPassword(auth, email, form.password);
+      await signOut(auth);
     } catch {
-      // Non-fatal: the student can still log in manually.
+      /* non-fatal */
     }
 
     setRegisteredUser({ fullName: profile.fullName, rollNumber, email });
@@ -365,7 +365,7 @@ export default function SignUp() {
       {success && registeredUser && (
         <RegistrationSuccessModal
           user={registeredUser}
-          onProceed={() => navigate('/student/dashboard')}
+          onProceed={() => navigate('/login')}
         />
       )}
     </>

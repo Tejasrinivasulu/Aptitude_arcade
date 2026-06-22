@@ -170,6 +170,7 @@ export const generalRules = [
   'The test remains available only during the daily window.',
   `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test is automatically closed.`,
   'If a student misses the test, contact admin via Help Center.',
+  'After submitting the test, take a screenshot of your score card as proof of completion.',
 ];
 
 export function getTodayDateStr(now = new Date()) {

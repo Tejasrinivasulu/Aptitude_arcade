@@ -108,6 +108,9 @@ export default function Results() {
               Google Sheet: {examResult.sheetUpload.message}
             </p>
           )}
+          <p className="mt-4 rounded-lg border border-green-300 bg-white px-4 py-3 text-sm font-semibold text-green-900">
+            📸 Note: Take a screenshot of this score card for your proof.
+          </p>
         </section>
       )}
 

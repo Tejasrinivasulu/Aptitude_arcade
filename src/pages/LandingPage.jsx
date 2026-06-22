@@ -16,7 +16,8 @@ export default function LandingPage() {
 
   const faqData = [
     { q: "Is this free?", a: "Yes, completely." },
-    { q: "What time does the quiz open?", a: "8 PM sharp. Closes at 10 PM. No exceptions." },
+    { q: "What time does the test start?", a: "The test starts at 10:00 AM IST." },
+    { q: "What time does the test end?", a: "The test ends at 11:00 PM IST. No exceptions." },
     { q: "What if I miss a day?", a: "Your streak resets to zero. That's the point." },
   ];
 

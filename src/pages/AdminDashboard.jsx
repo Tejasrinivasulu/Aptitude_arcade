@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
-  Shield, Lock, Users, Activity, Eye, FileText, ClipboardList, RotateCcw, LifeBuoy,
+  Shield, Lock, Users, Activity, Eye, FileText, ClipboardList, LifeBuoy,
 } from 'lucide-react';
 import {
   listenToOverviewMetrics,
@@ -14,7 +14,7 @@ import {
 import { signInWithEmailAndPassword, signOut, getIdTokenResult, onAuthStateChanged } from 'firebase/auth';
 import { auth, isFirebaseReady, getFirebaseSetupHint } from '../utils/firebase';
 import { DEFAULT_ADMIN_EMAIL, isAdminAccount } from '../utils/adminAuth';
-import { clearLocalProgressCache, filterExamResults, enrichExamResults, enrichHelpRequests } from '../utils/adminData';
+import { filterExamResults, enrichExamResults, enrichHelpRequests } from '../utils/adminData';
 import AdminOverviewTab from '../components/admin/AdminOverviewTab';
 import AdminRescueTab from '../components/admin/AdminRescueTab';
 import AdminExamResultsTab from '../components/admin/AdminExamResultsTab';
@@ -146,12 +146,6 @@ export default function AdminDashboard() {
     setSelectedUser(null);
   };
 
-  const handleFactoryReset = () => {
-    if (!window.confirm('Clear all local aptitude_progress_* cache on this browser?')) return;
-    clearLocalProgressCache();
-    alert('Local progress cache cleared.');
-  };
-
   const handleRescheduleFromOverview = async (student) => {
     const testKey = String(student.currentDay || 1);
     if (!window.confirm(`Grant Day ${testKey} retake for ${student.fullName || student.rollNumber}?`)) return;
@@ -214,9 +208,6 @@ export default function AdminDashboard() {
             )}
           </div>
           <div className="flex items-center gap-2">
-            <button type="button" onClick={handleFactoryReset} className="flex items-center gap-2 px-4 py-2 text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200 rounded-lg hover:bg-orange-100">
-              <RotateCcw size={14} /> Factory Reset
-            </button>
             <button type="button" onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-xs font-bold bg-gray-100 rounded-lg hover:bg-gray-200">
               <Lock size={14} /> Lock System
             </button>

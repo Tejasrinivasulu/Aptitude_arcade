@@ -97,32 +97,18 @@ export default function AdminRescueTab({
             <p className="text-center text-gray-500 text-sm py-8">No students found.</p>
           ) : (
             current.map((u) => (
-              <div
+              <button
                 key={u.id}
-                className={`flex items-center gap-1 rounded-xl transition-all ${selectedUser?.id === u.id ? 'bg-black text-white shadow-md' : 'hover:bg-gray-50'}`}
+                type="button"
+                onClick={() => setSelectedUser(u)}
+                className={`w-full text-left p-3 rounded-xl flex items-center justify-between transition-all ${selectedUser?.id === u.id ? 'bg-black text-white shadow-md' : 'hover:bg-gray-50'}`}
               >
-                <button
-                  type="button"
-                  onClick={() => setSelectedUser(u)}
-                  className="flex-1 text-left p-3 flex items-center justify-between min-w-0"
-                >
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold truncate">{u.rollNumber || 'No Roll'}</p>
-                    <p className={`text-xs mt-0.5 truncate ${selectedUser?.id === u.id ? 'text-gray-300' : 'text-gray-500'}`}>{u.fullName || u.email}</p>
-                  </div>
-                  <ChevronRight size={16} className="shrink-0" />
-                </button>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={(e) => { e.stopPropagation(); handleDeleteStudent(u); }}
-                  className={`shrink-0 p-2 mr-1 rounded-lg transition-colors ${selectedUser?.id === u.id ? 'text-red-300 hover:bg-red-500/20' : 'text-red-500 hover:bg-red-50'}`}
-                  title="Delete student"
-                  aria-label={`Delete ${u.fullName || u.rollNumber}`}
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold truncate">{u.rollNumber || 'No Roll'}</p>
+                  <p className={`text-xs mt-0.5 truncate ${selectedUser?.id === u.id ? 'text-gray-300' : 'text-gray-500'}`}>{u.fullName || u.email}</p>
+                </div>
+                <ChevronRight size={16} className="shrink-0" />
+              </button>
             ))
           )}
         </div>

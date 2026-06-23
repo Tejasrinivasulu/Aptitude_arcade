@@ -11,6 +11,7 @@ import {
   Fingerprint,
 } from 'lucide-react';
 import { dailyLearningPlan, getDayPlan } from '../data/dailyLearningPlan';
+import { ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
 
 export default function Learn() {
@@ -36,7 +37,7 @@ export default function Learn() {
         <div className="flex gap-2 overflow-x-auto p-4">
           {dailyLearningPlan.map((plan) => {
             const active = plan.day === selectedDay;
-            const locked = plan.day > progress.currentDay;
+            const locked = plan.day > ACTIVE_PROGRAM_DAY;
             return (
               <button
                 key={plan.day}

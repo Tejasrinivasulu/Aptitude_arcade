@@ -3,14 +3,19 @@ import { FileText, Save, Plus, Trash2 } from 'lucide-react';
 import { listenToQuestionBank, publishQuestionBank } from '../../services/adminService';
 import { DAY_TOPICS } from '../../utils/adminData';
 import { DAY1_QUESTION_BANK } from '../../data/day1QuestionBank';
+import { DAY2_QUESTION_BANK } from '../../data/day2QuestionBank';
 
 const DAYS = ['1', '2', '3', '4', '5', '6', '7'];
+const SEED_BANKS = {
+  '1': DAY1_QUESTION_BANK,
+  '2': DAY2_QUESTION_BANK,
+};
 
 export default function AdminContentTab() {
   const [selectedDay, setSelectedDay] = useState('1');
   const [bank, setBank] = useState(null);
   const [saving, setSaving] = useState(false);
-  const day1AutoPublished = useRef(false);
+  const dayAutoPublished = useRef({});
 
   useEffect(() => {
     const unsub = listenToQuestionBank(selectedDay, (data) => {
@@ -18,7 +23,7 @@ export default function AdminContentTab() {
         data || {
           title: `Day ${selectedDay} Assessment`,
           topicLabel: DAY_TOPICS[selectedDay] || `Day ${selectedDay}`,
-          durationMinutes: selectedDay === '1' ? 30 : 20,
+          durationMinutes: selectedDay === '1' || selectedDay === '2' ? 30 : 20,
           questions: [],
           lastPublishedAt: null,
         }
@@ -28,12 +33,13 @@ export default function AdminContentTab() {
   }, [selectedDay]);
 
   useEffect(() => {
-    if (selectedDay !== '1' || day1AutoPublished.current || !bank) return;
-    const versionMismatch = bank.questionBankVersion !== DAY1_QUESTION_BANK.questionBankVersion;
+    const seedBank = SEED_BANKS[selectedDay];
+    if (!seedBank || dayAutoPublished.current[selectedDay] || !bank) return;
+    const versionMismatch = bank.questionBankVersion !== seedBank.questionBankVersion;
     if (!versionMismatch && bank.lastPublishedAt && (bank.questions?.length || 0) >= 30) return;
-    day1AutoPublished.current = true;
-    publishQuestionBank('1', DAY1_QUESTION_BANK).catch(() => {
-      day1AutoPublished.current = false;
+    dayAutoPublished.current[selectedDay] = true;
+    publishQuestionBank(selectedDay, seedBank).catch(() => {
+      dayAutoPublished.current[selectedDay] = false;
     });
   }, [selectedDay, bank]);
 

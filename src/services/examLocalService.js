@@ -2,10 +2,16 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../utils/firebase';
 import { sanitizeForFirestore } from '../utils/firestoreHelpers';
 import { DAY1_DURATION_SECONDS, DAY1_QUESTION_BANK } from '../data/day1QuestionBank';
+import { DAY2_DURATION_SECONDS, DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
 import { getExamMeta } from '../data/examQuestions';
+import { ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
 
 const SESSION_KEY = 'exam_local_session';
-const ACTIVE_PROGRAM_DAY = 1;
+
+const LOCAL_BANKS = {
+  '1': { questions: DAY1_QUESTION_BANK.questions, durationSeconds: DAY1_DURATION_SECONDS },
+  '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS },
+};
 
 function stripAnswers(questions) {
   return questions.map(({ answer, ...rest }) => rest);
@@ -50,11 +56,8 @@ async function loadQuestions(testKey) {
       }
     }
   }
-  if (key === '1') {
-    return {
-      questions: DAY1_QUESTION_BANK.questions,
-      durationSeconds: DAY1_DURATION_SECONDS,
-    };
+  if (LOCAL_BANKS[key]) {
+    return LOCAL_BANKS[key];
   }
   throw new Error(`No questions available for Day ${key}.`);
 }

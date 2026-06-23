@@ -17,8 +17,11 @@ export const DAY1_EXAM_WINDOW = {
   durationMinutes: 30,
 };
 
+/** Day 2 exam date (IST) — 24 June */
+export const DAY2_EXAM_DATE = '2026-06-24';
+
 /** Only this day is live for students right now. Increase to 2, 3… when each day opens. */
-export const ACTIVE_PROGRAM_DAY = 1;
+export const ACTIVE_PROGRAM_DAY = 2;
 
 /** Allows assigned-day test outside calendar date for development */
 export const DEMO_SCHEDULE_BYPASS = false;
@@ -45,11 +48,11 @@ export const dailyTests = [
   {
     id: 2,
     day: 2,
-    title: 'Commercial Mathematics',
-    topics: ['Profit & Loss', 'Ratio & Proportion', 'Simple Interest', 'Compound Interest'],
-    testDate: getRelativeDateStr(1),
-    questions: 20,
-    durationMinutes: 20,
+    title: 'Percentages',
+    topics: ['Percentages'],
+    testDate: DAY2_EXAM_DATE,
+    questions: 30,
+    durationMinutes: 30,
   },
   {
     id: 3,
@@ -163,9 +166,9 @@ export function formatWindowTime(hour, minute = 0) {
 }
 
 export const generalRules = [
-  `Day 1 Test Date: ${formatDisplayDate(DAY1_EXAM_DATE)}`,
+  `Day 2 Test Date: ${formatDisplayDate(DAY2_EXAM_DATE)}`,
   `Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
-  'Day 1 exam duration: 30 minutes once started.',
+  'Day 2 exam duration: 30 minutes once started.',
   'Students can attempt the test only once.',
   'The test remains available only during the daily window.',
   `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test is automatically closed.`,
@@ -386,6 +389,15 @@ export function getTestAvailability({
 
 export function formatDay1ExamWindow() {
   return `${formatDisplayDate(DAY1_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+}
+
+export function formatDay2ExamWindow() {
+  return `${formatDisplayDate(DAY2_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+}
+
+export function formatExamWindowForDay(day) {
+  if (Number(day) === 2) return formatDay2ExamWindow();
+  return formatDay1ExamWindow();
 }
 
 export function getAssignedTestSummary(currentDay) {

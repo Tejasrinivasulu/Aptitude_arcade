@@ -20,8 +20,9 @@ const questionsDb = {
 
 const EXAM_DURATION_SECONDS = 20 * 60;
 const DAY1_DURATION_SECONDS = 30 * 60;
+const DAY2_DURATION_SECONDS = 30 * 60;
 const FINALE_DURATION_SECONDS = 60 * 60;
-const ACTIVE_PROGRAM_DAY = 1;
+const ACTIVE_PROGRAM_DAY = 2;
 
 function normalizeAnswer(value) {
   if (value === null || value === undefined) return '';
@@ -43,7 +44,9 @@ async function loadQuestionsForTest(testKey) {
     if (bankSnap.exists) {
       const bank = bankSnap.data();
       if (Array.isArray(bank.questions) && bank.questions.length > 0) {
-        const defaultDuration = testKey === '1' ? DAY1_DURATION_SECONDS : EXAM_DURATION_SECONDS;
+        const defaultDuration = testKey === '1' || testKey === '2'
+          ? DAY2_DURATION_SECONDS
+          : EXAM_DURATION_SECONDS;
         return {
           questions: bank.questions,
           durationSeconds: (bank.durationMinutes || defaultDuration / 60) * 60,
@@ -54,7 +57,7 @@ async function loadQuestionsForTest(testKey) {
     if (!fallback) return null;
     return {
       questions: fallback,
-      durationSeconds: testKey === '1' ? DAY1_DURATION_SECONDS : EXAM_DURATION_SECONDS,
+      durationSeconds: testKey === '1' || testKey === '2' ? DAY2_DURATION_SECONDS : EXAM_DURATION_SECONDS,
     };
   }
   const questions = questionsDb[testKey];

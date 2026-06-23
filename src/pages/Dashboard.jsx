@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudentProgress, getDayResultsFromProgress } from '../context/StudentProgressContext';
-import { getDailyTest, computeTestCountdown, formatCountdownParts, formatDay1ExamWindow } from '../data/testSchedule';
+import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay } from '../data/testSchedule';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -67,10 +67,10 @@ export default function Dashboard() {
               Day {progress.currentDay} — {progress.dayTitle}
             </h2>
             <p className="mt-1 text-sm font-medium text-primary">{progress.todayTopic}</p>
-            {progress.currentDay === 1 && (
+            {(progress.currentDay === 1 || progress.currentDay === 2) && (
               <p className="mt-2 inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-800">
                 <Calendar size={16} className="shrink-0" />
-                Day 1 Exam: {formatDay1ExamWindow()}
+                Day {progress.currentDay} Exam: {formatExamWindowForDay(progress.currentDay)}
               </p>
             )}
             <div className="mt-4 flex flex-wrap gap-3 items-center">

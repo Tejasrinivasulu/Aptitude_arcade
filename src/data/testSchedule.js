@@ -26,8 +26,8 @@ export const DAY3_EXAM_DATE = '2026-06-25';
 /** Day 4 exam date (IST) — 26 June */
 export const DAY4_EXAM_DATE = '2026-06-26';
 
-/** Only this day is live for students right now. Increase to 2, 3… when each day opens. */
-export const ACTIVE_PROGRAM_DAY = 4;
+/** Automatically switches to Day 4 on June 26th at 10:00 AM IST */
+export const ACTIVE_PROGRAM_DAY = (new Date() >= new Date('2026-06-26T10:00:00+05:30')) ? 4 : 3;
 
 /** Total days in the program (Day 4 is the last daily test). */
 export const TOTAL_PROGRAM_DAYS = 4;
@@ -172,7 +172,15 @@ export function getWindowBoundsForDate(dateStr) {
   const start = new Date(day);
   start.setHours(TEST_START_HOUR, TEST_START_MINUTE, 0, 0);
   const end = new Date(day);
-  end.setHours(TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
+  
+  if (dateStr === DAY3_EXAM_DATE) {
+    // Day 3 exception: ends next day at 10:00 AM
+    end.setDate(end.getDate() + 1);
+    end.setHours(10, 0, 0, 0);
+  } else {
+    end.setHours(TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
+  }
+  
   return { start, end };
 }
 
@@ -193,12 +201,15 @@ export function getPerformanceLevel(percentage) {
 
 export function getTestWindowPhase(testDate, now = new Date()) {
   const { start, end } = getWindowBoundsForDate(testDate);
-  const testDay = parseDateOnly(testDate);
 
-  if (now < start && isSameDay(testDay, now)) return 'before_window';
-  if (now >= start && now <= end && isSameDay(testDay, now)) return 'open';
-  if (isSameDay(testDay, now) && now > end) return 'closed_today';
-  if (now > end && testDay < new Date(now.getFullYear(), now.getMonth(), now.getDate())) return 'missed';
+  if (now < start) return 'before_window';
+  if (now >= start && now <= end) return 'open';
+  if (now > end) {
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+    if (isSameDay(endDay, today)) return 'closed_today';
+    return 'missed';
+  }
   return 'upcoming';
 }
 
@@ -217,10 +228,8 @@ export function getStudentProgramDay(currentDay = 1) {
 
 export function computeTestCountdown(testDate, now = new Date()) {
   const { start, end } = getWindowBoundsForDate(testDate);
-  const testDay = parseDateOnly(testDate);
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  if (now > end && (isSameDay(testDay, now) || testDay < today)) {
+  if (now > end) {
     return {
       hours: 0,
       minutes: 0,
@@ -231,7 +240,7 @@ export function computeTestCountdown(testDate, now = new Date()) {
     };
   }
 
-  if (now >= start && now <= end && isSameDay(testDay, now)) {
+  if (now >= start && now <= end) {
     return {
       hours: 0,
       minutes: 0,
@@ -393,7 +402,7 @@ export function formatDay2ExamWindow() {
 }
 
 export function formatDay3ExamWindow() {
-  return `${formatDisplayDate(DAY3_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+  return `${formatDisplayDate(DAY3_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatDisplayDate(DAY4_EXAM_DATE)} 10:00 AM IST`;
 }
 
 export function formatDay4ExamWindow() {

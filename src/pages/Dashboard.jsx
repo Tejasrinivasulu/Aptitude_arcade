@@ -68,7 +68,7 @@ export default function Dashboard() {
               Day {assignedDay} — {getDailyTest(assignedDay).title}
             </h2>
             <p className="mt-1 text-sm font-medium text-primary">{progress.dayTopics?.join(' · ') || getDailyTest(assignedDay).topics.join(' · ')}</p>
-            {assignedDay >= 1 && assignedDay <= 3 && (
+            {assignedDay >= 1 && assignedDay <= TOTAL_PROGRAM_DAYS && (
               <p className="mt-2 inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-800">
                 <Calendar size={16} className="shrink-0" />
                 Day {assignedDay} Exam: {formatExamWindowForDay(assignedDay)}

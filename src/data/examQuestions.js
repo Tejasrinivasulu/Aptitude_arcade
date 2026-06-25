@@ -7,6 +7,7 @@
 import { DAY1_DURATION_SECONDS, DAY1_TOTAL_QUESTIONS } from './day1QuestionBank';
 import { DAY2_DURATION_SECONDS, DAY2_TOTAL_QUESTIONS } from './day2QuestionBank';
 import { DAY3_DURATION_SECONDS, DAY3_TOTAL_QUESTIONS } from './day3QuestionBank';
+import { DAY4_DURATION_SECONDS, DAY4_TOTAL_QUESTIONS } from './day4QuestionBank';
 
 export const EXAM_DURATION_SECONDS = 20 * 60;
 export const EXAM_TOTAL_QUESTIONS = 20;
@@ -17,7 +18,7 @@ const dayTopics = {
   1: 'Number Systems',
   2: 'Percentages',
   3: 'Ratio and Proportion',
-  4: 'Logical Reasoning Basics',
+  4: 'Averages',
 };
 
 export function getExamMeta(testKey) {
@@ -59,6 +60,16 @@ export function getExamMeta(testKey) {
       topicLabel: dayTopics[3],
       totalQuestions: DAY3_TOTAL_QUESTIONS,
       durationSeconds: DAY3_DURATION_SECONDS,
+      durationMinutes: 30,
+    };
+  }
+  if (day === 4) {
+    return {
+      testKey: '4',
+      title: 'Day 4 Assessment',
+      topicLabel: dayTopics[4],
+      totalQuestions: DAY4_TOTAL_QUESTIONS,
+      durationSeconds: DAY4_DURATION_SECONDS,
       durationMinutes: 30,
     };
   }

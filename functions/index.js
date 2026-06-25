@@ -19,10 +19,10 @@ const EXAM_DURATION_SECONDS = 20 * 60;
 const DAY1_DURATION_SECONDS = 30 * 60;
 const THIRTY_MIN_DURATION_SECONDS = 30 * 60;
 const FINALE_DURATION_SECONDS = 60 * 60;
-const ACTIVE_PROGRAM_DAY = 3;
+const ACTIVE_PROGRAM_DAY = 4;
 
 function dayDurationSeconds(testKey) {
-  if (testKey === '1' || testKey === '2' || testKey === '3') return THIRTY_MIN_DURATION_SECONDS;
+  if (testKey === '1' || testKey === '2' || testKey === '3' || testKey === '4') return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }
 

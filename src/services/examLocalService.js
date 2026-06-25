@@ -4,6 +4,7 @@ import { sanitizeForFirestore } from '../utils/firestoreHelpers';
 import { DAY1_DURATION_SECONDS, DAY1_QUESTION_BANK } from '../data/day1QuestionBank';
 import { DAY2_DURATION_SECONDS, DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
 import { DAY3_DURATION_SECONDS, DAY3_QUESTION_BANK } from '../data/day3QuestionBank';
+import { DAY4_DURATION_SECONDS, DAY4_QUESTION_BANK } from '../data/day4QuestionBank';
 import { getExamMeta } from '../data/examQuestions';
 import { ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
 
@@ -13,6 +14,7 @@ const LOCAL_BANKS = {
   '1': { questions: DAY1_QUESTION_BANK.questions, durationSeconds: DAY1_DURATION_SECONDS },
   '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS },
   '3': { questions: DAY3_QUESTION_BANK.questions, durationSeconds: DAY3_DURATION_SECONDS },
+  '4': { questions: DAY4_QUESTION_BANK.questions, durationSeconds: DAY4_DURATION_SECONDS },
 };
 
 function stripAnswers(questions) {

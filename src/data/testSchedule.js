@@ -23,8 +23,11 @@ export const DAY2_EXAM_DATE = '2026-06-24';
 /** Day 3 exam date (IST) — 25 June */
 export const DAY3_EXAM_DATE = '2026-06-25';
 
+/** Day 4 exam date (IST) — 26 June */
+export const DAY4_EXAM_DATE = '2026-06-26';
+
 /** Only this day is live for students right now. Increase to 2, 3… when each day opens. */
-export const ACTIVE_PROGRAM_DAY = 3;
+export const ACTIVE_PROGRAM_DAY = 4;
 
 /** Total days in the program (Day 4 is the last daily test). */
 export const TOTAL_PROGRAM_DAYS = 4;
@@ -74,18 +77,18 @@ export const dailyTests = [
   {
     id: 4,
     day: 4,
-    title: 'Logical Reasoning Basics',
-    topics: ['Coding-Decoding', 'Blood Relations', 'Directions'],
-    testDate: getRelativeDateStr(3),
-    questions: 20,
-    durationMinutes: 20,
+    title: 'Averages',
+    topics: ['Averages'],
+    testDate: DAY4_EXAM_DATE,
+    questions: 30,
+    durationMinutes: 30,
   },
 ];
 
 export const grandFinale = {
   id: 'finale',
   title: 'Grand Finale Assessment',
-  testDate: getRelativeDateStr(4),
+  testDate: getRelativeDateStr(5),
   topics: [
     'Number Systems',
     'Percentages',
@@ -147,9 +150,9 @@ export function formatWindowTime(hour, minute = 0) {
 }
 
 export const generalRules = [
-  `Day 3 Test Date: ${formatDisplayDate(DAY3_EXAM_DATE)}`,
+  `Day 4 Test Date: ${formatDisplayDate(DAY4_EXAM_DATE)}`,
   `Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
-  'Day 3 exam duration: 30 minutes once started.',
+  'Day 4 exam duration: 30 minutes once started.',
   'Students can attempt the test only once.',
   'The test remains available only during the daily window.',
   `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test is automatically closed.`,
@@ -393,7 +396,12 @@ export function formatDay3ExamWindow() {
   return `${formatDisplayDate(DAY3_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
 }
 
+export function formatDay4ExamWindow() {
+  return `${formatDisplayDate(DAY4_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+}
+
 export function formatExamWindowForDay(day) {
+  if (Number(day) === 4) return formatDay4ExamWindow();
   if (Number(day) === 3) return formatDay3ExamWindow();
   if (Number(day) === 2) return formatDay2ExamWindow();
   return formatDay1ExamWindow();

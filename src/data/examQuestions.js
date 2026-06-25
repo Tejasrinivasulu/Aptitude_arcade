@@ -18,9 +18,6 @@ const dayTopics = {
   2: 'Percentages',
   3: 'Ratio and Proportion',
   4: 'Logical Reasoning Basics',
-  5: 'Advanced Logical Reasoning',
-  6: 'Advanced Quantitative',
-  7: 'Data Interpretation & Revision',
 };
 
 export function getExamMeta(testKey) {

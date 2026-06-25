@@ -6,7 +6,7 @@ import {
   performanceTips,
   useStudentProgress,
 } from '../context/StudentProgressContext';
-import { grandFinale } from '../data/testSchedule';
+import { grandFinale, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
 
 export default function Results() {
   const { progress } = useStudentProgress();
@@ -134,7 +134,7 @@ export default function Results() {
           { label: 'Average Score', value: `${progress.averageScore}%` },
           { label: 'Highest Score', value: `${progress.highestScore}%` },
           { label: 'Current Rank', value: `#${progress.currentRank}` },
-          { label: 'Tests Completed', value: `${progress.testsCompleted} / 7` },
+          { label: 'Tests Completed', value: `${progress.testsCompleted} / ${TOTAL_PROGRAM_DAYS}` },
         ].map(({ label, value }) => (
           <div key={label} className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p className="text-sm text-gray-500">{label}</p>

@@ -3,7 +3,10 @@ import {
   Search, ChevronRight, Users, Clock, AlertTriangle, Key, Ban, Trash2, RotateCcw, LifeBuoy,
 } from 'lucide-react';
 import { formatIST, getTotalViolations, DAY_TOPICS, filterStudents } from '../../utils/adminData';
+import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
 import { grantStudentRetake, resetStudentAttempt, deleteStudentCompletely } from '../../services/adminService';
+
+const TEST_KEYS = [...PROGRAM_DAY_KEYS, 'finale'];
 
 const PER_PAGE = 10;
 
@@ -158,7 +161,7 @@ export default function AdminRescueTab({
                       onChange={(e) => setRescheduleDay(e.target.value)}
                       className="rounded-lg border border-gray-200 px-3 py-2 text-sm"
                     >
-                      {['1', '2', '3', '4', '5', '6', '7', 'finale'].map((d) => (
+                      {TEST_KEYS.map((d) => (
                         <option key={d} value={d}>{d === 'finale' ? 'Grand Finale' : `Day ${d}`}</option>
                       ))}
                     </select>
@@ -205,7 +208,7 @@ export default function AdminRescueTab({
               <section className="mb-8">
                 <h3 className="text-xs font-bold tracking-widest text-gray-400 mb-3 uppercase">Test Progress</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {['1', '2', '3', '4', '5', '6', '7', 'finale'].map((d) => {
+                  {TEST_KEYS.map((d) => {
                     const done = selectedUser.attemptedTests?.[d] || selectedUserResults.some((r) => String(r.testKey) === d);
                     const rescheduled = studentProgress?.rescheduledTests?.[d];
                     return (

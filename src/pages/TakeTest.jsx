@@ -18,6 +18,7 @@ import {
   getAssignedTestSummary,
   getTestAvailability,
   getTodaysAssignedDay,
+  TOTAL_PROGRAM_DAYS,
   formatDisplayDate,
   formatWindowTime,
   TEST_END_HOUR,
@@ -92,7 +93,7 @@ export default function TakeTest() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Test Schedule</h1>
           <p className="mt-1 text-sm text-gray-500">
-            Aptitude Arcade 2026 — daily tests and Grand Finale assessment.
+            Aptitude Arcade 2026 — {TOTAL_PROGRAM_DAYS} daily tests and Grand Finale assessment.
           </p>
         </div>
 

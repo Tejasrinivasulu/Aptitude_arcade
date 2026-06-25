@@ -16,6 +16,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { DAY_TOPICS, filterExamResults, enrichExamResults, getTotalViolations, readLocalProgressCache, clearLocalProgressCache } from '../utils/adminData';
+import { PROGRAM_DAY_KEYS } from '../data/testSchedule';
 import { DEFAULT_ADMIN_EMAIL } from '../utils/adminAuth';
 import { DAY1_QUESTION_BANK } from '../data/day1QuestionBank';
 import { DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
@@ -405,7 +406,7 @@ export async function deleteStudentCompletely(uid) {
     }
   }
 
-  for (const key of ['1', '2', '3', '4', '5', '6', '7', 'finale']) {
+  for (const key of [...PROGRAM_DAY_KEYS, 'finale']) {
     await deleteDoc(doc(db, 'results', `${key}_${uid}`)).catch(() => {});
     await deleteDoc(doc(db, 'exam_results', `${key}_${uid}`)).catch(() => {});
   }

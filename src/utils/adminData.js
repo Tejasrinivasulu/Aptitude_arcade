@@ -76,9 +76,6 @@ export const DAY_TOPICS = {
   '2': 'Percentages',
   '3': 'Ratio and Proportion',
   '4': 'Logical Reasoning',
-  '5': 'Advanced Reasoning',
-  '6': 'Quantitative',
-  '7': 'Data Interpretation',
   finale: 'Grand Finale',
 };
 

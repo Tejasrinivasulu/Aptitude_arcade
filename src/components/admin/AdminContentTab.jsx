@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { FileText, Save, Plus, Trash2 } from 'lucide-react';
 import { listenToQuestionBank, publishQuestionBank } from '../../services/adminService';
 import { DAY_TOPICS } from '../../utils/adminData';
+import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
 import { DAY1_QUESTION_BANK } from '../../data/day1QuestionBank';
 import { DAY2_QUESTION_BANK } from '../../data/day2QuestionBank';
 import { DAY3_QUESTION_BANK } from '../../data/day3QuestionBank';
 
-const DAYS = ['1', '2', '3', '4', '5', '6', '7'];
+const DAYS = PROGRAM_DAY_KEYS;
 const SEED_BANKS = {
   '1': DAY1_QUESTION_BANK,
   '2': DAY2_QUESTION_BANK,

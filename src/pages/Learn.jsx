@@ -11,7 +11,7 @@ import {
   Fingerprint,
 } from 'lucide-react';
 import { dailyLearningPlan, getDayPlan } from '../data/dailyLearningPlan';
-import { ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
+import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
 
 export default function Learn() {
@@ -24,7 +24,7 @@ export default function Learn() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Daily Learning Module</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Aptitude Arcade 2026 — 7-day structured learning program.
+          Aptitude Arcade 2026 — {TOTAL_PROGRAM_DAYS}-day structured learning program.
         </p>
       </div>
 

@@ -12,9 +12,6 @@ const questionsDb = {
   '2': require('./questions/day2'),
   '3': require('./questions/day3'),
   '4': require('./questions/day4'),
-  '5': require('./questions/day5'),
-  '6': require('./questions/day6'),
-  '7': require('./questions/day7'),
   'finale': require('./questions/finale'),
 };
 
@@ -43,7 +40,7 @@ function isAnswerCorrect(question, userAnswer) {
 }
 
 async function loadQuestionsForTest(testKey) {
-  const dayKeys = ['1', '2', '3', '4', '5', '6', '7'];
+  const dayKeys = ['1', '2', '3', '4'];
   if (dayKeys.includes(String(testKey))) {
     const bankSnap = await db.collection('question_banks').doc(String(testKey)).get();
     if (bankSnap.exists) {
@@ -107,7 +104,7 @@ exports.startExam = onCall(async (request) => {
     throw new HttpsError('failed-precondition', 'Grand Finale is not open yet.');
   }
   
-  if (!questionsDb[testKey] && !['1', '2', '3', '4', '5', '6', '7'].includes(testKey)) {
+  if (!questionsDb[testKey] && !['1', '2', '3', '4'].includes(testKey)) {
     throw new HttpsError('invalid-argument', 'Invalid test key.');
   }
 

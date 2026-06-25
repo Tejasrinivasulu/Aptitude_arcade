@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getDayPlan } from '../data/dailyLearningPlan';
-import { getPerformanceLevel, getTodaysAssignedDay, ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
+import { getPerformanceLevel, getTodaysAssignedDay, ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
 import { useAuth } from './AuthContext';
 import { db, isFirebaseReady } from '../utils/firebase';
 import { collection, query, where, onSnapshot, doc } from 'firebase/firestore';
@@ -34,11 +34,11 @@ function withDerivedProgress(progress) {
   const highestScore = scores.length > 0 ? Math.max(...scores) : 0;
   const learningProgress = Math.min(
     100,
-    Math.round((completedCount / 7) * 100 + (progress.learningCompleted ? 5 : 0))
+    Math.round((completedCount / TOTAL_PROGRAM_DAYS) * 100 + (progress.learningCompleted ? 5 : 0))
   );
   const overallProgress = Math.min(
     100,
-    Math.round((completedCount / 7) * 100 + (progress.attemptedTests?.finale ? 10 : 0))
+    Math.round((completedCount / TOTAL_PROGRAM_DAYS) * 100 + (progress.attemptedTests?.finale ? 10 : 0))
   );
 
   return {
@@ -175,7 +175,7 @@ export function StudentProgressProvider({ children }) {
       .map(Number)
       .sort((a,b) => b-a)[0] || 0;
     const next = highestDayFinished + 1;
-    const capped = next > 7 ? 7 : Math.max(currentDay, next);
+    const capped = next > TOTAL_PROGRAM_DAYS ? TOTAL_PROGRAM_DAYS : Math.max(currentDay, next);
     return Math.min(capped, ACTIVE_PROGRAM_DAY);
   };
 
@@ -201,7 +201,7 @@ export function StudentProgressProvider({ children }) {
         [String(testKey)]: resultData,
       };
 
-      const nextDay = testKey !== 'finale' && Number(testKey) === prev.currentDay && prev.currentDay < 7
+      const nextDay = testKey !== 'finale' && Number(testKey) === prev.currentDay && prev.currentDay < TOTAL_PROGRAM_DAYS
         ? prev.currentDay + 1
         : prev.currentDay;
 

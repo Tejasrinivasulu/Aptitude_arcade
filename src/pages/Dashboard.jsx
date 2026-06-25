@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudentProgress, getDayResultsFromProgress } from '../context/StudentProgressContext';
-import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay, getTodaysAssignedDay } from '../data/testSchedule';
+import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay, getTodaysAssignedDay, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -54,9 +54,9 @@ export default function Dashboard() {
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={Calendar} title="Current Day" value={`Day ${assignedDay} of 7`} />
+        <StatCard icon={Calendar} title="Current Day" value={`Day ${assignedDay} of ${TOTAL_PROGRAM_DAYS}`} />
         <StatCard icon={TrendingUp} title="Learning Progress" value={`${progress.learningProgress}%`} progress={progress.learningProgress} />
-        <StatCard icon={CheckCircle2} title="Tests Completed" value={`${progress.testsCompleted} / 7`} />
+        <StatCard icon={CheckCircle2} title="Tests Completed" value={`${progress.testsCompleted} / ${TOTAL_PROGRAM_DAYS}`} />
         <StatCard icon={Award} title="Average Score" value={`${progress.averageScore}%`} accent />
       </div>
 
@@ -132,7 +132,7 @@ export default function Dashboard() {
 
 function StreakIndicator({ progress }) {
   const assignedDay = progress.programDay;
-  const days = Array.from({ length: 7 }, (_, i) => i + 1);
+  const days = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, i) => i + 1);
   return (
     <div className="mt-8 flex items-center justify-start gap-4">
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">

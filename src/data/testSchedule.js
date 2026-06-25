@@ -26,6 +26,11 @@ export const DAY3_EXAM_DATE = '2026-06-25';
 /** Only this day is live for students right now. Increase to 2, 3… when each day opens. */
 export const ACTIVE_PROGRAM_DAY = 3;
 
+/** Total days in the program (Day 4 is the last daily test). */
+export const TOTAL_PROGRAM_DAYS = 4;
+
+export const PROGRAM_DAY_KEYS = ['1', '2', '3', '4'];
+
 /** Allows assigned-day test outside calendar date for development */
 export const DEMO_SCHEDULE_BYPASS = false;
 
@@ -75,39 +80,12 @@ export const dailyTests = [
     questions: 20,
     durationMinutes: 20,
   },
-  {
-    id: 5,
-    day: 5,
-    title: 'Advanced Logical Reasoning',
-    topics: ['Series', 'Seating Arrangements'],
-    testDate: getRelativeDateStr(4),
-    questions: 20,
-    durationMinutes: 20,
-  },
-  {
-    id: 6,
-    day: 6,
-    title: 'Advanced Quantitative Aptitude',
-    topics: ['Permutations & Combinations', 'Probability'],
-    testDate: getRelativeDateStr(5),
-    questions: 20,
-    durationMinutes: 20,
-  },
-  {
-    id: 7,
-    day: 7,
-    title: 'Data Analysis & Revision',
-    topics: ['Data Interpretation', 'Complete Revision'],
-    testDate: getRelativeDateStr(6),
-    questions: 20,
-    durationMinutes: 20,
-  },
 ];
 
 export const grandFinale = {
   id: 'finale',
   title: 'Grand Finale Assessment',
-  testDate: getRelativeDateStr(7),
+  testDate: getRelativeDateStr(4),
   topics: [
     'Number Systems',
     'Percentages',
@@ -360,7 +338,7 @@ export function getTestAvailability({
       label: 'Locked',
       color: 'gray',
       canStart: false,
-      message: 'Grand Finale unlocks after all 7 daily tests are complete.',
+      message: `Grand Finale unlocks after all ${TOTAL_PROGRAM_DAYS} daily tests are complete.`,
       test,
       countdown: computeTestCountdown(test.testDate, now, testKey),
     };

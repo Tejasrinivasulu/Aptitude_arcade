@@ -20,8 +20,11 @@ export const DAY1_EXAM_WINDOW = {
 /** Day 2 exam date (IST) — 24 June */
 export const DAY2_EXAM_DATE = '2026-06-24';
 
+/** Day 3 exam date (IST) — 25 June */
+export const DAY3_EXAM_DATE = '2026-06-25';
+
 /** Only this day is live for students right now. Increase to 2, 3… when each day opens. */
-export const ACTIVE_PROGRAM_DAY = 2;
+export const ACTIVE_PROGRAM_DAY = 3;
 
 /** Allows assigned-day test outside calendar date for development */
 export const DEMO_SCHEDULE_BYPASS = false;
@@ -57,11 +60,11 @@ export const dailyTests = [
   {
     id: 3,
     day: 3,
-    title: 'Time-Based Problems',
-    topics: ['Time & Work', 'Time, Speed & Distance'],
-    testDate: getRelativeDateStr(2),
-    questions: 20,
-    durationMinutes: 20,
+    title: 'Ratio and Proportion',
+    topics: ['Ratio and Proportion'],
+    testDate: DAY3_EXAM_DATE,
+    questions: 30,
+    durationMinutes: 30,
   },
   {
     id: 4,
@@ -166,9 +169,9 @@ export function formatWindowTime(hour, minute = 0) {
 }
 
 export const generalRules = [
-  `Day 2 Test Date: ${formatDisplayDate(DAY2_EXAM_DATE)}`,
+  `Day 3 Test Date: ${formatDisplayDate(DAY3_EXAM_DATE)}`,
   `Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
-  'Day 2 exam duration: 30 minutes once started.',
+  'Day 3 exam duration: 30 minutes once started.',
   'Students can attempt the test only once.',
   'The test remains available only during the daily window.',
   `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test is automatically closed.`,
@@ -219,6 +222,11 @@ export function getTestWindowPhase(testDate, now = new Date()) {
 }
 
 export function getActiveProgramDay() {
+  return ACTIVE_PROGRAM_DAY;
+}
+
+/** Calendar program day — today's live assigned test (not tied to student completion progress). */
+export function getTodaysAssignedDay() {
   return ACTIVE_PROGRAM_DAY;
 }
 
@@ -288,7 +296,15 @@ export function getTestAvailability({
   const test = isFinale ? grandFinale : getDailyTest(Number(testKey));
   const attempt = attemptedTests[key];
   const isRescheduled = rescheduledTests[key] === true;
-  const programDay = getStudentProgramDay(currentDay);
+  const testDayNum = Number(testKey);
+  const expiredCountdown = {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    isReady: false,
+    isExpired: true,
+    totalMs: 0,
+  };
 
   if (attempt && !isRescheduled) {
     return {
@@ -314,7 +330,7 @@ export function getTestAvailability({
     };
   }
 
-  if (!isFinale && Number(testKey) > ACTIVE_PROGRAM_DAY) {
+  if (!isFinale && testDayNum > ACTIVE_PROGRAM_DAY) {
     return {
       status: 'locked',
       label: 'Coming Soon',
@@ -326,15 +342,15 @@ export function getTestAvailability({
     };
   }
 
-  if (!isFinale && Number(testKey) !== programDay) {
+  if (!isFinale && testDayNum < ACTIVE_PROGRAM_DAY) {
     return {
-      status: 'locked',
-      label: 'Not Assigned',
-      color: 'gray',
+      status: 'missed',
+      label: 'Expired',
+      color: 'red',
       canStart: false,
-      message: `This test is scheduled for Day ${testKey}. Your current day is Day ${programDay}.`,
+      message: 'Test window closed. Access has expired permanently.',
       test,
-      countdown: computeTestCountdown(test.testDate, now, testKey),
+      countdown: expiredCountdown,
     };
   }
 
@@ -395,7 +411,12 @@ export function formatDay2ExamWindow() {
   return `${formatDisplayDate(DAY2_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
 }
 
+export function formatDay3ExamWindow() {
+  return `${formatDisplayDate(DAY3_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+}
+
 export function formatExamWindowForDay(day) {
+  if (Number(day) === 3) return formatDay3ExamWindow();
   if (Number(day) === 2) return formatDay2ExamWindow();
   return formatDay1ExamWindow();
 }

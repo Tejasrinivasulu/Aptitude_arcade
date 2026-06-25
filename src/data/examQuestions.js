@@ -6,6 +6,7 @@
 
 import { DAY1_DURATION_SECONDS, DAY1_TOTAL_QUESTIONS } from './day1QuestionBank';
 import { DAY2_DURATION_SECONDS, DAY2_TOTAL_QUESTIONS } from './day2QuestionBank';
+import { DAY3_DURATION_SECONDS, DAY3_TOTAL_QUESTIONS } from './day3QuestionBank';
 
 export const EXAM_DURATION_SECONDS = 20 * 60;
 export const EXAM_TOTAL_QUESTIONS = 20;
@@ -15,7 +16,7 @@ export const FINALE_TOTAL_QUESTIONS = 50;
 const dayTopics = {
   1: 'Number Systems',
   2: 'Percentages',
-  3: 'Time-Based Problems',
+  3: 'Ratio and Proportion',
   4: 'Logical Reasoning Basics',
   5: 'Advanced Logical Reasoning',
   6: 'Advanced Quantitative',
@@ -51,6 +52,16 @@ export function getExamMeta(testKey) {
       topicLabel: dayTopics[2],
       totalQuestions: DAY2_TOTAL_QUESTIONS,
       durationSeconds: DAY2_DURATION_SECONDS,
+      durationMinutes: 30,
+    };
+  }
+  if (day === 3) {
+    return {
+      testKey: '3',
+      title: 'Day 3 Assessment',
+      topicLabel: dayTopics[3],
+      totalQuestions: DAY3_TOTAL_QUESTIONS,
+      durationSeconds: DAY3_DURATION_SECONDS,
       durationMinutes: 30,
     };
   }

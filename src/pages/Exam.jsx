@@ -26,7 +26,7 @@ import { useStudentProgress } from '../context/StudentProgressContext';
 import { useExamSecurity, MAX_TAB_VIOLATIONS } from '../hooks/useExamSecurity';
 import { useFaceMonitoring } from '../hooks/useFaceMonitoring';
 import { getExamMeta } from '../data/examQuestions';
-import { getAssignedTestSummary, getTestAvailability, getStudentProgramDay } from '../data/testSchedule';
+import { getAssignedTestSummary, getTestAvailability, getTodaysAssignedDay } from '../data/testSchedule';
 import { startExam, submitExam } from '../services/examService';
 import ProctorCamera from '../components/exam/ProctorCamera';
 
@@ -54,7 +54,7 @@ export default function Exam() {
   const navigate = useNavigate();
   const { progress, markTestSubmitted } = useStudentProgress();
 
-  const testKey = sessionStorage.getItem('exam_test_key') || String(getStudentProgramDay(progress.currentDay));
+  const testKey = sessionStorage.getItem('exam_test_key') || String(getTodaysAssignedDay());
   
   // Use metadata for the setup UI
   const examMeta = useMemo(() => getExamMeta(testKey), [testKey]);
@@ -204,7 +204,7 @@ export default function Exam() {
         testKey,
         attemptedTests: progress.attemptedTests,
         rescheduledTests: progress.rescheduledTests || {},
-        currentDay: getStudentProgramDay(progress.currentDay),
+        currentDay: getTodaysAssignedDay(),
       });
 
       if (!availability.canStart) {

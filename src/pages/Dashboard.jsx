@@ -3,19 +3,20 @@ import { Link } from 'react-router-dom';
 import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudentProgress, getDayResultsFromProgress } from '../context/StudentProgressContext';
-import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay } from '../data/testSchedule';
+import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay, getTodaysAssignedDay } from '../data/testSchedule';
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { progress } = useStudentProgress();
   const firstName = user?.fullName?.split(' ')[0] || 'Student';
-  const assignedAttempt = progress.attemptedTests?.[String(progress.currentDay)];
+  const assignedDay = getTodaysAssignedDay();
+  const assignedAttempt = progress.attemptedTests?.[String(assignedDay)];
   const testDone = !!assignedAttempt;
   
   const [timeLeft, setTimeLeft] = useState('');
   const [isTestLive, setIsTestLive] = useState(false);
 
-  const assignedTest = getDailyTest(progress.currentDay);
+  const assignedTest = getDailyTest(assignedDay);
 
   useEffect(() => {
     const updateTimer = () => {
@@ -53,7 +54,7 @@ export default function Dashboard() {
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={Calendar} title="Current Day" value={`Day ${progress.currentDay} of 7`} />
+        <StatCard icon={Calendar} title="Current Day" value={`Day ${assignedDay} of 7`} />
         <StatCard icon={TrendingUp} title="Learning Progress" value={`${progress.learningProgress}%`} progress={progress.learningProgress} />
         <StatCard icon={CheckCircle2} title="Tests Completed" value={`${progress.testsCompleted} / 7`} />
         <StatCard icon={Award} title="Average Score" value={`${progress.averageScore}%`} accent />
@@ -64,13 +65,13 @@ export default function Dashboard() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-primary">Current Challenge</p>
             <h2 className="mt-1 text-xl font-bold text-gray-900">
-              Day {progress.currentDay} — {progress.dayTitle}
+              Day {assignedDay} — {getDailyTest(assignedDay).title}
             </h2>
-            <p className="mt-1 text-sm font-medium text-primary">{progress.todayTopic}</p>
-            {(progress.currentDay === 1 || progress.currentDay === 2) && (
+            <p className="mt-1 text-sm font-medium text-primary">{progress.dayTopics?.join(' · ') || getDailyTest(assignedDay).topics.join(' · ')}</p>
+            {assignedDay >= 1 && assignedDay <= 3 && (
               <p className="mt-2 inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-800">
                 <Calendar size={16} className="shrink-0" />
-                Day {progress.currentDay} Exam: {formatExamWindowForDay(progress.currentDay)}
+                Day {assignedDay} Exam: {formatExamWindowForDay(assignedDay)}
               </p>
             )}
             <div className="mt-4 flex flex-wrap gap-3 items-center">
@@ -130,14 +131,15 @@ export default function Dashboard() {
 }
 
 function StreakIndicator({ progress }) {
+  const assignedDay = progress.programDay;
   const days = Array.from({ length: 7 }, (_, i) => i + 1);
   return (
     <div className="mt-8 flex items-center justify-start gap-4">
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
         {days.map(day => {
-          const isToday = day === progress.currentDay;
-          const isPast = day < progress.currentDay;
-          const isFuture = day > progress.currentDay;
+          const isToday = day === assignedDay;
+          const isPast = day < assignedDay;
+          const isFuture = day > assignedDay;
           const attempted = progress.attemptedTests?.[String(day)];
           
           let content;

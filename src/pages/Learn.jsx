@@ -16,7 +16,7 @@ import { useStudentProgress } from '../context/StudentProgressContext';
 
 export default function Learn() {
   const { progress } = useStudentProgress();
-  const [selectedDay, setSelectedDay] = useState(progress.currentDay);
+  const [selectedDay, setSelectedDay] = useState(progress.programDay);
   const dayPlan = getDayPlan(selectedDay);
 
   return (
@@ -76,8 +76,8 @@ export default function Learn() {
             </p>
             <h2 className="mt-2 text-xl font-bold text-gray-900">{dayPlan.title}</h2>
           </div>
-          <span className={`rounded-full px-3 py-1 text-xs font-semibold ${selectedDay === progress.currentDay ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`}>
-            {selectedDay === progress.currentDay ? 'Active Day' : 'Review Mode'}
+          <span className={`rounded-full px-3 py-1 text-xs font-semibold ${selectedDay === progress.programDay ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`}>
+            {selectedDay === progress.programDay ? 'Active Day' : 'Review Mode'}
           </span>
         </div>
 

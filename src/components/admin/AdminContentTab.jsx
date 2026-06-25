@@ -3,12 +3,13 @@ import { FileText, Save, Plus, Trash2 } from 'lucide-react';
 import { listenToQuestionBank, publishQuestionBank } from '../../services/adminService';
 import { DAY_TOPICS } from '../../utils/adminData';
 import { DAY1_QUESTION_BANK } from '../../data/day1QuestionBank';
-import { DAY2_QUESTION_BANK } from '../../data/day2QuestionBank';
+import { DAY3_QUESTION_BANK } from '../../data/day3QuestionBank';
 
 const DAYS = ['1', '2', '3', '4', '5', '6', '7'];
 const SEED_BANKS = {
   '1': DAY1_QUESTION_BANK,
   '2': DAY2_QUESTION_BANK,
+  '3': DAY3_QUESTION_BANK,
 };
 
 export default function AdminContentTab() {
@@ -23,7 +24,7 @@ export default function AdminContentTab() {
         data || {
           title: `Day ${selectedDay} Assessment`,
           topicLabel: DAY_TOPICS[selectedDay] || `Day ${selectedDay}`,
-          durationMinutes: selectedDay === '1' || selectedDay === '2' ? 30 : 20,
+          durationMinutes: selectedDay === '1' || selectedDay === '2' || selectedDay === '3' ? 30 : 20,
           questions: [],
           lastPublishedAt: null,
         }

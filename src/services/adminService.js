@@ -19,6 +19,7 @@ import { DAY_TOPICS, filterExamResults, enrichExamResults, getTotalViolations, r
 import { DEFAULT_ADMIN_EMAIL } from '../utils/adminAuth';
 import { DAY1_QUESTION_BANK } from '../data/day1QuestionBank';
 import { DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
+import { DAY3_QUESTION_BANK } from '../data/day3QuestionBank';
 
 const RESULTS_COLLECTIONS = ['results', 'exam_results'];
 
@@ -313,10 +314,12 @@ export const listenToStudentProgress = (uid, callback) => {
 
 const DAY1_SEED = { ...DAY1_QUESTION_BANK };
 const DAY2_SEED = { ...DAY2_QUESTION_BANK };
+const DAY3_SEED = { ...DAY3_QUESTION_BANK };
 
 const OFFLINE_BANKS = {
   '1': DAY1_SEED,
   '2': DAY2_SEED,
+  '3': DAY3_SEED,
 };
 
 export const listenToQuestionBank = (dayKey, callback) => {
@@ -337,7 +340,7 @@ export const listenToQuestionBank = (dayKey, callback) => {
           : {
               title: `Day ${dayKey} Assessment`,
               topicLabel: DAY_TOPICS[dayKey] || `Day ${dayKey}`,
-              durationMinutes: dayKey === '1' || dayKey === '2' ? 30 : 20,
+              durationMinutes: dayKey === '1' || dayKey === '2' || dayKey === '3' ? 30 : 20,
               questions: [],
               lastPublishedAt: null,
             }

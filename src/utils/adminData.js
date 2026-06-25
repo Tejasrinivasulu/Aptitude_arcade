@@ -74,7 +74,7 @@ export function getTestTitle(testKey) {
 export const DAY_TOPICS = {
   '1': 'Number Systems',
   '2': 'Percentages',
-  '3': 'Time & Work',
+  '3': 'Ratio and Proportion',
   '4': 'Logical Reasoning',
   '5': 'Advanced Reasoning',
   '6': 'Quantitative',

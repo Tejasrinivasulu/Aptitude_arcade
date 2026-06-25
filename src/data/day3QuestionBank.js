@@ -1,0 +1,42 @@
+/** Day 3 — Ratio and Proportion: 25 MCQs + 5 Fill in the Blanks · 30 min */
+export const DAY3_QUESTION_BANK = {
+  questionBankVersion: 1,
+  title: 'Day 3 Assessment',
+  topicLabel: 'Ratio and Proportion',
+  durationMinutes: 30,
+  questions: [
+    { id: 1, type: 'mcq', question: 'If A : B = 3 : 4 and B : C = 5 : 6, find A : C.', options: ['5 : 8', '5 : 7', '5 : 6', '5 : 9'], answer: 0 },
+    { id: 2, type: 'mcq', question: 'A sum of ₹1,560 is divided among A, B, and C such that A gets ¼ of what B and C together get. What is A\'s share?', options: ['₹300', '₹312', '₹350', '₹400'], answer: 1 },
+    { id: 3, type: 'mcq', question: 'The incomes of A and B are in the ratio 5 : 4 and their expenditures are in the ratio 3 : 2. If each saves ₹1,600, find A\'s income.', options: ['₹3,600', '₹4,000', '₹4,800', '₹5,000'], answer: 1 },
+    { id: 4, type: 'mcq', question: 'Find the fourth proportional to 3, 7 and 9.', options: ['18', '21', '24', '27'], answer: 1 },
+    { id: 5, type: 'mcq', question: 'Two numbers are in the ratio 3 : 5. If 6 is added to each, the ratio becomes 3 : 4. Find the larger number.', options: ['10', '12', '15', '18'], answer: 0 },
+    { id: 6, type: 'mcq', question: 'If 40% of a number equals ⅔ of another number, what is the ratio of the first to the second?', options: ['2 : 3', '5 : 3', '5 : 2', '3 : 5'], answer: 1 },
+    { id: 7, type: 'mcq', question: 'The ratio of milk to water in a mixture is 7 : 3. If the mixture is 100 litres, how much water must be added to make the ratio 7 : 5?', options: ['15 L', '18 L', '20 L', '24 L'], answer: 2 },
+    { id: 8, type: 'mcq', question: 'Find the mean proportional between 9 and 25.', options: ['12', '13', '15', '17'], answer: 2 },
+    { id: 9, type: 'mcq', question: 'A, B and C invest in a business in the ratio 2 : 3 : 5. After 4 months, A withdraws. After 8 months, B withdraws. At the end of the year, the profit is ₹25,000. Find C\'s share.', options: ['₹15,000', '₹16,304', '₹17,500', '₹18,000'], answer: 1 },
+    { id: 10, type: 'mcq', question: 'If a : b = 2 : 3, find (3a + 2b) : (5a – b).', options: ['11 : 7', '12 : 7', '11 : 9', '13 : 7'], answer: 1 },
+    { id: 11, type: 'mcq', question: 'Seats for Maths, Physics and Biology are in the ratio 5 : 7 : 8. If they are increased by 40%, 50% and 75% respectively, what will be the new ratio?', options: ['2 : 3 : 4', '3 : 4 : 5', '1 : 2 : 3', '3 : 3 : 4'], answer: 0 },
+    { id: 12, type: 'mcq', question: 'The ratio of two numbers is 4 : 7. If 10 is subtracted from both, the ratio becomes 2 : 5. Find the larger number.', options: ['28', '35', '42', '49'], answer: 1 },
+    { id: 13, type: 'mcq', question: 'A mixture contains alcohol and water in the ratio 4 : 1. If 15 litres of water is added, the ratio becomes 4 : 4. Find the initial quantity of alcohol.', options: ['12 L', '15 L', '20 L', '24 L'], answer: 2 },
+    { id: 14, type: 'mcq', question: 'If x : y = 3 : 4, then find (x² + y²) : (x² – y²).', options: ['25 : 7', '5 : 7', '25 : -7', '7 : 25'], answer: 2 },
+    { id: 15, type: 'mcq', question: 'A and B can do a piece of work. Their efficiencies are in the ratio 3 : 5. If B alone takes 20 days, how many days will A alone take?', options: ['25 days', '30 days', '33⅓ days', '35 days'], answer: 2 },
+    { id: 16, type: 'mcq', question: 'The ratio of the ages of a father and his son is 7 : 2. After 10 years, the ratio becomes 9 : 4. Find the father\'s present age.', options: ['35 years', '42 years', '49 years', '56 years'], answer: 0 },
+    { id: 17, type: 'mcq', question: 'Three numbers are in the ratio 1 : 2 : 3. Their HCF is 12. Find their LCM.', options: ['36', '48', '60', '72'], answer: 3 },
+    { id: 18, type: 'mcq', question: '₹4,200 is divided among A, B and C in the ratio 2 : 3 : 7. Find the difference between the highest and the lowest shares.', options: ['₹1,500', '₹1,650', '₹1,750', '₹2,100'], answer: 2 },
+    { id: 19, type: 'mcq', question: 'If a/3 = b/4 = c/7, then (a + b + c)/c is', options: ['1', '2', '3', '4'], answer: 1 },
+    { id: 20, type: 'mcq', question: 'Gold and copper are mixed in the ratio 5 : 2 in alloy A and 3 : 4 in alloy B. In what ratio should A and B be mixed so that the final alloy has gold and copper in the ratio 3 : 2?', options: ['2 : 3', '3 : 2', '4 : 3', '5 : 3'], answer: 1 },
+    { id: 21, type: 'mcq', question: 'The third proportional to 12 and 18 is', options: ['24', '27', '30', '36'], answer: 1 },
+    { id: 22, type: 'mcq', question: 'The ratio of boys to girls in a class is 4 : 5. If 8 more boys join and 5 girls leave, the ratio becomes 1 : 1. How many students were initially in the class?', options: ['99', '108', '117', '126'], answer: 2 },
+    { id: 23, type: 'mcq', question: 'If 4A = 6B = 9C, then A : B : C is', options: ['4 : 6 : 9', '9 : 6 : 4', '6 : 9 : 4', '9 : 4 : 6'], answer: 1 },
+    { id: 24, type: 'mcq', question: 'In a bag, ₹1, ₹2 and ₹5 coins are in the ratio 3 : 4 : 5. If the total value of the coins is ₹144, find the number of ₹5 coins.', options: ['16', '18', '20', '24'], answer: 2 },
+    { id: 25, type: 'mcq', question: 'Two vessels contain milk and water. Vessel 1 has the ratio 3 : 2 and Vessel 2 has the ratio 7 : 3. If equal quantities are mixed, find the resultant ratio of milk to water.', options: ['13 : 7', '15 : 8', '17 : 9', '19 : 11'], answer: 0 },
+    { id: 26, type: 'fill', question: 'If A : B = 2 : 3 and B : C = 4 : 5, then A : B : C = ______.', answer: '8 : 12 : 15' },
+    { id: 27, type: 'fill', question: 'The sub-duplicate ratio of 49 : 81 is ______.', answer: '7 : 9' },
+    { id: 28, type: 'fill', question: 'If two numbers are in the ratio 5 : 8 and their sum is 182, the smaller number is ______.', answer: '70' },
+    { id: 29, type: 'fill', question: 'If A : B = 3 : 4 and B : C = 8 : 9, then A : C = ______.', answer: '2 : 3' },
+    { id: 30, type: 'fill', question: 'A mixture of 60 litres contains milk and water in the ratio 2 : 1. How many litres of water must be added to make the ratio 1 : 2?', answer: '60' },
+  ],
+};
+
+export const DAY3_DURATION_SECONDS = 30 * 60;
+export const DAY3_TOTAL_QUESTIONS = 30;

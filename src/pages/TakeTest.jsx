@@ -17,8 +17,7 @@ import {
   generalRules,
   getAssignedTestSummary,
   getTestAvailability,
-  getStudentProgramDay,
-  ACTIVE_PROGRAM_DAY,
+  getTodaysAssignedDay,
   formatDisplayDate,
   formatWindowTime,
   TEST_END_HOUR,
@@ -47,29 +46,29 @@ const statusStyles = {
 export default function TakeTest() {
   const navigate = useNavigate();
   const { progress } = useStudentProgress();
-  const programDay = getStudentProgramDay(progress.currentDay);
+  const assignedDay = getTodaysAssignedDay();
   const [showVerification, setShowVerification] = useState(false);
-  const [selectedTestKey, setSelectedTestKey] = useState(String(programDay));
+  const [selectedTestKey, setSelectedTestKey] = useState(String(assignedDay));
 
   const assignedTest = useMemo(
-    () => getAssignedTestSummary(programDay),
-    [programDay]
+    () => getAssignedTestSummary(assignedDay),
+    [assignedDay]
   );
 
-  const assignedCountdown = useTestCountdown(assignedTest.testDate, programDay);
+  const assignedCountdown = useTestCountdown(assignedTest.testDate, assignedDay);
 
   const assignedAvailability = useMemo(
     () =>
       getTestAvailability({
-        testKey: programDay,
+        testKey: assignedDay,
         attemptedTests: progress.attemptedTests,
         rescheduledTests: progress.rescheduledTests || {},
-        currentDay: programDay,
+        currentDay: assignedDay,
       }),
-    [progress, programDay]
+    [progress, assignedDay]
   );
 
-  const isRescheduledToday = progress.rescheduledTests?.[String(programDay)] === true;
+  const isRescheduledToday = progress.rescheduledTests?.[String(assignedDay)] === true;
 
   const canStartAssigned =
     assignedAvailability.canStart &&
@@ -116,7 +115,7 @@ export default function TakeTest() {
                 Today&apos;s Assigned Test
               </p>
               <h2 className="mt-1 text-xl font-bold text-gray-900">
-                Day {programDay} — {assignedTest.title}
+                Day {assignedDay} — {assignedTest.title}
               </h2>
               <p className="mt-1 text-sm text-primary">{assignedTest.topicLabel}</p>
             </div>
@@ -154,13 +153,13 @@ export default function TakeTest() {
             </ul>
             <button
               type="button"
-              onClick={() => openVerification(programDay)}
+              onClick={() => openVerification(assignedDay)}
               disabled={!canStartAssigned}
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-white shadow-md shadow-primary/25 hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Rocket size={18} />
               {canStartAssigned
-                ? `Start Day ${programDay} Test`
+                ? `Start Day ${assignedDay} Test`
                 : assignedAvailability.status === 'completed'
                   ? 'Test Already Completed'
                   : assignedCountdown.isExpired
@@ -195,18 +194,19 @@ export default function TakeTest() {
 }
 
 function DailyTestRow({ test, progress, onStart }) {
-  const programDay = getStudentProgramDay(progress.currentDay);
+  const assignedDay = getTodaysAssignedDay();
   const availability = getTestAvailability({
     testKey: test.day,
     attemptedTests: progress.attemptedTests,
     rescheduledTests: progress.rescheduledTests || {},
-    currentDay: programDay,
+    currentDay: assignedDay,
   });
   const countdown = useTestCountdown(test.testDate);
-  const active = test.day === programDay;
-  const locked = test.day > ACTIVE_PROGRAM_DAY || test.day > programDay;
+  const active = test.day === assignedDay;
+  const locked = test.day > assignedDay;
   const isRescheduled = progress.rescheduledTests?.[String(test.day)] === true;
   const canStart = availability.canStart && (isRescheduled || (countdown.isReady && !countdown.isExpired));
+  const showExpired = availability.status === 'missed' || availability.label === 'Expired';
 
   return (
     <div
@@ -232,7 +232,11 @@ function DailyTestRow({ test, progress, onStart }) {
           {formatDisplayDate(test.testDate)} · {locked ? '?? Q' : `${test.questions} Q`} · {test.durationMinutes} min
         </p>
         <div className="mt-2">
-          <TestCountdown testDate={test.testDate} compact />
+          {showExpired ? (
+            <span className="font-mono text-xs font-semibold text-red-600">Expired</span>
+          ) : (
+            <TestCountdown testDate={test.testDate} compact />
+          )}
         </div>
       </div>
       <div className="flex items-center gap-3">

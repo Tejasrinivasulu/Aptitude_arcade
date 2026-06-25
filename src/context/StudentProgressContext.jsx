@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { getDayPlan, getDayTopicLabel } from '../data/dailyLearningPlan';
-import { getPerformanceLevel, getStudentProgramDay, ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
+import { getDayPlan } from '../data/dailyLearningPlan';
+import { getPerformanceLevel, getTodaysAssignedDay, ACTIVE_PROGRAM_DAY } from '../data/testSchedule';
 import { useAuth } from './AuthContext';
 import { db, isFirebaseReady } from '../utils/firebase';
 import { collection, query, where, onSnapshot, doc } from 'firebase/firestore';
@@ -22,7 +22,8 @@ const defaultProgress = {
 };
 
 function withDerivedProgress(progress) {
-  const programDay = getStudentProgramDay(progress.currentDay);
+  const programDay = getTodaysAssignedDay();
+  const dayPlan = getDayPlan(programDay);
   const attempted = progress.attemptedTests || {};
   const completedCount = Object.keys(attempted).filter((k) => k !== 'finale').length;
   const scores = Object.values(attempted).map((a) => a.percentage);
@@ -48,10 +49,10 @@ function withDerivedProgress(progress) {
     highestScore,
     learningProgress,
     overallProgress,
-    todayTopic: getDayTopicLabel(programDay),
-    dayTitle: getDayPlan(programDay).title,
-    learningGoal: getDayPlan(programDay).learningGoal,
-    dayTopics: getDayPlan(programDay).topics,
+    todayTopic: dayPlan.topics.join(' · '),
+    dayTitle: dayPlan.title,
+    learningGoal: dayPlan.learningGoal,
+    dayTopics: dayPlan.topics,
     programDay,
   };
 }

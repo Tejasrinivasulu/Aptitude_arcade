@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LifeBuoy, CheckCircle, Clock, AlertCircle, Send, MessageSquare, X } from 'lucide-react';
+import { LifeBuoy, CheckCircle, Clock, AlertCircle, Send, MessageSquare, X, ChevronDown, ChevronUp, History } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { submitHelpRequest } from '../services/adminService';
 import { auth, db, isFirebaseReady } from '../utils/firebase';
@@ -32,6 +32,7 @@ export default function HelpCenter() {
   const [errorMsg, setErrorMsg] = useState('');
   const [queries, setQueries] = useState([]);
   const [loadingQueries, setLoadingQueries] = useState(true);
+  const [showAllQueries, setShowAllQueries] = useState(false);
 
   // Real-time listener for current student's help requests
   useEffect(() => {
@@ -176,18 +177,41 @@ export default function HelpCenter() {
         {/* Live Query Status Section (if student has submitted queries) */}
         {queries.length > 0 && (
           <div className="mb-8 space-y-4">
-            <div className="flex items-center justify-between border-b border-orange-100 pb-3">
-              <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <MessageSquare className="text-orange-500" size={20} />
-                Your Queries & Live Status
-              </h2>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-orange-800">
-                {queries.length} {queries.length === 1 ? 'Query' : 'Queries'}
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-orange-100 pb-3">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                  <MessageSquare className="text-orange-500" size={20} />
+                  {showAllQueries ? 'All Support Queries' : 'Latest Query Status'}
+                </h2>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {showAllQueries
+                    ? `Showing all ${queries.length} submitted queries`
+                    : 'Showing your most recent query. Live updates from admin appear here.'}
+                </p>
+              </div>
+
+              {queries.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllQueries((prev) => !prev)}
+                  className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-lg border border-orange-200 bg-white px-3 py-1.5 text-xs font-bold text-orange-700 shadow-xs transition hover:bg-orange-50 hover:border-orange-300"
+                >
+                  <History size={14} className="text-orange-600" />
+                  {showAllQueries ? (
+                    <>
+                      Show Latest Only <ChevronUp size={14} />
+                    </>
+                  ) : (
+                    <>
+                      View All Queries ({queries.length}) <ChevronDown size={14} />
+                    </>
+                  )}
+                </button>
+              )}
             </div>
 
             <div className="space-y-3">
-              {queries.map((q) => {
+              {(showAllQueries ? queries : queries.slice(0, 1)).map((q) => {
                 const isResolved = q.status === 'resolved';
                 return (
                   <div
@@ -248,6 +272,29 @@ export default function HelpCenter() {
                 );
               })}
             </div>
+
+            {queries.length > 1 && !showAllQueries && (
+              <div className="text-center pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowAllQueries(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-800 hover:underline transition-colors"
+                >
+                  <ChevronDown size={14} /> View previous {queries.length - 1} {queries.length - 1 === 1 ? 'query' : 'queries'}
+                </button>
+              </div>
+            )}
+            {queries.length > 1 && showAllQueries && (
+              <div className="text-center pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowAllQueries(false)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-700 hover:underline transition-colors"
+                >
+                  <ChevronUp size={14} /> Collapse to latest query only
+                </button>
+              </div>
+            )}
           </div>
         )}
 

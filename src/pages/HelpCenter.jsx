@@ -173,9 +173,68 @@ export default function HelpCenter() {
           </div>
         )}
 
+        {/* Submit Query Form */}
+        <div className="bg-white p-6 rounded-xl border border-orange-100 shadow-sm mb-8">
+          <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Send size={18} className="text-orange-500" />
+            Submit a Query
+          </h3>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <p><span className="font-bold text-gray-500">Name:</span> {user?.fullName || '—'}</p>
+              <p><span className="font-bold text-gray-500">Roll No:</span> {user?.rollNumber || '—'}</p>
+              <p className="sm:col-span-2"><span className="font-bold text-gray-500">Email:</span> {user?.email || '—'}</p>
+            </div>
+
+            <div>
+              <label htmlFor="issueType" className="block text-sm font-semibold text-gray-700 mb-1">
+                What kind of issue are you facing?
+              </label>
+              <select
+                id="issueType"
+                name="issueType"
+                required
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 bg-gray-50"
+              >
+                <option value="">Select an issue type...</option>
+                <option value="Test didn't load">Test didn&apos;t load</option>
+                <option value="Camera verification failed">Camera verification failed</option>
+                <option value="Answers not saving">Answers not saving</option>
+                <option value="Auto-submitted / tab switch">Auto-submitted / tab switch</option>
+                <option value="Question error">Error in a question</option>
+                <option value="Request exam reschedule">Request exam reschedule</option>
+                <option value="Other">Other technical issue</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
+                Describe your query
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                rows={5}
+                placeholder="Please provide full details about what happened..."
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none bg-gray-50"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-orange-600/20 transition hover:bg-orange-700 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              <Send size={16} />
+              {isSubmitting ? 'Sending...' : 'Submit Query'}
+            </button>
+            {errorMsg && <p className="text-red-500 text-sm text-center font-medium mt-2">{errorMsg}</p>}
+          </form>
+        </div>
+
         {/* Live Query Status Section (if student has submitted queries) */}
         {queries.length > 0 && (
-          <div className="mb-8 space-y-4">
+          <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-orange-100 pb-3">
               <div>
                 <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -296,65 +355,6 @@ export default function HelpCenter() {
             )}
           </div>
         )}
-
-        {/* Submit Query Form */}
-        <div className="bg-white p-6 rounded-xl border border-orange-100 shadow-sm">
-          <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <Send size={18} className="text-orange-500" />
-            {queries.length > 0 ? 'Submit Another Query' : 'Submit a Query'}
-          </h3>
-
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4 border border-gray-100">
-              <p><span className="font-bold text-gray-500">Name:</span> {user?.fullName || '—'}</p>
-              <p><span className="font-bold text-gray-500">Roll No:</span> {user?.rollNumber || '—'}</p>
-              <p className="sm:col-span-2"><span className="font-bold text-gray-500">Email:</span> {user?.email || '—'}</p>
-            </div>
-
-            <div>
-              <label htmlFor="issueType" className="block text-sm font-semibold text-gray-700 mb-1">
-                What kind of issue are you facing?
-              </label>
-              <select
-                id="issueType"
-                name="issueType"
-                required
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 bg-gray-50"
-              >
-                <option value="">Select an issue type...</option>
-                <option value="Test didn't load">Test didn&apos;t load</option>
-                <option value="Camera verification failed">Camera verification failed</option>
-                <option value="Answers not saving">Answers not saving</option>
-                <option value="Auto-submitted / tab switch">Auto-submitted / tab switch</option>
-                <option value="Question error">Error in a question</option>
-                <option value="Request exam reschedule">Request exam reschedule</option>
-                <option value="Other">Other technical issue</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
-                Describe your query
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                required
-                rows={5}
-                placeholder="Please provide full details about what happened..."
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none bg-gray-50"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-orange-600/20 transition hover:bg-orange-700 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              <Send size={16} />
-              {isSubmitting ? 'Sending...' : 'Submit Query'}
-            </button>
-            {errorMsg && <p className="text-red-500 text-sm text-center font-medium mt-2">{errorMsg}</p>}
-          </form>
-        </div>
       </section>
     </div>
   );

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { LifeBuoy, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { LifeBuoy, CheckCircle, Clock, AlertCircle, Send, MessageSquare, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { submitHelpRequest } from '../services/adminService';
-import { db, isFirebaseReady } from '../utils/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth, db, isFirebaseReady } from '../utils/firebase';
+import { doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
 
 const ADMIN_NOTIFY_EMAIL = 'admin@aptitudearcade.com';
 
@@ -30,13 +30,57 @@ export default function HelpCenter() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [queries, setQueries] = useState([]);
+  const [loadingQueries, setLoadingQueries] = useState(true);
+
+  // Real-time listener for current student's help requests
+  useEffect(() => {
+    if (!isFirebaseReady() || !db || !user) {
+      setLoadingQueries(false);
+      return;
+    }
+
+    const uid = user.id || user.uid || auth?.currentUser?.uid;
+    if (!uid) {
+      setLoadingQueries(false);
+      return;
+    }
+
+    const q = query(
+      collection(db, 'help_requests'),
+      where('uid', '==', uid)
+    );
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const list = snapshot.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+        }));
+        // Sort newest first
+        list.sort((a, b) =>
+          String(b.submittedAt || b.createdAt || '').localeCompare(String(a.submittedAt || a.createdAt || ''))
+        );
+        setQueries(list);
+        setLoadingQueries(false);
+      },
+      (err) => {
+        console.warn('Student queries listener:', err);
+        setLoadingQueries(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMsg('');
 
-    const formData = new FormData(e.target);
+    const formEl = e.target;
+    const formData = new FormData(formEl);
     const issueType = formData.get('issueType');
     const description = formData.get('description');
     const submittedAtIST = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
@@ -76,16 +120,14 @@ export default function HelpCenter() {
       formData.append('to_email', ADMIN_NOTIFY_EMAIL);
       formData.append('message', emailBody);
 
-      const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-      const data = await response.json();
-
-      if (data.success) {
-        setIsSuccess(true);
-        e.target.reset();
-      } else {
-        setIsSuccess(true);
-        e.target.reset();
+      try {
+        await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+      } catch (e) {
+        // web3forms is optional notification, Firestore entry already saved
       }
+
+      setIsSuccess(true);
+      formEl.reset();
     } catch (err) {
       setErrorMsg(err.message || 'Failed to submit. Please try again.');
     } finally {
@@ -103,30 +145,120 @@ export default function HelpCenter() {
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Support & Help Center</h1>
             <p className="text-sm text-gray-600 font-medium">
-              Report issues during tests. Your name, time, and query are saved for admin review.
+              Report issues during tests. Admin reviews your query and updates status in real-time.
             </p>
           </div>
         </div>
 
-        {isSuccess ? (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center shadow-sm">
-            <div className="flex justify-center mb-4">
-              <CheckCircle size={48} className="text-green-500" />
+        {/* Success Alert Banner */}
+        {isSuccess && (
+          <div className="mb-6 flex items-start justify-between gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 shadow-sm animate-fade-in">
+            <div className="flex items-start gap-3">
+              <CheckCircle size={22} className="text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-sm text-emerald-900">Query Submitted Successfully!</h4>
+                <p className="text-xs text-emerald-700 mt-0.5">
+                  Your query has been forwarded to the examination admin team. You can track its live status below.
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Query Submitted Successfully!</h3>
-            <p className="text-gray-600 mb-6">
-              Admin can see your request in the dashboard. You will be contacted if a retake is needed.
-            </p>
             <button
               type="button"
               onClick={() => setIsSuccess(false)}
-              className="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition"
+              className="text-emerald-700 hover:text-emerald-950 p-1 rounded-lg"
+              aria-label="Dismiss alert"
             >
-              Submit Another Query
+              <X size={16} />
             </button>
           </div>
-        ) : (
-          <form className="space-y-4 bg-white p-6 rounded-xl border border-orange-100 shadow-sm" onSubmit={handleSubmit}>
+        )}
+
+        {/* Live Query Status Section (if student has submitted queries) */}
+        {queries.length > 0 && (
+          <div className="mb-8 space-y-4">
+            <div className="flex items-center justify-between border-b border-orange-100 pb-3">
+              <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <MessageSquare className="text-orange-500" size={20} />
+                Your Queries & Live Status
+              </h2>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-orange-800">
+                {queries.length} {queries.length === 1 ? 'Query' : 'Queries'}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {queries.map((q) => {
+                const isResolved = q.status === 'resolved';
+                return (
+                  <div
+                    key={q.id}
+                    className={`rounded-xl border p-5 transition-all shadow-sm ${
+                      isResolved
+                        ? 'border-emerald-200 bg-emerald-50/60'
+                        : 'border-amber-200 bg-amber-50/40'
+                    }`}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-gray-900 text-sm">
+                          {q.issueType || 'Technical Issue'}
+                        </span>
+                        {q.submittedAtIST && (
+                          <span className="text-xs text-gray-500">
+                            • {q.submittedAtIST}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        {isResolved ? (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs">
+                            <CheckCircle size={14} className="text-emerald-600" />
+                            Query Solved
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 shadow-xs">
+                            <Clock size={14} className="text-amber-600 animate-pulse" />
+                            Pending Review
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-gray-700 bg-white/90 p-3 rounded-lg border border-gray-100 mb-3 whitespace-pre-wrap leading-relaxed">
+                      {q.query || q.description}
+                    </p>
+
+                    {isResolved ? (
+                      <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-100/90 px-3.5 py-2.5 rounded-lg border border-emerald-200">
+                        <CheckCircle size={16} className="text-emerald-600 shrink-0" />
+                        <span>
+                          🎉 <strong>Query has been solved!</strong> Admin has reviewed and resolved this query.
+                          {q.resolvedTestKey && ` A retake has been granted for Day ${q.resolvedTestKey}.`}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-xs font-medium text-amber-800 bg-amber-100/80 px-3.5 py-2.5 rounded-lg border border-amber-200">
+                        <Clock size={16} className="text-amber-600 shrink-0" />
+                        <span>
+                          ⏳ <strong>Under Review:</strong> Our examination admin team is reviewing your query. Once marked resolved, this status will update immediately.
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Submit Query Form */}
+        <div className="bg-white p-6 rounded-xl border border-orange-100 shadow-sm">
+          <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Send size={18} className="text-orange-500" />
+            {queries.length > 0 ? 'Submit Another Query' : 'Submit a Query'}
+          </h3>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm bg-gray-50 rounded-lg p-4 border border-gray-100">
               <p><span className="font-bold text-gray-500">Name:</span> {user?.fullName || '—'}</p>
               <p><span className="font-bold text-gray-500">Roll No:</span> {user?.rollNumber || '—'}</p>
@@ -161,7 +293,7 @@ export default function HelpCenter() {
                 id="description"
                 name="description"
                 required
-                rows={6}
+                rows={5}
                 placeholder="Please provide full details about what happened..."
                 className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none bg-gray-50"
               />
@@ -171,11 +303,12 @@ export default function HelpCenter() {
               disabled={isSubmitting}
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-orange-600/20 transition hover:bg-orange-700 disabled:opacity-70 disabled:cursor-not-allowed"
             >
+              <Send size={16} />
               {isSubmitting ? 'Sending...' : 'Submit Query'}
             </button>
             {errorMsg && <p className="text-red-500 text-sm text-center font-medium mt-2">{errorMsg}</p>}
           </form>
-        )}
+        </div>
       </section>
     </div>
   );

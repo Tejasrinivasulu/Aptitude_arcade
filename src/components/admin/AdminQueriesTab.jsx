@@ -75,7 +75,7 @@ export default function AdminQueriesTab({ helpRequests }) {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm min-w-[900px]">
+        <table className="w-full text-left text-sm min-w-[950px]">
           <thead>
             <tr className="text-xs uppercase text-gray-400 border-b border-gray-200">
               <th className="p-4 font-bold">Student</th>
@@ -85,7 +85,7 @@ export default function AdminQueriesTab({ helpRequests }) {
               <th className="p-4 font-bold">Query</th>
               <th className="p-4 font-bold">Submitted (IST)</th>
               <th className="p-4 font-bold">Status</th>
-              <th className="p-4 font-bold">Actions</th>
+              <th className="p-4 font-bold min-w-[260px]">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -99,46 +99,57 @@ export default function AdminQueriesTab({ helpRequests }) {
               rows.map((row) => {
                 const status = row.status || 'pending';
                 return (
-                  <tr key={row.id} className="hover:bg-gray-50 align-top">
+                  <tr key={row.id} className="hover:bg-gray-50/80 transition-colors align-top">
                     <td className="p-4 font-bold text-gray-900">{row.fullName || '—'}</td>
-                    <td className="p-4">{row.rollNumber || '—'}</td>
+                    <td className="p-4 font-medium text-gray-700">{row.rollNumber || '—'}</td>
                     <td className="p-4 text-gray-600 text-xs">{row.email || '—'}</td>
-                    <td className="p-4 font-medium">{row.issueType || '—'}</td>
-                    <td className="p-4 max-w-xs text-gray-700 whitespace-pre-wrap">{row.query || row.description || '—'}</td>
-                    <td className="p-4 text-xs text-gray-500">{row.submittedAtIST || formatIST(row.submittedAt || row.createdAt)}</td>
-                    <td className="p-4">
-                      <span className={`text-xs font-bold px-2 py-1 rounded border ${STATUS_STYLES[status] || STATUS_STYLES.pending}`}>
-                        {status}
+                    <td className="p-4 font-semibold text-gray-800">{row.issueType || '—'}</td>
+                    <td className="p-4 max-w-xs text-gray-700 whitespace-pre-wrap text-xs leading-relaxed">{row.query || row.description || '—'}</td>
+                    <td className="p-4 text-xs text-gray-500 whitespace-nowrap">{row.submittedAtIST || formatIST(row.submittedAt || row.createdAt)}</td>
+                    <td className="p-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${STATUS_STYLES[status] || STATUS_STYLES.pending}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${status === 'resolved' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        {status === 'resolved' ? 'Resolved' : 'Pending'}
                       </span>
                     </td>
-                    <td className="p-4">
-                      <div className="flex flex-col gap-2">
-                        {status !== 'resolved' && (
+                    <td className="p-4 whitespace-nowrap">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {status !== 'resolved' ? (
                           <>
                             <button
                               type="button"
                               disabled={busyId === row.id}
-                              onClick={() => handleRetake(row)}
-                              className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 hover:underline disabled:opacity-50"
+                              onClick={() => handleResolve(row.id)}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 shadow-xs transition hover:bg-emerald-100 hover:border-emerald-400 active:scale-95 disabled:opacity-50"
+                              title="Mark this query as resolved"
                             >
-                              <RotateCcw size={12} /> Grant Day 1 retake
+                              <CheckCircle size={14} className="text-emerald-600 shrink-0" />
+                              Mark Resolved
                             </button>
                             <button
                               type="button"
                               disabled={busyId === row.id}
-                              onClick={() => handleResolve(row.id)}
-                              className="inline-flex items-center gap-1 text-xs font-bold text-green-700 hover:underline disabled:opacity-50"
+                              onClick={() => handleRetake(row)}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 shadow-xs transition hover:bg-blue-100 hover:border-blue-400 active:scale-95 disabled:opacity-50"
+                              title="Grant test retake for this student"
                             >
-                              <CheckCircle size={12} /> Mark resolved
+                              <RotateCcw size={14} className="text-blue-600 shrink-0" />
+                              Grant Retake
                             </button>
                           </>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                            <CheckCircle size={13} className="text-emerald-600 shrink-0" /> Solved
+                          </span>
                         )}
                         {row.email && (
                           <a
                             href={`mailto:${row.email}?subject=Re: ${encodeURIComponent(row.issueType || 'Support')}`}
-                            className="inline-flex items-center gap-1 text-xs font-bold text-gray-600 hover:underline"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-700 shadow-xs transition hover:bg-gray-50 hover:border-gray-400 active:scale-95"
+                            title="Reply to student via email"
                           >
-                            <Mail size={12} /> Reply by email
+                            <Mail size={13} className="text-gray-500 shrink-0" />
+                            Email
                           </a>
                         )}
                       </div>

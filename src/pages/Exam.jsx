@@ -31,9 +31,11 @@ import { startExam, submitExam } from '../services/examService';
 import ProctorCamera from '../components/exam/ProctorCamera';
 
 function formatTime(seconds) {
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  const safe = Math.max(0, Number(seconds) || 0);
+  const h = Math.floor(safe / 3600);
+  const m = Math.floor((safe % 3600) / 60);
+  const s = safe % 60;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
 function SecurityBadge({ ok, icon: Icon, label, warn }) {
@@ -246,8 +248,11 @@ export default function Exam() {
         // Fetch session and questions from Cloud Functions
         const sessionData = await startExam(testKey);
         setServerSession(sessionData);
-        setTimeLeft(sessionData.durationSeconds);
-        setAnswers(Array(sessionData.totalQuestions).fill(null));
+        const examSecs = (sessionData?.durationSeconds && sessionData.durationSeconds > 0)
+          ? sessionData.durationSeconds
+          : (defaultDuration || 30 * 60);
+        setTimeLeft(examSecs);
+        setAnswers(Array(sessionData.totalQuestions || defaultTotal).fill(null));
         
         sessionStorage.setItem('exam_in_progress', 'true');
         setCenterWarning(null);

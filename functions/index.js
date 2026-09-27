@@ -19,10 +19,11 @@ const EXAM_DURATION_SECONDS = 20 * 60;
 const DAY1_DURATION_SECONDS = 30 * 60;
 const THIRTY_MIN_DURATION_SECONDS = 30 * 60;
 const FINALE_DURATION_SECONDS = 60 * 60;
-const ACTIVE_PROGRAM_DAY = 4;
+const ACTIVE_PROGRAM_DAY = 14;
+const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
-  if (testKey === '1' || testKey === '2' || testKey === '3' || testKey === '4') return THIRTY_MIN_DURATION_SECONDS;
+  if (PROGRAM_DAY_KEYS.includes(String(testKey))) return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }
 
@@ -40,29 +41,31 @@ function isAnswerCorrect(question, userAnswer) {
 }
 
 async function loadQuestionsForTest(testKey) {
-  const dayKeys = ['1', '2', '3', '4'];
-  if (dayKeys.includes(String(testKey))) {
-    const bankSnap = await db.collection('question_banks').doc(String(testKey)).get();
+  const key = String(testKey);
+  if (PROGRAM_DAY_KEYS.includes(key)) {
+    const bankSnap = await db.collection('question_banks').doc(key).get();
     if (bankSnap.exists) {
       const bank = bankSnap.data();
       if (Array.isArray(bank.questions) && bank.questions.length > 0) {
-        const defaultDuration = dayDurationSeconds(testKey);
+        const defaultDuration = dayDurationSeconds(key);
         return {
           questions: bank.questions,
           durationSeconds: (bank.durationMinutes || defaultDuration / 60) * 60,
         };
       }
     }
-    const fallback = questionsDb[testKey];
-    if (!fallback) return null;
-    return {
-      questions: fallback,
-      durationSeconds: dayDurationSeconds(testKey),
-    };
+    const fallback = questionsDb[key];
+    if (fallback) {
+      return {
+        questions: fallback,
+        durationSeconds: dayDurationSeconds(key),
+      };
+    }
+    return null;
   }
-  const questions = questionsDb[testKey];
+  const questions = questionsDb[key];
   if (!questions) return null;
-  const durationSeconds = testKey === 'finale' ? FINALE_DURATION_SECONDS : EXAM_DURATION_SECONDS;
+  const durationSeconds = key === 'finale' ? FINALE_DURATION_SECONDS : EXAM_DURATION_SECONDS;
   return { questions, durationSeconds };
 }
 
@@ -97,15 +100,8 @@ exports.startExam = onCall(async (request) => {
     throw new HttpsError('invalid-argument', 'Missing test key.');
   }
 
-  if (testKey !== 'finale' && Number(testKey) > ACTIVE_PROGRAM_DAY) {
-    throw new HttpsError('failed-precondition', `Only Day ${ACTIVE_PROGRAM_DAY} exam is active right now.`);
-  }
-  if (testKey === 'finale') {
-    throw new HttpsError('failed-precondition', 'Grand Finale is not open yet.');
-  }
-  
-  if (!questionsDb[testKey] && !['1', '2', '3', '4'].includes(testKey)) {
-    throw new HttpsError('invalid-argument', 'Invalid test key.');
+  if (testKey !== 'finale' && !PROGRAM_DAY_KEYS.includes(testKey)) {
+    throw new HttpsError('invalid-argument', `Invalid test key: Day ${testKey} is not in the 14-day schedule.`);
   }
 
   const loaded = await loadQuestionsForTest(testKey);
@@ -138,8 +134,8 @@ exports.startExam = onCall(async (request) => {
 
     if (testKey === 'finale') {
       const completedCount = Object.keys(attemptedTests).filter(k => k !== 'finale').length;
-      if (completedCount < 7) {
-        throw new HttpsError('failed-precondition', 'Must complete all 7 daily tests before finale.');
+      if (completedCount < 14) {
+        throw new HttpsError('failed-precondition', 'Must complete all 14 daily tests before finale.');
       }
     }
 

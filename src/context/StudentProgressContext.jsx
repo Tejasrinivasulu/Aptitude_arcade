@@ -6,7 +6,7 @@ import { db, isFirebaseReady } from '../utils/firebase';
 import { collection, query, where, onSnapshot, doc } from 'firebase/firestore';
 
 const PROGRESS_KEY = 'aptitude_student_progress';
-const PROGRESS_VERSION = 4;
+const PROGRESS_VERSION = 5;
 
 const defaultProgress = {
   progressVersion: PROGRESS_VERSION,

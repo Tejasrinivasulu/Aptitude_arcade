@@ -186,6 +186,7 @@ export default function AdminDashboard() {
             <button type="submit" disabled={authLoading} className="w-full py-3.5 bg-black text-white font-bold rounded-xl disabled:opacity-70">
               {authLoading ? 'Authenticating...' : 'Authenticate'}
             </button>
+
           </form>
         </div>
       </div>

@@ -47,19 +47,19 @@ export default function Learn() {
                   active
                     ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
                     : locked
-                    ? 'border-slate-800 bg-slate-900 cursor-not-allowed hover:bg-slate-800 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]'
+                    ? 'border-gray-200 bg-gray-50 cursor-not-allowed'
                     : 'border-gray-200 bg-white hover:border-primary/30 hover:bg-gray-50 cursor-pointer'
                 }`}
               >
-                {locked && <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20"></div>}
+                {locked && <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-0"></div>}
                 <div className="flex items-center gap-1.5 z-10">
-                  <p className={`text-xs font-bold transition-colors ${active ? 'text-primary' : locked ? 'text-red-500 tracking-widest drop-shadow-[0_0_3px_rgba(239,68,68,0.8)]' : 'text-gray-600'}`}>
+                  <p className={`text-xs font-bold transition-colors ${active ? 'text-primary' : locked ? 'text-gray-400' : 'text-gray-600'}`}>
                     DAY {plan.day}
                   </p>
-                  {locked && <Fingerprint size={12} className="text-red-500 drop-shadow-[0_0_3px_rgba(239,68,68,0.8)] transition-all duration-300 group-hover:scale-110" />}
+                  {locked && <Lock size={12} className="text-gray-400" />}
                 </div>
-                <p className={`mt-1 text-[10px] font-mono font-bold tracking-widest z-10 ${active ? 'text-gray-800' : locked ? 'text-slate-400 uppercase' : 'text-gray-500'}`}>
-                  {locked ? '[ SECURED CONTENT ]' : plan.title}
+                <p className={`mt-1 text-[10px] font-medium z-10 ${active ? 'text-gray-800' : locked ? 'text-gray-400' : 'text-gray-500'}`}>
+                  {locked ? plan.title : plan.title}
                 </p>
               </button>
             );

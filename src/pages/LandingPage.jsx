@@ -1,10 +1,28 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   ChevronDown,
   Mail,
   MessageCircle,
+  Flame,
+  Clock,
+  Trophy,
+  BarChart3,
 } from "lucide-react";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+});
+
+const STATS = [
+  { icon: Flame, label: '14 Days', sub: 'Daily Streak', bg: 'bg-orange-50', ring: 'bg-orange-100', color: 'text-orange-500' },
+  { icon: Clock, label: '30 Min', sub: 'Per Test', bg: 'bg-blue-50', ring: 'bg-blue-100', color: 'text-blue-500' },
+  { icon: Trophy, label: 'Grand Finale', sub: 'Qualifier', bg: 'bg-amber-50', ring: 'bg-amber-100', color: 'text-amber-500' },
+  { icon: BarChart3, label: 'Live Rankings', sub: 'Campus-wide', bg: 'bg-emerald-50', ring: 'bg-emerald-100', color: 'text-emerald-500' },
+];
 
 export default function LandingPage() {
   // FAQ Accordion State
@@ -24,7 +42,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white font-sans text-black flex flex-col justify-between antialiased selection:bg-[#FFE6D5]">
       {/* SECTION 1 — Navbar */}
-      <header className="sticky top-0 bg-white border-b border-[#F0F0F0] px-6 py-4 flex items-center justify-between z-30">
+      <header className="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-[#F0F0F0] px-6 py-4 flex items-center justify-between z-30">
         <div className="flex items-center gap-3">
           <img src="/arcade-logo.png" alt="Aptitude Arcade Logo" className="h-8 w-auto object-contain rounded-md shadow-sm" />
           <span className="text-xl md:text-2xl font-black tracking-tight text-black">Aptitude Arcade</span>
@@ -47,28 +65,75 @@ export default function LandingPage() {
       <main className="flex-grow">
         {/* SECTION 2 — Hero */}
         <section 
-          className="relative px-6 py-24 text-center flex flex-col items-center justify-center space-y-6 overflow-hidden min-h-[85vh] bg-white bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url("/hero_background.svg")' }}
+          className="relative px-6 pt-8 pb-20 md:pt-10 md:pb-24 text-center flex flex-col items-center justify-center space-y-6 overflow-hidden min-h-[65vh]"
         >
-          <div className="relative z-10 flex flex-col items-center justify-center space-y-6 w-full">
-            <p className="text-[#FF6B2B] text-xs font-black tracking-widest uppercase bg-white/60 px-4 py-1.5 rounded-full border border-white/80 backdrop-blur-sm shadow-sm">
-              YOUR NEW QUIZ PLATFORM
-            </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none text-black max-w-4xl drop-shadow-sm">
-              Ready to challenge<br />your students?
-            </h1>
-            <p className="text-[#666666] text-base md:text-xl font-medium max-w-[600px] leading-relaxed drop-shadow-sm">
-              Use this landing page design as the starting point for your next educational platform.
-            </p>
+          {/* Warm ambient background */}
+          <div className="absolute inset-0 bg-[#FAFAFA]" />
+          <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-gradient-to-b from-[#FF6B2B]/[0.06] via-[#FFD3B6]/[0.08] to-transparent blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF6B2B]/10 to-transparent" />
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+          <div className="relative z-10 flex flex-col items-center justify-center space-y-5 w-full">
+            <motion.p
+              {...fadeUp(0.1)}
+              className="text-[#FF6B2B] text-[11px] font-black tracking-widest uppercase bg-white/80 px-4 py-1.5 rounded-full border border-orange-100 shadow-sm"
+            >
+              14-DAY SPRINT // ISTE MBU
+            </motion.p>
+
+            <motion.h1
+              {...fadeUp(0.25)}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-black max-w-3xl"
+            >
+              Level Up Your Aptitude.<br />
+              <span className="text-[#FF6B2B]">Conquer Competitive Exams.</span>
+            </motion.h1>
+
+            <motion.p
+              {...fadeUp(0.4)}
+              className="text-[#666666] text-sm md:text-base font-medium max-w-lg leading-relaxed"
+            >
+              14 daily aptitude challenges. Maintain your streak to qualify for the Grand Finale.
+            </motion.p>
+
+            <motion.div
+              {...fadeUp(0.55)}
+              className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2"
+            >
               <Link
                 to="/signup"
-                className="w-full sm:w-auto px-10 py-4 bg-[#FF6B2B] hover:bg-[#e0531b] text-white font-black rounded-xl shadow-xl shadow-[#FF6B2B]/20 transition-all text-sm uppercase tracking-wider hover:-translate-y-0.5"
+                className="group relative w-full sm:w-auto px-8 py-3.5 bg-[#FF6B2B] hover:bg-[#e0531b] text-white font-bold rounded-xl shadow-lg shadow-[#FF6B2B]/20 transition-all text-sm uppercase tracking-wider hover:-translate-y-0.5 overflow-hidden"
               >
-                Get Started →
+                <span className="relative z-10">Register Now →</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </Link>
-            </div>
+              <Link
+                to="/login"
+                className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-gray-50 text-black font-bold rounded-xl border border-gray-200 shadow-sm transition-all text-sm uppercase tracking-wider hover:-translate-y-0.5"
+              >
+                Student Login →
+              </Link>
+            </motion.div>
+
+            {/* Stat Cards */}
+            <motion.div
+              {...fadeUp(0.7)}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-8 w-full max-w-2xl"
+            >
+              {STATS.map(({ icon: Icon, label, sub, bg, ring, color }) => (
+                <div
+                  key={label}
+                  className={`flex flex-col items-center gap-2.5 px-4 py-4 ${bg} rounded-2xl border border-white shadow-sm hover:shadow-md transition-shadow`}
+                >
+                  <div className={`${ring} w-10 h-10 rounded-xl flex items-center justify-center`}>
+                    <Icon size={20} className={`${color} shrink-0`} />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-black text-black leading-tight">{label}</p>
+                    <p className="text-[11px] text-gray-400 font-medium mt-0.5">{sub}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </section>
 

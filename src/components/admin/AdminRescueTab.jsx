@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-  Search, ChevronRight, Users, Clock, AlertTriangle, Key, Ban, Trash2, RotateCcw, LifeBuoy,
+  Search, ChevronRight, Users, Clock, AlertTriangle, Key, Ban, Trash2, RotateCcw, LifeBuoy, Edit3, ShieldAlert, CheckCircle2,
 } from 'lucide-react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db, isFirebaseReady } from '../../utils/firebase';
 import { formatIST, getTotalViolations, DAY_TOPICS, filterStudents } from '../../utils/adminData';
 import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
 import { grantStudentRetake, resetStudentAttempt, deleteStudentCompletely } from '../../services/adminService';
@@ -80,6 +82,70 @@ export default function AdminRescueTab({
     }
   };
 
+  const handleToggleSuspend = async () => {
+    if (!selectedUser) return;
+    const newStatus = !selectedUser.suspended;
+    const msg = newStatus
+      ? `Suspend ${selectedUser.fullName || selectedUser.rollNumber}?`
+      : `Lift suspension for ${selectedUser.fullName || selectedUser.rollNumber}?`;
+    if (!window.confirm(msg)) return;
+    setBusy(true);
+    try {
+      if (isFirebaseReady() && db) {
+        await updateDoc(doc(db, 'users', selectedUser.id), { suspended: newStatus });
+      }
+      setSelectedUser({ ...selectedUser, suspended: newStatus });
+      alert(newStatus ? 'Account suspended.' : 'Suspension lifted! Student can now log in and take tests.');
+    } catch (err) {
+      alert(`Action failed: ${err.message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleSetTempPassword = async () => {
+    if (!selectedUser) return;
+    const tempPass = window.prompt(`Enter temporary password for ${selectedUser.fullName || selectedUser.rollNumber}:`, 'arcade2026');
+    if (!tempPass || !tempPass.trim()) return;
+    setBusy(true);
+    try {
+      if (isFirebaseReady() && db) {
+        await updateDoc(doc(db, 'users', selectedUser.id), {
+          tempPassword: tempPass.trim(),
+          tempPasswordCreatedAt: new Date().toISOString(),
+        });
+      }
+      alert(`Temporary password set to "${tempPass.trim()}". Student can log in immediately using this password.`);
+    } catch (err) {
+      alert(`Failed to set password: ${err.message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleEditProfile = async () => {
+    if (!selectedUser) return;
+    const newRoll = window.prompt('Update Roll Number:', selectedUser.rollNumber || '');
+    if (newRoll === null) return;
+    const newName = window.prompt('Update Full Name:', selectedUser.fullName || '');
+    if (newName === null) return;
+    setBusy(true);
+    try {
+      if (isFirebaseReady() && db) {
+        await updateDoc(doc(db, 'users', selectedUser.id), {
+          rollNumber: newRoll.trim(),
+          fullName: newName.trim(),
+        });
+      }
+      setSelectedUser({ ...selectedUser, rollNumber: newRoll.trim(), fullName: newName.trim() });
+      alert('Student profile updated successfully.');
+    } catch (err) {
+      alert(`Update failed: ${err.message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-[700px]">
@@ -132,19 +198,49 @@ export default function AdminRescueTab({
                     Current Day: {studentProgress?.currentDay || selectedUser.currentDay || 1}
                   </p>
                 </div>
-                <div className="flex flex-col items-end gap-2">
+                <div className="flex flex-wrap items-center justify-end gap-2">
                   {selectedUser.suspended ? (
-                    <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-lg">SUSPENDED</span>
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={handleToggleSuspend}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg cursor-pointer shadow-sm"
+                    >
+                      <CheckCircle2 size={14} /> Lift Suspension
+                    </button>
                   ) : (
-                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-lg">ACTIVE</span>
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={handleToggleSuspend}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg cursor-pointer shadow-sm"
+                    >
+                      <ShieldAlert size={14} /> Suspend
+                    </button>
                   )}
                   <button
                     type="button"
                     disabled={busy}
-                    onClick={() => handleDeleteStudent(selectedUser)}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-60"
+                    onClick={handleSetTempPassword}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 cursor-pointer"
                   >
-                    <Trash2 size={14} /> Delete Student
+                    <Key size={14} /> Temp Password
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={handleEditProfile}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-gray-700 bg-gray-100 border border-gray-200 rounded-lg hover:bg-gray-200 cursor-pointer"
+                  >
+                    <Edit3 size={14} /> Edit Info
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => handleDeleteStudent(selectedUser)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-60 cursor-pointer"
+                  >
+                    <Trash2 size={14} /> Delete
                   </button>
                 </div>
               </div>

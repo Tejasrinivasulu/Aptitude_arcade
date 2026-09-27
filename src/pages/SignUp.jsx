@@ -49,7 +49,6 @@ const initialForm = {
   email: '',
   phone: '',
   gender: '',
-  collegeName: '',
   branch: '',
   yearOfStudy: '',
   password: '',
@@ -67,12 +66,21 @@ export default function SignUp() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    const newValue = type === 'checkbox' ? checked : value;
+    setForm((prev) => {
+      const updated = { ...prev, [name]: newValue };
+      // Auto-fill email from roll number
+      if (name === 'rollNumber') {
+        const roll = String(newValue).trim();
+        updated.email = roll ? `${roll}@mbu.asia`.toLowerCase() : '';
+      }
+      return updated;
+    });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+    if (name === 'rollNumber' && errors.email) {
+      setErrors((prev) => ({ ...prev, email: '' }));
     }
   };
 
@@ -114,7 +122,6 @@ export default function SignUp() {
     newErrors.rollNumber = validateRollNumber(form.rollNumber, []); // format-only check here
     newErrors.phone = validatePhone(form.phone);
     newErrors.gender = validateRequired(form.gender, 'Gender');
-    newErrors.collegeName = validateRequired(form.collegeName, 'College name');
     newErrors.branch = validateRequired(form.branch, 'Branch');
     newErrors.yearOfStudy = validateRequired(form.yearOfStudy, 'Year of study');
     newErrors.password = validatePassword(form.password);
@@ -177,7 +184,7 @@ export default function SignUp() {
       email,
       phone: form.phone.replace(/\D/g, ''),
       gender: form.gender,
-      collegeName: form.collegeName.trim(),
+      collegeName: 'Mohan Babu University',
       branch: form.branch,
       yearOfStudy: form.yearOfStudy,
       createdAt: new Date().toISOString(),
@@ -244,15 +251,27 @@ export default function SignUp() {
                 error={errors.rollNumber}
                 icon={Hash}
               />
-              <FormField
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Email Address"
-                error={errors.email}
-                icon={Mail}
-              />
+              <div>
+                <div className="relative">
+                  <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <Mail size={16} />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    readOnly
+                    tabIndex={-1}
+                    placeholder="Auto-filled from Roll Number"
+                    aria-label="Email Address"
+                    className={`w-full rounded-2xl border-2 border-transparent bg-gray-100 pl-10 pr-4 py-3.5 text-sm text-gray-500 outline-none cursor-not-allowed ${
+                      errors.email ? '!border-red-400 !bg-white' : ''
+                    }`}
+                  />
+                </div>
+                {errors.email && <p className="mt-1 text-xs font-medium text-red-500">{errors.email}</p>}
+              </div>
               <FormField
                 name="phone"
                 type="tel"
@@ -287,14 +306,7 @@ export default function SignUp() {
                 error={errors.branch}
                 className="sm:col-span-2"
               />
-              <FormField
-                name="collegeName"
-                value={form.collegeName}
-                onChange={handleChange}
-                placeholder="College Name"
-                error={errors.collegeName}
-                className="sm:col-span-2"
-              />
+
               <FormField
                 name="password"
                 type="password"

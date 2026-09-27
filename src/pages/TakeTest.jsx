@@ -135,7 +135,7 @@ export default function TakeTest() {
           </div>
 
           <div className="mt-4">
-            <TestCountdown testDate={assignedTest.testDate} />
+            <TestCountdown testDate={assignedTest.testDate} testKey={assignedDay} />
           </div>
 
           <p className="mt-4 text-sm text-gray-600">{assignedAvailability.message}</p>
@@ -170,21 +170,7 @@ export default function TakeTest() {
           </section>
         </section>
 
-        <section className="rounded-2xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-100 px-6 py-4">
-            <h2 className="font-bold text-gray-900">📅 Daily Test Schedule</h2>
-          </div>
-          <div className="divide-y divide-gray-100">
-            {dailyTests.map((test) => (
-              <DailyTestRow
-                key={test.day}
-                test={test}
-                progress={progress}
-                onStart={openVerification}
-              />
-            ))}
-          </div>
-        </section>
+
       </div>
 
       {showVerification && (
@@ -202,7 +188,7 @@ function DailyTestRow({ test, progress, onStart }) {
     rescheduledTests: progress.rescheduledTests || {},
     currentDay: assignedDay,
   });
-  const countdown = useTestCountdown(test.testDate);
+  const countdown = useTestCountdown(test.testDate, test.day);
   const active = test.day === assignedDay;
   const locked = test.day > assignedDay;
   const isRescheduled = progress.rescheduledTests?.[String(test.day)] === true;
@@ -236,7 +222,7 @@ function DailyTestRow({ test, progress, onStart }) {
           {showExpired ? (
             <span className="font-mono text-xs font-semibold text-red-600">Expired</span>
           ) : (
-            <TestCountdown testDate={test.testDate} compact />
+            <TestCountdown testDate={test.testDate} testKey={test.day} compact />
           )}
         </div>
       </div>

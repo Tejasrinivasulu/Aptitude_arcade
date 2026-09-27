@@ -1,12 +1,26 @@
-import { getDayPlan } from './dailyLearningPlan';
+import { getDayPlan } from './dailyLearningPlan.js';
 
 export const TEST_START_HOUR = 10;
 export const TEST_START_MINUTE = 0;
 export const TEST_END_HOUR = 23;
 export const TEST_END_MINUTE = 0;
 
-/** Day 1 exam date and live window (IST) — 23 June, 10:00 AM to 11:00 PM */
-export const DAY1_EXAM_DATE = '2026-06-23';
+/** New 14-Day Series Start Date: Monday, September 28, 2026 */
+export const SERIES_START_DATE = '2026-09-28';
+
+export function getRelativeDateStr(offsetDays) {
+  const d = new Date(`${SERIES_START_DATE}T00:00:00`);
+  d.setDate(d.getDate() + offsetDays);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dateVal = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dateVal}`;
+}
+
+export const DAY1_EXAM_DATE = getRelativeDateStr(0); // 2026-09-28
+export const DAY2_EXAM_DATE = getRelativeDateStr(1);
+export const DAY3_EXAM_DATE = getRelativeDateStr(2);
+export const DAY4_EXAM_DATE = getRelativeDateStr(3);
 
 export const DAY1_EXAM_WINDOW = {
   date: DAY1_EXAM_DATE,
@@ -17,97 +31,61 @@ export const DAY1_EXAM_WINDOW = {
   durationMinutes: 30,
 };
 
-/** Day 2 exam date (IST) — 24 June */
-export const DAY2_EXAM_DATE = '2026-06-24';
+/** Total days in the program (14 continuous daily tests) */
+export const TOTAL_PROGRAM_DAYS = 14;
 
-/** Day 3 exam date (IST) — 25 June */
-export const DAY3_EXAM_DATE = '2026-06-25';
+export const PROGRAM_DAY_KEYS = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, i) => String(i + 1));
 
-/** Day 4 exam date (IST) — 26 June */
-export const DAY4_EXAM_DATE = '2026-06-26';
-
-/** Automatically switches to Day 4 on June 26th at 10:00 AM IST */
-export const ACTIVE_PROGRAM_DAY = (new Date() >= new Date('2026-06-26T10:00:00+05:30')) ? 4 : 3;
-
-/** Total days in the program (Day 4 is the last daily test). */
-export const TOTAL_PROGRAM_DAYS = 4;
-
-export const PROGRAM_DAY_KEYS = ['1', '2', '3', '4'];
-
-/** Allows assigned-day test outside calendar date for development */
-export const DEMO_SCHEDULE_BYPASS = false;
-
-function getRelativeDateStr(offsetDays) {
-  const d = new Date('2026-06-23T00:00:00');
-  d.setDate(d.getDate() + offsetDays);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const dateVal = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${dateVal}`;
+/** Calculate active program day based on calendar timeline (1 to 14) */
+export function calculateActiveProgramDay(now = new Date()) {
+  const start = new Date(`${SERIES_START_DATE}T00:00:00+05:30`);
+  const diffDays = Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
+  if (diffDays < 1) return 1;
+  if (diffDays > TOTAL_PROGRAM_DAYS) return TOTAL_PROGRAM_DAYS;
+  return diffDays;
 }
 
-export const dailyTests = [
-  {
-    id: 1,
-    day: 1,
-    title: 'Number Systems',
-    topics: ['Number Systems'],
-    testDate: DAY1_EXAM_DATE,
-    questions: 30,
-    durationMinutes: 30,
-  },
-  {
-    id: 2,
-    day: 2,
-    title: 'Percentages',
-    topics: ['Percentages'],
-    testDate: DAY2_EXAM_DATE,
-    questions: 30,
-    durationMinutes: 30,
-  },
-  {
-    id: 3,
-    day: 3,
-    title: 'Ratio and Proportion',
-    topics: ['Ratio and Proportion'],
-    testDate: DAY3_EXAM_DATE,
-    questions: 30,
-    durationMinutes: 30,
-  },
-  {
-    id: 4,
-    day: 4,
-    title: 'Averages',
-    topics: ['Averages'],
-    testDate: DAY4_EXAM_DATE,
-    questions: 30,
-    durationMinutes: 30,
-  },
+export const ACTIVE_PROGRAM_DAY = calculateActiveProgramDay();
+
+/** Allows assigned-day test outside calendar date for development and inspection */
+export const DEMO_SCHEDULE_BYPASS = false;
+
+const TOPIC_TITLES = [
+  'Number System',
+  'Percentages',
+  'Ratio & Proportion',
+  'Averages',
+  'Profit, Loss & Discount',
+  'Simple & Compound Interest',
+  'Problems on Ages',
+  'Time & Work + Pipes & Cisterns',
+  'Time, Speed & Distance',
+  'Problems on Trains',
+  'Mixtures & Alligation',
+  'Permutation & Combination',
+  'Probability',
+  'Data Interpretation',
 ];
+
+export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) => {
+  const day = idx + 1;
+  const title = TOPIC_TITLES[idx] || `Day ${day} Assessment`;
+  return {
+    id: day,
+    day,
+    title,
+    topics: [title],
+    testDate: getRelativeDateStr(idx),
+    questions: 30,
+    durationMinutes: 30,
+  };
+});
 
 export const grandFinale = {
   id: 'finale',
   title: 'Grand Finale Assessment',
-  testDate: getRelativeDateStr(5),
-  topics: [
-    'Number Systems',
-    'Percentages',
-    'Averages',
-    'Profit & Loss',
-    'Ratio & Proportion',
-    'Simple Interest',
-    'Compound Interest',
-    'Time & Work',
-    'Time Speed Distance',
-    'Coding-Decoding',
-    'Blood Relations',
-    'Directions',
-    'Series',
-    'Seating Arrangements',
-    'Permutations & Combinations',
-    'Probability',
-    'Data Interpretation',
-  ],
+  testDate: getRelativeDateStr(14),
+  topics: TOPIC_TITLES,
   questions: 50,
   durationMinutes: 60,
   resultFeatures: [
@@ -135,6 +113,7 @@ function isSameDay(a, b) {
 }
 
 export function formatDisplayDate(dateStr) {
+  if (!dateStr) return '';
   return parseDateOnly(dateStr).toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'long',
@@ -150,14 +129,14 @@ export function formatWindowTime(hour, minute = 0) {
 }
 
 export const generalRules = [
-  `Day 4 Test Date: ${formatDisplayDate(DAY4_EXAM_DATE)}`,
-  `Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
-  'Day 4 exam duration: 30 minutes once started.',
-  'Students can attempt the test only once.',
+  `14-Day Series Start Date: ${formatDisplayDate(DAY1_EXAM_DATE)}`,
+  `Daily Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
+  'Daily exam duration: 30 minutes once started.',
+  'Students can attempt each test only once.',
   'The test remains available only during the daily window.',
-  `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test is automatically closed.`,
-  'If a student misses the test, contact admin via Help Center.',
-  'After submitting the test, take a screenshot of your score card as proof of completion.',
+  `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test window automatically closes.`,
+  'If you face technical difficulties, contact admin via the Help Center immediately.',
+  'After submitting the test, review your score breakdown on the results screen.',
 ];
 
 export function getTodayDateStr(now = new Date()) {
@@ -172,15 +151,7 @@ export function getWindowBoundsForDate(dateStr) {
   const start = new Date(day);
   start.setHours(TEST_START_HOUR, TEST_START_MINUTE, 0, 0);
   const end = new Date(day);
-  
-  if (dateStr === DAY3_EXAM_DATE) {
-    // Day 3 exception: ends next day at 10:00 AM
-    end.setDate(end.getDate() + 1);
-    end.setHours(10, 0, 0, 0);
-  } else {
-    end.setHours(TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
-  }
-  
+  end.setHours(TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
   return { start, end };
 }
 
@@ -190,7 +161,8 @@ export function getCalendarDayFromDate(now = new Date()) {
 }
 
 export function getDailyTest(day) {
-  return dailyTests.find((t) => t.day === day) ?? dailyTests[0];
+  const num = Number(day) || 1;
+  return dailyTests.find((t) => t.day === num) ?? dailyTests[0];
 }
 
 export function getPerformanceLevel(percentage) {
@@ -214,20 +186,41 @@ export function getTestWindowPhase(testDate, now = new Date()) {
 }
 
 export function getActiveProgramDay() {
-  return ACTIVE_PROGRAM_DAY;
+  return calculateActiveProgramDay();
 }
 
-/** Calendar program day — today's live assigned test (not tied to student completion progress). */
+/** Calendar program day — today's live assigned test */
 export function getTodaysAssignedDay() {
-  return ACTIVE_PROGRAM_DAY;
+  return calculateActiveProgramDay();
 }
 
 export function getStudentProgramDay(currentDay = 1) {
-  return Math.min(Number(currentDay) || 1, ACTIVE_PROGRAM_DAY);
+  return Math.min(Number(currentDay) || 1, getActiveProgramDay());
 }
 
-export function computeTestCountdown(testDate, now = new Date()) {
+export function computeTestCountdown(testDate, now = new Date(), testKey = null) {
   const { start, end } = getWindowBoundsForDate(testDate);
+
+  // During bypass for Day 1: ensure live test window counts down until 11:00 PM today
+  const isDay1Active = testKey === '1' || testKey === 1 || testDate === DAY1_EXAM_DATE;
+  if (DEMO_SCHEDULE_BYPASS && isDay1Active) {
+    const endToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
+    if (now < endToday) {
+      const diffMs = Math.max(0, endToday.getTime() - now.getTime());
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return {
+        hours,
+        minutes,
+        seconds,
+        isReady: true,
+        isExpired: false,
+        totalMs: diffMs,
+      };
+    }
+  }
 
   if (now > end) {
     return {
@@ -241,36 +234,45 @@ export function computeTestCountdown(testDate, now = new Date()) {
   }
 
   if (now >= start && now <= end) {
+    // Window is LIVE right now! Countdown until 11:00 PM close
+    const diffMs = Math.max(0, end.getTime() - now.getTime());
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
     return {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
+      hours,
+      minutes,
+      seconds,
       isReady: true,
       isExpired: false,
-      totalMs: 0,
+      totalMs: diffMs,
     };
   }
 
-  const diff = Math.max(0, start.getTime() - now.getTime());
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  // Before window (upcoming): Countdown until 10:00 AM start
+  const diffMs = Math.max(0, start.getTime() - now.getTime());
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
   return {
     hours,
     minutes,
     seconds,
-    isReady: diff === 0,
+    isReady: false,
     isExpired: false,
-    totalMs: diff,
+    totalMs: diffMs,
   };
 }
 
 export function formatCountdownParts({ hours, minutes, seconds }) {
+  const pad = (n) => String(n).padStart(2, '0');
   return {
-    hours: String(hours).padStart(2, '0'),
-    minutes: String(minutes).padStart(2, '0'),
-    seconds: String(seconds).padStart(2, '0'),
+    hours: pad(hours),
+    minutes: pad(minutes),
+    seconds: pad(seconds),
   };
 }
 
@@ -287,6 +289,8 @@ export function getTestAvailability({
   const attempt = attemptedTests[key];
   const isRescheduled = rescheduledTests[key] === true;
   const testDayNum = Number(testKey);
+  const activeDay = getActiveProgramDay();
+
   const expiredCountdown = {
     hours: 0,
     minutes: 0,
@@ -316,23 +320,24 @@ export function getTestAvailability({
       canStart: true,
       message: 'Admin granted a retake. You may start the test now.',
       test,
-      countdown: { hours: 0, minutes: 0, seconds: 0, isReady: true, isExpired: false, totalMs: 0 },
+      countdown: computeTestCountdown(test.testDate, now, testKey),
     };
   }
 
-  if (!isFinale && testDayNum > ACTIVE_PROGRAM_DAY) {
+  // ALL FUTURE DAYS ARE STRICTLY LOCKED — NO EXCEPTIONS!
+  if (!isFinale && testDayNum > activeDay) {
     return {
       status: 'locked',
-      label: 'Coming Soon',
+      label: 'Locked',
       color: 'gray',
       canStart: false,
-      message: `Day ${testKey} is not open yet. The program is on Day ${ACTIVE_PROGRAM_DAY} only.`,
+      message: `Day ${testKey} is locked. Opens on ${formatDisplayDate(test.testDate)} at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST.`,
       test,
       countdown: computeTestCountdown(test.testDate, now, testKey),
     };
   }
 
-  if (!isFinale && testDayNum < ACTIVE_PROGRAM_DAY) {
+  if (!isFinale && testDayNum < activeDay) {
     return {
       status: 'missed',
       label: 'Expired',
@@ -376,7 +381,19 @@ export function getTestAvailability({
       label: 'Open Now',
       color: 'green',
       canStart: true,
-      message: `Test window is open until ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}.`,
+      message: `Test window is open until ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST.`,
+      test,
+      countdown,
+    };
+  }
+
+  if (DEMO_SCHEDULE_BYPASS) {
+    return {
+      status: 'open',
+      label: 'Open (Bypass)',
+      color: 'green',
+      canStart: true,
+      message: `Test opens on ${formatDisplayDate(test.testDate)} at ${formatWindowTime(TEST_START_HOUR)}. (Testing bypass active)`,
       test,
       countdown,
     };
@@ -393,27 +410,10 @@ export function getTestAvailability({
   };
 }
 
-export function formatDay1ExamWindow() {
-  return `${formatDisplayDate(DAY1_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
-}
-
-export function formatDay2ExamWindow() {
-  return `${formatDisplayDate(DAY2_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
-}
-
-export function formatDay3ExamWindow() {
-  return `${formatDisplayDate(DAY3_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatDisplayDate(DAY4_EXAM_DATE)} 10:00 AM IST`;
-}
-
-export function formatDay4ExamWindow() {
-  return `${formatDisplayDate(DAY4_EXAM_DATE)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
-}
-
 export function formatExamWindowForDay(day) {
-  if (Number(day) === 4) return formatDay4ExamWindow();
-  if (Number(day) === 3) return formatDay3ExamWindow();
-  if (Number(day) === 2) return formatDay2ExamWindow();
-  return formatDay1ExamWindow();
+  const test = getDailyTest(Number(day));
+  if (!test) return '';
+  return `${formatDisplayDate(test.testDate)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
 }
 
 export function getAssignedTestSummary(currentDay) {

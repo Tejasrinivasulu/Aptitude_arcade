@@ -1,9 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock } from 'lucide-react';
+import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock, Clock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudentProgress, getDayResultsFromProgress } from '../context/StudentProgressContext';
-import { getDailyTest, computeTestCountdown, formatCountdownParts, formatExamWindowForDay, getTodaysAssignedDay, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
+import {
+  getDailyTest,
+  computeTestCountdown,
+  formatCountdownParts,
+  formatExamWindowForDay,
+  getTodaysAssignedDay,
+  TOTAL_PROGRAM_DAYS,
+  formatDisplayDate,
+} from '../data/testSchedule';
+import { getDayPlan } from '../data/dailyLearningPlan';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -17,13 +26,14 @@ export default function Dashboard() {
   const [isTestLive, setIsTestLive] = useState(false);
 
   const assignedTest = getDailyTest(assignedDay);
+  const upcomingDays = [assignedDay + 1, assignedDay + 2].filter((d) => d <= TOTAL_PROGRAM_DAYS);
 
   useEffect(() => {
     const updateTimer = () => {
       if (!assignedTest) return;
-      const cd = computeTestCountdown(assignedTest.testDate);
+      const cd = computeTestCountdown(assignedTest.testDate, new Date(), assignedDay);
       setIsTestLive(cd.isReady);
-      if (!cd.isReady && !cd.isExpired) {
+      if (!cd.isExpired) {
         const parts = formatCountdownParts(cd);
         setTimeLeft(`${parts.hours}:${parts.minutes}:${parts.seconds}`);
       } else {
@@ -34,7 +44,7 @@ export default function Dashboard() {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [assignedTest?.testDate]);
+  }, [assignedTest?.testDate, assignedDay]);
 
   const testStatus = testDone ? 'Completed' : (isTestLive ? 'Live' : 'Scheduled');
   const pastResults = getDayResultsFromProgress(progress.attemptedTests).reverse();
@@ -82,6 +92,11 @@ export default function Dashboard() {
                 color={testDone ? 'green' : (isTestLive ? 'blue' : 'amber')}
                 icon={testDone ? '✅' : (isTestLive ? '🚀' : '⏳')}
               />
+              {!testDone && isTestLive && timeLeft && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 shadow-sm animate-pulse">
+                  ⏱️ Closes in: {timeLeft}
+                </span>
+              )}
               {!testDone && !isTestLive && timeLeft && (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 animate-pulse shadow-sm">
                   ⏱️ Opens in: {timeLeft}
@@ -90,14 +105,117 @@ export default function Dashboard() {
             </div>
           </div>
           <Link
-            to={testDone ? '/student/results' : (isTestLive ? '/student/take-test' : '/student/learn')}
+            to={testDone ? '/student/results' : '/student/take-test'}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-md shadow-primary/25 transition-all hover:bg-primary-dark"
           >
             <Rocket size={18} />
-            {testDone ? 'View Results' : isTestLive ? 'Take Test' : 'Learn'}
+            {testDone ? 'View Results' : 'Take Test'}
           </Link>
         </div>
       </section>
+
+      {/* Next 2 Days' Tests - Strictly Locked Until That Day */}
+      {upcomingDays.length > 0 && (
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <span>Upcoming Challenges</span>
+                <span className="rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-bold text-amber-800">
+                  Next 2 Days
+                </span>
+              </h2>
+              <p className="text-sm text-gray-500 mt-0.5">
+                These tests are locked and will open automatically on their scheduled day only.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {upcomingDays.map((d) => {
+              const test = getDailyTest(d);
+              const plan = getDayPlan(d);
+              const dateStr = formatDisplayDate(test.testDate);
+
+              return (
+                <div
+                  key={d}
+                  className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-gray-300 hover:shadow-md"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-700">
+                          Day {d}
+                        </span>
+                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                          <Lock size={12} /> Locked · Opens {dateStr}
+                        </span>
+                      </div>
+
+                      <h3 className="mt-2 text-lg font-bold text-gray-900">
+                        Day {d} — {test.title}
+                      </h3>
+                      <p className="mt-1 text-xs font-semibold text-primary">
+                        {plan?.topics?.join(' · ') || test.topics.join(' · ')}
+                      </p>
+                      {plan?.learningGoal && (
+                        <p className="mt-2 text-xs text-gray-500 line-clamp-2">
+                          {plan.learningGoal}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-400 border border-gray-200">
+                      <Lock size={20} />
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-gray-600">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
+                      <Calendar size={13} className="text-gray-400" />
+                      {dateStr}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
+                      <Clock size={13} className="text-gray-400" />
+                      10:00 AM – 11:00 PM IST
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
+                      30 Questions · 30 min
+                    </span>
+                  </div>
+
+                  <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-gray-400">
+                      <Lock size={13} className="text-gray-400" />
+                      <span>Available on Day {d} only</span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Link
+                        to="/student/learn"
+                        className="rounded-xl border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:text-primary transition"
+                      >
+                        Study Topics
+                      </Link>
+                      <button
+                        type="button"
+                        disabled
+                        aria-disabled="true"
+                        title={`Day ${d} test will unlock on ${dateStr}`}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-bold text-gray-400 cursor-not-allowed select-none"
+                      >
+                        <Lock size={13} />
+                        Locked
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Previous Results */}
       {pastResults.length > 0 && (
@@ -157,8 +275,8 @@ function StreakIndicator({ progress }) {
               boxClasses += "border-red-100/50 bg-red-50/90 shadow-sm";
             }
           } else {
-            content = <Lock size={18} className="text-white/40" />;
-            boxClasses += "border-white/10 bg-white/5";
+            content = <Lock size={20} className="text-white/70 drop-shadow-sm" />;
+            boxClasses += "border-white/20 bg-white/15 backdrop-blur-sm shadow-sm";
           }
 
           return (
@@ -166,7 +284,7 @@ function StreakIndicator({ progress }) {
               <div className={boxClasses}>
                 {content}
               </div>
-              <span className={`text-[11px] font-bold uppercase tracking-wider ${isToday ? 'text-white' : isFuture ? 'text-white/40' : 'text-white/80'}`}>
+              <span className={`text-[11px] font-bold uppercase tracking-wider ${isToday ? 'text-white' : isFuture ? 'text-white/60' : 'text-white/80'}`}>
                 Day {day}
               </span>
             </div>

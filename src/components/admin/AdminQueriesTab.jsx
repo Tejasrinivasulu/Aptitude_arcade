@@ -39,11 +39,12 @@ export default function AdminQueriesTab({ helpRequests }) {
       alert('Missing student account id for this query.');
       return;
     }
-    if (!window.confirm(`Grant Day 1 retake for ${row.fullName || row.rollNumber}?`)) return;
+    const day = window.prompt(`Which test day would you like to grant retake for ${row.fullName || row.rollNumber}? (Enter 1 to 14 or 'finale'):`, '1');
+    if (!day) return;
     setBusyId(row.id);
     try {
-      await grantStudentRetake({ uid: row.uid, testKey: '1', helpRequestId: row.id });
-      alert('Retake granted and query marked resolved.');
+      await grantStudentRetake({ uid: row.uid, testKey: String(day).trim(), helpRequestId: row.id });
+      alert(`Day ${day} retake granted and query marked resolved.`);
     } catch (err) {
       alert(`Retake failed: ${err.message}`);
     } finally {

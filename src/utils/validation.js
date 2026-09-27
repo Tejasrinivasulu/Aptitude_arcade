@@ -24,6 +24,10 @@ export function validateEmail(email) {
   if (!email.trim()) return 'Email address is required';
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.trim())) return 'Enter a valid email address';
+  const domain = email.trim().toLowerCase().split('@')[1];
+  if (domain !== 'mbu.asia' && domain !== 'aptitudearcade.com') {
+    return 'Only MBU student emails (@mbu.asia) are allowed';
+  }
   return '';
 }
 

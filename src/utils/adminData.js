@@ -72,10 +72,20 @@ export function getTestTitle(testKey) {
 }
 
 export const DAY_TOPICS = {
-  '1': 'Number Systems',
+  '1': 'Number System',
   '2': 'Percentages',
-  '3': 'Ratio and Proportion',
+  '3': 'Ratio & Proportion',
   '4': 'Averages',
+  '5': 'Profit, Loss & Discount',
+  '6': 'Simple & Compound Interest',
+  '7': 'Problems on Ages',
+  '8': 'Time & Work + Pipes & Cisterns',
+  '9': 'Time, Speed & Distance',
+  '10': 'Problems on Trains',
+  '11': 'Mixtures & Alligation',
+  '12': 'Permutation & Combination',
+  '13': 'Probability',
+  '14': 'Data Interpretation',
   finale: 'Grand Finale',
 };
 

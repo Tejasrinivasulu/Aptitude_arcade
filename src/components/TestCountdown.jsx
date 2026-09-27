@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { computeTestCountdown, formatCountdownParts } from '../data/testSchedule';
 
-export function useTestCountdown(testDate) {
-  const [countdown, setCountdown] = useState(() => computeTestCountdown(testDate));
+export function useTestCountdown(testDate, testKey = null) {
+  const [countdown, setCountdown] = useState(() => computeTestCountdown(testDate, new Date(), testKey));
 
   useEffect(() => {
-    setCountdown(computeTestCountdown(testDate));
+    setCountdown(computeTestCountdown(testDate, new Date(), testKey));
     const timer = setInterval(() => {
-      setCountdown(computeTestCountdown(testDate));
+      setCountdown(computeTestCountdown(testDate, new Date(), testKey));
     }, 1000);
     return () => clearInterval(timer);
-  }, [testDate]);
+  }, [testDate, testKey]);
 
   return countdown;
 }
 
-export default function TestCountdown({ testDate, compact = false }) {
-  const countdown = useTestCountdown(testDate);
+export default function TestCountdown({ testDate, testKey = null, compact = false }) {
+  const countdown = useTestCountdown(testDate, testKey);
   const parts = formatCountdownParts(countdown);
   const ready = countdown.isReady && !countdown.isExpired;
 
@@ -41,7 +41,7 @@ export default function TestCountdown({ testDate, compact = false }) {
       }`}
     >
       <p className="text-center text-xs font-semibold uppercase tracking-wider text-gray-500">
-        {ready ? 'Test Window Open' : countdown.isExpired ? 'Test Expired' : 'Test Starts In'}
+        {ready ? '🟢 Test Window Live — Closes In' : countdown.isExpired ? '🔴 Test Expired' : '⏳ Test Starts In'}
       </p>
       <div className="mt-3 flex items-center justify-center gap-3 sm:gap-6">
         <CountdownUnit value={parts.hours} label="hrs" active={ready} />
@@ -49,8 +49,8 @@ export default function TestCountdown({ testDate, compact = false }) {
         <CountdownUnit value={parts.seconds} label="sec" active={ready} />
       </div>
       {ready && (
-        <p className="mt-3 text-center text-sm font-medium text-green-700">
-          Take Test button is now active
+        <p className="mt-3 text-center text-sm font-semibold text-green-700">
+          Take Test button is active · Window closes at 11:00 PM IST
         </p>
       )}
     </div>

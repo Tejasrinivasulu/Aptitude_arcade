@@ -355,7 +355,20 @@ export const listenToQuestionBank = (dayKey, callback) => {
 };
 
 export async function publishQuestionBank(dayKey, bank) {
-  if (!isFirebaseReady() || !db) throw new Error('Firebase not configured');
+  try {
+    localStorage.setItem(`local_qbank_${dayKey}`, JSON.stringify(bank));
+  } catch {
+    // Ignore storage errors
+  }
+
+  if (!isFirebaseReady() || !db) {
+    return {
+      ...bank,
+      dayKey: String(dayKey),
+      lastPublishedAt: new Date().toISOString(),
+    };
+  }
+
   const payload = {
     ...bank,
     dayKey: String(dayKey),

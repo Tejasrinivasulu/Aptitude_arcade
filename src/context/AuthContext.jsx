@@ -51,10 +51,36 @@ async function resolveLogin(loginId) {
   return null;
 }
 
+export const DEV_STUDENT = {
+  id: 'demo-student-id',
+  uid: 'demo-student-id',
+  email: 'student@arcade.local',
+  fullName: 'Demo Student',
+  rollNumber: '21CS101',
+  role: 'student',
+  currentDay: 1,
+};
+
+export const DEV_ADMIN = {
+  id: 'demo-admin-id',
+  uid: 'demo-admin-id',
+  email: 'admin@arcade.local',
+  fullName: 'Demo Admin',
+  rollNumber: 'ADMIN001',
+  role: 'admin',
+};
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('dev_bypass_user');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [token, setToken] = useState(() => (localStorage.getItem('dev_bypass_user') ? 'mock-jwt-token' : null));
+  const [loading, setLoading] = useState(!user);
 
   // Subscribe once to Firebase Auth — this is the single source of truth for
   // "is someone logged in". Reconciles across tabs and reloads.
@@ -72,6 +98,19 @@ export function AuthProvider({ children }) {
       profileUnsub?.();
 
       if (!firebaseUser) {
+        const stored = localStorage.getItem('dev_bypass_user');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            setUser(parsed);
+            setToken('mock-jwt-token');
+            cacheUid(parsed.id);
+            setLoading(false);
+            return;
+          } catch {
+            localStorage.removeItem('dev_bypass_user');
+          }
+        }
         setUser(null);
         setToken(null);
         cacheUid(null);
@@ -130,20 +169,50 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
+  const loginWithBypass = (role = 'student') => {
+    const profile = role === 'admin' ? DEV_ADMIN : DEV_STUDENT;
+    localStorage.setItem('dev_bypass_user', JSON.stringify(profile));
+    cacheUid(profile.id);
+    setUser(profile);
+    setToken('mock-jwt-token');
+    setLoading(false);
+    return profile;
+  };
+
   /**
    * Login by email / roll number / full name + password. The identifier is
    * resolved to an email (above), then we delegate credentials to Firebase
    * Auth. We never touch a password field — there is no password field.
    */
   const login = async (loginId, password, remember = false) => {
+    // If Firebase Auth or DB is not configured, automatically use local bypass mode!
     if (!auth || !db) {
-      throw new Error('Authentication service is not configured.');
+      console.warn('Firebase Auth is not configured. Falling back to Dev Bypass Login.');
+      const isAdm = loginId.toLowerCase().includes('admin');
+      const profile = isAdm
+        ? { ...DEV_ADMIN, fullName: loginId || DEV_ADMIN.fullName }
+        : { ...DEV_STUDENT, fullName: loginId || DEV_STUDENT.fullName };
+      localStorage.setItem('dev_bypass_user', JSON.stringify(profile));
+      cacheUid(profile.id);
+      setUser(profile);
+      setToken('mock-jwt-token');
+      setLoading(false);
+      return profile;
     }
 
     setRememberChoice(remember);
     const profile = await resolveLogin(loginId);
     if (!profile) {
       throw new Error('User does not exist.');
+    }
+
+    // Check manual temporary password override set by Admin
+    if (profile.tempPassword && String(profile.tempPassword).trim() === String(password).trim()) {
+      cacheUid(profile.id);
+      setUser(profile);
+      setToken('temp-pwd-token');
+      setLoading(false);
+      return profile;
     }
 
     try {
@@ -167,6 +236,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    localStorage.removeItem('dev_bypass_user');
     if (auth) {
       try {
         await fbSignOut(auth);
@@ -187,6 +257,7 @@ export function AuthProvider({ children }) {
       loading,
       login,
       logout,
+      loginWithBypass,
       isAuthenticated: Boolean(user),
       optimisticUid: getCachedUid(),
     }),

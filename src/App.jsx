@@ -5,6 +5,7 @@ import { StudentProgressProvider } from './context/StudentProgressContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
 import LandingPage from './pages/LandingPage';
+import IntroPage from './pages/IntroPage';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -18,9 +19,18 @@ import HelpCenter from './pages/HelpCenter';
 import AdminDashboard from './pages/AdminDashboard';
 import ThankYouPage from './pages/ThankYouPage';
 
+/** Intro page cutoff: Sep 28, 2026 at 08:00 AM IST */
+function isBeforeEventStart() {
+  const cutoff = new Date('2026-09-28T08:00:00+05:30');
+  return new Date() < cutoff;
+}
+
 export default function App() {
-  // KILL SWITCH: Set this to true at 11:45 PM to lock down the site.
-  const isEventOver = true;
+  // KILL SWITCH: Set this to true to lock down the site after event ends.
+  const isEventOver = false;
+
+  // INTRO SWITCH: Show cinematic intro page before event start date.
+  const isIntroActive = isBeforeEventStart();
 
   return (
     <ThemeProvider>
@@ -31,15 +41,20 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
             
-            {/* Temporary preview route */}
+            {/* Temporary preview routes (always accessible for development) */}
             <Route path="/thank-you-preview" element={<ThankYouPage />} />
+            <Route path="/intro-preview" element={<IntroPage />} />
+            <Route path="/landing-preview" element={<LandingPage />} />
 
             {/* Event Lock Down Logic */}
             {isEventOver ? (
-              // If the event is over, EVERY other route is replaced by the Thank You Page
+              // Event is over → Thank You page everywhere
               <Route path="*" element={<ThankYouPage />} />
+            ) : isIntroActive ? (
+              // Before event start → Intro page everywhere (except admin)
+              <Route path="*" element={<IntroPage />} />
             ) : (
-              // If the event is NOT over, all student routes work normally
+              // Event is live → Normal site
               <>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -80,3 +95,4 @@ export default function App() {
     </ThemeProvider>
   );
 }
+

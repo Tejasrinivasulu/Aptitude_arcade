@@ -5,7 +5,10 @@ import { submitHelpRequest } from '../services/adminService';
 import { auth, db, isFirebaseReady } from '../utils/firebase';
 import { doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
 
-const ADMIN_NOTIFY_EMAIL = 'admin@aptitudearcade.com';
+const WEB3FORMS_ACCESS_KEYS = [
+  'e3fbf152-ea11-405b-ac93-f8e6a0c10fe3', // Primary Admin Email
+  '24a932dd-1464-4246-9aba-d6d7dc1cb3d4', // Secondary Admin Email
+];
 
 function buildEmailBody({ fullName, rollNumber, email, branch, issueType, description, submittedAtIST }) {
   return [
@@ -114,15 +117,19 @@ export default function HelpCenter() {
         submittedAtIST,
       });
 
-      formData.append('access_key', 'e3fbf152-ea11-405b-ac93-f8e6a0c10fe3');
-      formData.append('subject', `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`);
-      formData.append('from_name', student.fullName || 'Aptitude Arcade Student');
-      formData.append('email', student.email);
-      formData.append('to_email', ADMIN_NOTIFY_EMAIL);
-      formData.append('message', emailBody);
-
+      // Deliver notification emails to both admin inboxes via Web3Forms
       try {
-        await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+        await Promise.allSettled(
+          WEB3FORMS_ACCESS_KEYS.map((accessKey) => {
+            const body = new FormData();
+            body.append('access_key', accessKey);
+            body.append('subject', `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`);
+            body.append('from_name', student.fullName || 'Aptitude Arcade Student');
+            body.append('email', student.email);
+            body.append('message', emailBody);
+            return fetch('https://api.web3forms.com/submit', { method: 'POST', body });
+          })
+        );
       } catch (e) {
         // web3forms is optional notification, Firestore entry already saved
       }

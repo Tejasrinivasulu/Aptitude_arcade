@@ -119,17 +119,24 @@ export default function HelpCenter() {
 
       // Deliver notification emails to both admin inboxes via Web3Forms
       try {
-        await Promise.allSettled(
-          WEB3FORMS_ACCESS_KEYS.map((accessKey) => {
+        for (const accessKey of WEB3FORMS_ACCESS_KEYS) {
+          try {
             const body = new FormData();
             body.append('access_key', accessKey);
             body.append('subject', `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`);
             body.append('from_name', student.fullName || 'Aptitude Arcade Student');
             body.append('email', student.email);
             body.append('message', emailBody);
-            return fetch('https://api.web3forms.com/submit', { method: 'POST', body });
-          })
-        );
+
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
+            const result = await res.json();
+            console.log(`[Web3Forms] Status for ${accessKey.slice(0, 8)}...:`, result);
+          } catch (keyErr) {
+            console.warn(`[Web3Forms] Failed for ${accessKey.slice(0, 8)}...:`, keyErr);
+          }
+          // 500ms spacing to prevent concurrent IP rate-limiting
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
       } catch (e) {
         // web3forms is optional notification, Firestore entry already saved
       }

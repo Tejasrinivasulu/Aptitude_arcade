@@ -29,8 +29,8 @@ export default function App() {
   // KILL SWITCH: Set this to true to lock down the site after event ends.
   const isEventOver = false;
 
-  // INTRO SWITCH: Show cinematic intro page before event start date.
-  const isIntroActive = isBeforeEventStart();
+  // INTRO SWITCH: Temporarily disabled for testing (re-enable with isBeforeEventStart())
+  const isIntroActive = false;
 
   return (
     <ThemeProvider>

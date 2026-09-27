@@ -23,7 +23,8 @@ const AuthContext = createContext(null);
  */
 async function resolveLogin(loginId) {
   if (!db) return null;
-  const normalized = loginId.trim().toLowerCase();
+  const raw = loginId.trim();
+  const normalized = raw.toLowerCase();
 
   // Fast path: it's already an email — read the profile directly.
   if (normalized.includes('@')) {
@@ -36,11 +37,19 @@ async function resolveLogin(loginId) {
     return snap.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
   }
 
-  // Otherwise search by rollNumber then fullName.
-  for (const field of ['rollNumber', 'fullName']) {
+  // Otherwise search by rollNumber (both raw and lower), email with @mbu.asia appended, or fullName.
+  const lookups = [
+    { field: 'email', val: `${normalized}@mbu.asia` },
+    { field: 'rollNumber', val: raw },
+    { field: 'rollNumber', val: raw.toUpperCase() },
+    { field: 'rollNumber', val: normalized },
+    { field: 'fullName', val: raw },
+  ];
+
+  for (const { field, val } of lookups) {
     const q = query(
       collection(db, 'users'),
-      where(field, '==', normalized),
+      where(field, '==', val),
       limit(1)
     );
     const snap = await getDocs(q);

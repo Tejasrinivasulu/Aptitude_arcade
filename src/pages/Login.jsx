@@ -1,4 +1,4 @@
-import { User, Lock, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import AuthCardLayout from '../components/AuthCardLayout';
@@ -38,7 +38,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.loginId.trim() || !form.password) {
-      setError('Please enter your full name and password.');
+      setError('Please enter your email and password.');
       return;
     }
 
@@ -66,8 +66,8 @@ export default function Login() {
             type="text"
             value={form.loginId}
             onChange={handleChange}
-            placeholder="Full Name"
-            icon={User}
+            placeholder="College Email ID"
+            icon={Mail}
             compact
           />
 

@@ -129,11 +129,10 @@ export default function Results() {
         </section>
       )}
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-3">
         {[
           { label: 'Average Score', value: `${progress.averageScore}%` },
           { label: 'Highest Score', value: `${progress.highestScore}%` },
-          { label: 'Current Rank', value: `#${progress.currentRank}` },
           { label: 'Tests Completed', value: `${progress.testsCompleted} / ${TOTAL_PROGRAM_DAYS}` },
         ].map(({ label, value }) => (
           <div key={label} className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">

@@ -49,7 +49,7 @@ export default function LandingPage() {
         </div>
         <div className="flex items-center gap-2 md:gap-3">
           <a
-            href="https://chat.whatsapp.com/KZNAUM1o7Qw0skVB5LA88T"
+            href="https://chat.whatsapp.com/DfQKex7MTIA9kvTlhrg73j?s=sh&p=a&mlu=4&ilr=4"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#1ebe57] text-white text-xs md:text-sm font-bold uppercase tracking-wider px-3 md:px-4 py-2.5 rounded-xl transition-all"

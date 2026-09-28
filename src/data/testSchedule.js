@@ -2,8 +2,10 @@ import { getDayPlan } from './dailyLearningPlan.js';
 
 export const TEST_START_HOUR = 10;
 export const TEST_START_MINUTE = 0;
-export const TEST_END_HOUR = 23;
+/** Window closes at noon on the day after the test date (e.g. Day 1: today 10 AM → tomorrow 12 PM). */
+export const TEST_END_HOUR = 12;
 export const TEST_END_MINUTE = 0;
+export const TEST_END_OFFSET_DAYS = 1;
 
 /** New 14-Day Series Start Date: Monday, September 28, 2026 */
 export const SERIES_START_DATE = '2026-09-28';
@@ -128,13 +130,17 @@ export function formatWindowTime(hour, minute = 0) {
   return `${h}${mins} ${period}`;
 }
 
+export function formatWindowRangeLabel() {
+  return `${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST next day`;
+}
+
 export const generalRules = [
   `14-Day Series Start Date: ${formatDisplayDate(DAY1_EXAM_DATE)}`,
-  `Daily Test Window: ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`,
+  `Daily Test Window: ${formatWindowRangeLabel()}`,
   'Daily exam duration: 30 minutes once started.',
   'Students can attempt each test only once.',
   'The test remains available only during the daily window.',
-  `After ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}, the test window automatically closes.`,
+  `Each day's window opens at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} and closes at ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST the next day.`,
   'If you face technical difficulties, contact admin via the Help Center immediately.',
   'After submitting the test, review your score breakdown on the results screen.',
 ];
@@ -151,6 +157,7 @@ export function getWindowBoundsForDate(dateStr) {
   const start = new Date(day);
   start.setHours(TEST_START_HOUR, TEST_START_MINUTE, 0, 0);
   const end = new Date(day);
+  end.setDate(end.getDate() + TEST_END_OFFSET_DAYS);
   end.setHours(TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
   return { start, end };
 }
@@ -201,12 +208,12 @@ export function getStudentProgramDay(currentDay = 1) {
 export function computeTestCountdown(testDate, now = new Date(), testKey = null) {
   const { start, end } = getWindowBoundsForDate(testDate);
 
-  // During bypass for Day 1: ensure live test window counts down until 11:00 PM today
+  // During bypass for Day 1: keep window live until the configured end bound
   const isDay1Active = testKey === '1' || testKey === 1 || testDate === DAY1_EXAM_DATE;
   if (DEMO_SCHEDULE_BYPASS && isDay1Active) {
-    const endToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), TEST_END_HOUR, TEST_END_MINUTE, 0, 0);
-    if (now < endToday) {
-      const diffMs = Math.max(0, endToday.getTime() - now.getTime());
+    const { end: bypassEnd } = getWindowBoundsForDate(DAY1_EXAM_DATE);
+    if (now < bypassEnd) {
+      const diffMs = Math.max(0, bypassEnd.getTime() - now.getTime());
       const totalSeconds = Math.floor(diffMs / 1000);
       const hours = Math.floor(totalSeconds / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -234,7 +241,7 @@ export function computeTestCountdown(testDate, now = new Date(), testKey = null)
   }
 
   if (now >= start && now <= end) {
-    // Window is LIVE right now! Countdown until 11:00 PM close
+    // Window is LIVE — countdown until next-day noon close
     const diffMs = Math.max(0, end.getTime() - now.getTime());
     const totalSeconds = Math.floor(diffMs / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -337,18 +344,6 @@ export function getTestAvailability({
     };
   }
 
-  if (!isFinale && testDayNum < activeDay) {
-    return {
-      status: 'missed',
-      label: 'Expired',
-      color: 'red',
-      canStart: false,
-      message: 'Test window closed. Access has expired permanently.',
-      test,
-      countdown: expiredCountdown,
-    };
-  }
-
   if (isFinale) {
     return {
       status: 'locked',
@@ -361,6 +356,7 @@ export function getTestAvailability({
     };
   }
 
+  // Past or current calendar day — respect extended window (opens day X 10 AM, closes day X+1 12 PM)
   const countdown = computeTestCountdown(test.testDate, now, testKey);
 
   if (countdown.isExpired) {
@@ -371,17 +367,18 @@ export function getTestAvailability({
       canStart: false,
       message: 'Test window closed. Access has expired permanently.',
       test,
-      countdown,
+      countdown: testDayNum < activeDay ? expiredCountdown : countdown,
     };
   }
 
   if (countdown.isReady) {
+    const { end } = getWindowBoundsForDate(test.testDate);
     return {
       status: 'open',
       label: 'Open Now',
       color: 'green',
       canStart: true,
-      message: `Test window is open until ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST.`,
+      message: `Test window is open until ${formatDisplayDate(getTodayDateStr(end))} at ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST.`,
       test,
       countdown,
     };
@@ -413,7 +410,7 @@ export function getTestAvailability({
 export function formatExamWindowForDay(day) {
   const test = getDailyTest(Number(day));
   if (!test) return '';
-  return `${formatDisplayDate(test.testDate)} · ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST`;
+  return `${formatDisplayDate(test.testDate)} · ${formatWindowRangeLabel()}`;
 }
 
 export function getAssignedTestSummary(currentDay) {

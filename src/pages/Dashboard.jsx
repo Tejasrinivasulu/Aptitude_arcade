@@ -178,7 +178,7 @@ export default function Dashboard() {
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
                       <Clock size={13} className="text-gray-400" />
-                      10:00 AM – 11:00 PM IST
+                      10:00 AM – 12:00 PM IST next day
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
                       30 Questions · 30 min

@@ -50,7 +50,7 @@ export default function TestCountdown({ testDate, testKey = null, compact = fals
       </div>
       {ready && (
         <p className="mt-3 text-center text-sm font-semibold text-green-700">
-          Take Test button is active · Window closes at 11:00 PM IST
+          Take Test button is active · Window closes at 12:00 PM IST next day
         </p>
       )}
     </div>

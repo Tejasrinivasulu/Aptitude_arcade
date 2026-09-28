@@ -20,10 +20,7 @@ import {
   getTodaysAssignedDay,
   TOTAL_PROGRAM_DAYS,
   formatDisplayDate,
-  formatWindowTime,
-  TEST_END_HOUR,
-  TEST_END_MINUTE,
-  TEST_START_HOUR,
+  formatWindowRangeLabel,
 } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
 import TestVerificationModal from '../components/dashboard/TestVerificationModal';
@@ -128,7 +125,7 @@ export default function TakeTest() {
             <InfoChip
               icon={Clock}
               label="Test Window"
-              value={`${formatWindowTime(TEST_START_HOUR)} – ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)}`}
+              value={formatWindowRangeLabel()}
             />
             <InfoChip icon={FileText} label="Questions" value={`${assignedTest.questions} Questions`} />
             <InfoChip icon={Clock} label="Duration" value={`${assignedTest.durationMinutes} Minutes`} />

@@ -35,7 +35,7 @@ export default function LandingPage() {
   const faqData = [
     { q: "Is this free?", a: "Yes, completely." },
     { q: "What time does the test start?", a: "The test starts at 10:00 AM IST." },
-    { q: "What time does the test end?", a: "The test ends at 11:00 PM IST. No exceptions." },
+    { q: "What time does the test end?", a: "Each day's window closes at 12:00 PM IST the next day." },
     { q: "What if I miss a day?", a: "Your streak resets to zero. That's the point." },
   ];
 
@@ -47,12 +47,24 @@ export default function LandingPage() {
           <img src="/arcade-logo.png" alt="Aptitude Arcade Logo" className="h-8 w-auto object-contain rounded-md shadow-sm" />
           <span className="text-xl md:text-2xl font-black tracking-tight text-black">Aptitude Arcade</span>
         </div>
-        <Link
-          to="/login"
-          className="bg-[#FF6B2B] hover:bg-[#e0531b] text-white text-xs md:text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all flex items-center gap-1"
-        >
-          Enter Portal →
-        </Link>
+        <div className="flex items-center gap-2 md:gap-3">
+          <a
+            href="https://chat.whatsapp.com/KZNAUM1o7Qw0skVB5LA88T"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#1ebe57] text-white text-xs md:text-sm font-bold uppercase tracking-wider px-3 md:px-4 py-2.5 rounded-xl transition-all"
+          >
+            <MessageCircle size={16} className="shrink-0" />
+            <span className="hidden sm:inline">WhatsApp Community</span>
+            <span className="sm:hidden">WhatsApp</span>
+          </a>
+          <Link
+            to="/login"
+            className="bg-[#FF6B2B] hover:bg-[#e0531b] text-white text-xs md:text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all flex items-center gap-1"
+          >
+            Enter Portal →
+          </Link>
+        </div>
       </header>
 
       {/* SECTION 1.5 — Logos */}
@@ -174,11 +186,11 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#E5E5E5] rounded text-[10px] font-bold text-[#FF6B2B] uppercase tracking-wider mb-5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B]"></span>
-                    NEXT DAY: 10AM - 8PM
+                    10AM – NEXT DAY 12PM
                   </div>
                   <h3 className="text-lg font-black text-black uppercase tracking-wider mb-3">Attempt</h3>
                   <p className="text-sm font-medium text-[#666666] leading-relaxed">
-                    The quiz for yesterday's topic opens. You have a 10-hour window to complete it securely.
+                    The quiz opens at 10:00 AM and stays open until 12:00 PM the next day. Complete it securely in that window.
                   </p>
                 </div>
 
@@ -189,7 +201,7 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#E5E5E5] rounded text-[10px] font-bold text-[#FF6B2B] uppercase tracking-wider mb-5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B]"></span>
-                    NEXT DAY: 8:00 PM
+                    NEXT DAY: 12:00 PM
                   </div>
                   <h3 className="text-lg font-black text-black uppercase tracking-wider mb-3">Compete</h3>
                   <p className="text-sm font-medium text-[#666666] leading-relaxed">

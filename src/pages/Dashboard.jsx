@@ -265,7 +265,7 @@ function StreakIndicator({ progress }) {
           
           if (isToday) {
             content = <span className="text-2xl filter drop-shadow-md">🔥</span>;
-            boxClasses += "border-white bg-white/20 backdrop-blur-md shadow-xl scale-110";
+            boxClasses = "flex h-[58px] w-[58px] flex-col items-center justify-center rounded-[1rem] border-2 transition-all overflow-hidden border-white bg-white/20 backdrop-blur-md shadow-xl";
           } else if (isPast) {
             if (attempted) {
               content = <Check size={24} className="text-primary-dark" />;

@@ -114,16 +114,33 @@ export default function HelpCenter() {
         submittedAtIST,
       });
 
-      formData.append('access_key', WEB3FORMS_ACCESS_KEY);
-      formData.append('subject', `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`);
-      formData.append('from_name', student.fullName || 'Aptitude Arcade Student');
-      formData.append('email', student.email);
-      formData.append('message', emailBody);
-
       try {
-        await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`,
+            from_name: student.fullName || 'Aptitude Arcade Student',
+            name: student.fullName || 'Aptitude Arcade Student',
+            email: student.email || 'student@aptitudearcade.com',
+            message: emailBody,
+            issueType,
+            rollNumber: student.rollNumber,
+            branch: student.branch,
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.success) {
+          console.warn('Web3Forms email status:', result?.message || response.statusText);
+        } else {
+          console.info('Web3Forms email delivered successfully:', result);
+        }
       } catch (e) {
-        // web3forms is optional notification, Firestore entry already saved
+        console.warn('Web3Forms network notice:', e);
       }
 
       setIsSuccess(true);

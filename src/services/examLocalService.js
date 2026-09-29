@@ -11,10 +11,10 @@ import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '..
 const SESSION_KEY = 'exam_local_session';
 
 const LOCAL_BANKS = {
-  '1': { questions: DAY1_QUESTION_BANK.questions, durationSeconds: DAY1_DURATION_SECONDS },
-  '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS },
-  '3': { questions: DAY3_QUESTION_BANK.questions, durationSeconds: DAY3_DURATION_SECONDS },
-  '4': { questions: DAY4_QUESTION_BANK.questions, durationSeconds: DAY4_DURATION_SECONDS },
+  '1': { questions: DAY1_QUESTION_BANK.questions, durationSeconds: DAY1_DURATION_SECONDS, questionBankVersion: DAY1_QUESTION_BANK.questionBankVersion ?? 1 },
+  '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS, questionBankVersion: DAY2_QUESTION_BANK.questionBankVersion ?? 1 },
+  '3': { questions: DAY3_QUESTION_BANK.questions, durationSeconds: DAY3_DURATION_SECONDS, questionBankVersion: DAY3_QUESTION_BANK.questionBankVersion ?? 1 },
+  '4': { questions: DAY4_QUESTION_BANK.questions, durationSeconds: DAY4_DURATION_SECONDS, questionBankVersion: DAY4_QUESTION_BANK.questionBankVersion ?? 1 },
 };
 
 function generateFallbackQuestions(day) {
@@ -58,12 +58,21 @@ function scoreAnswers(questions, answers) {
 
 async function loadQuestions(testKey) {
   const key = String(testKey);
+  // Determine the local bank version (if available) so we can compare against Firestore
+  const localBankVersion = LOCAL_BANKS[key]?.questionBankVersion ?? 0;
+
   if (isFirebaseReady() && db) {
     try {
       const bankSnap = await getDoc(doc(db, 'question_banks', key));
       if (bankSnap.exists()) {
         const bank = bankSnap.data();
-        if (Array.isArray(bank.questions) && bank.questions.length > 0) {
+        const firestoreVersion = bank.questionBankVersion ?? 0;
+        // Only use Firestore if its version is at least as new as the local bank
+        if (
+          Array.isArray(bank.questions) &&
+          bank.questions.length > 0 &&
+          firestoreVersion >= localBankVersion
+        ) {
           return {
             questions: bank.questions,
             durationSeconds: (bank.durationMinutes || 30) * 60,

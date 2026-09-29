@@ -10,7 +10,7 @@ import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '..
 
 const SESSION_KEY = 'exam_local_session';
 
-const LOCAL_BANKS = {
+export const LOCAL_BANKS = {
   '1': { questions: DAY1_QUESTION_BANK.questions, durationSeconds: DAY1_DURATION_SECONDS, questionBankVersion: DAY1_QUESTION_BANK.questionBankVersion ?? 1 },
   '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS, questionBankVersion: DAY2_QUESTION_BANK.questionBankVersion ?? 1 },
   '3': { questions: DAY3_QUESTION_BANK.questions, durationSeconds: DAY3_DURATION_SECONDS, questionBankVersion: DAY3_QUESTION_BANK.questionBankVersion ?? 1 },
@@ -31,7 +31,7 @@ function stripAnswers(questions) {
   return questions.map(({ answer, ...rest }) => rest);
 }
 
-function normalizeAnswer(value) {
+export function normalizeAnswer(value) {
   if (value === null || value === undefined) return '';
   return String(value)
     .trim()
@@ -43,7 +43,7 @@ function normalizeAnswer(value) {
     .trim();
 }
 
-function isAnswerCorrect(question, userAnswer) {
+export function isAnswerCorrect(question, userAnswer) {
   if (userAnswer === null || userAnswer === undefined || userAnswer === '') return false;
   if (question.type === 'fill') {
     return normalizeAnswer(userAnswer) === normalizeAnswer(question.answer);
@@ -201,6 +201,8 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
   );
 
   const meta = getExamMeta(key);
+  const correctAnswers = testData.questions.map((q) => q.answer);
+  const publicQs = stripAnswers(testData.questions);
   const resultData = {
     testKey: key,
     title: meta.title,
@@ -212,6 +214,10 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
     emoji,
     submittedAt: new Date().toISOString(),
     proctoringViolations: proctoringViolations || {},
+    questions: publicQs,
+    answers: answers || [],
+    userAnswers: answers || [],
+    correctAnswers,
   };
 
   // If Firebase is not configured, save locally
@@ -248,6 +254,9 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
       performance,
       emoji,
       answers: answers || [],
+      userAnswers: answers || [],
+      questions: publicQs,
+      correctAnswers,
       submittedAt: resultData.submittedAt,
       tabViolations: proctoringViolations?.tabViolations || 0,
       faceWarnings: proctoringViolations?.faceWarnings || 0,
@@ -273,6 +282,10 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
             emoji,
             title: meta.title,
             submittedAt: resultData.submittedAt,
+            answers: answers || [],
+            userAnswers: answers || [],
+            questions: publicQs,
+            correctAnswers,
           },
         },
       },

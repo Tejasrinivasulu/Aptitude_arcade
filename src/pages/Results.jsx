@@ -7,6 +7,7 @@ import {
   useStudentProgress,
 } from '../context/StudentProgressContext';
 import { grandFinale, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
+import { LOCAL_BANKS, isAnswerCorrect } from '../services/examLocalService';
 
 export default function Results() {
   const { progress } = useStudentProgress();
@@ -26,6 +27,9 @@ export default function Results() {
         faceWarnings: location.state.faceWarnings,
         sheetUpload: location.state.sheetUpload,
         autoSubmit: location.state.autoSubmit,
+        questions: location.state.questions,
+        answers: location.state.answers,
+        correctAnswers: location.state.correctAnswers,
       }
     : null;
 
@@ -33,31 +37,58 @@ export default function Results() {
   const finaleResult = progress.attemptedTests?.finale;
 
   const completedTestKeys = useMemo(() => {
-    return Object.keys(progress.attemptedTests || {}).filter((key) => {
+    const keys = Object.keys(progress.attemptedTests || {}).filter((key) => {
       const attempt = progress.attemptedTests[key];
-      return attempt && attempt.answers && attempt.answers.length > 0;
+      return attempt && (attempt.score !== undefined || attempt.percentage !== undefined || (attempt.answers && attempt.answers.length > 0));
     });
-  }, [progress.attemptedTests]);
+    if (examResult && !keys.includes(String(examResult.testKey))) {
+      keys.unshift(String(examResult.testKey));
+    }
+    return keys;
+  }, [progress.attemptedTests, examResult]);
 
   const [selectedReviewKey, setSelectedReviewKey] = useState(() => {
     if (examResult) return String(examResult.testKey);
     if (completedTestKeys.length > 0) return String(completedTestKeys[0]);
     return '';
   });
+
+  useEffect(() => {
+    if (!selectedReviewKey && completedTestKeys.length > 0) {
+      setSelectedReviewKey(String(completedTestKeys[0]));
+    }
+  }, [completedTestKeys, selectedReviewKey]);
   
   const [selectedQuestionIdx, setSelectedQuestionIdx] = useState(0);
   const [questionFilter, setQuestionFilter] = useState('all');
 
   const reviewTestDetails = useMemo(() => {
     if (!selectedReviewKey) return null;
-    const attempt = progress.attemptedTests[selectedReviewKey];
-    if (!attempt || !attempt.questions) return null; // Requires server sync
+    const attempt = progress.attemptedTests?.[selectedReviewKey] || (String(examResult?.testKey) === selectedReviewKey ? examResult : null);
+    if (!attempt) return null;
+
+    let questions = attempt.questions;
+    let correctAnswers = attempt.correctAnswers;
+    let answers = attempt.answers || attempt.userAnswers || [];
+
+    if (!questions || questions.length === 0) {
+      const localBank = LOCAL_BANKS[selectedReviewKey];
+      if (localBank && localBank.questions) {
+        questions = localBank.questions;
+        correctAnswers = localBank.questions.map((q) => q.answer);
+      }
+    }
+
+    if (!questions || questions.length === 0) return null;
 
     return {
       ...attempt,
       testKey: selectedReviewKey,
+      questions,
+      correctAnswers: correctAnswers || questions.map((q) => q.answer),
+      answers,
     };
-  }, [selectedReviewKey, progress.attemptedTests]);
+  }, [selectedReviewKey, progress.attemptedTests, examResult]);
 
   const handleSelectReview = (key) => {
     setSelectedReviewKey(String(key));
@@ -275,9 +306,8 @@ export default function Results() {
             {(() => {
               const filteredIndices = reviewTestDetails.questions.map((q, idx) => {
                 const userAns = reviewTestDetails.answers?.[idx];
-                const correctAns = reviewTestDetails.correctAnswers?.[idx];
-                const isCorrect = userAns === correctAns;
-                const isSkipped = userAns === null || userAns === undefined;
+                const isCorrect = isAnswerCorrect(q, userAns);
+                const isSkipped = userAns === null || userAns === undefined || userAns === '';
                 const isWrong = !isCorrect && !isSkipped;
 
                 if (questionFilter === 'correct' && !isCorrect) return -1;
@@ -294,10 +324,10 @@ export default function Results() {
                 <>
                   <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10">
                     {filteredIndices.map((qIdx) => {
+                      const q = reviewTestDetails.questions[qIdx];
                       const userAns = reviewTestDetails.answers?.[qIdx];
-                      const correctAns = reviewTestDetails.correctAnswers?.[qIdx];
-                      const isCorrect = userAns === correctAns;
-                      const isSkipped = userAns === null || userAns === undefined;
+                      const isCorrect = isAnswerCorrect(q, userAns);
+                      const isSkipped = userAns === null || userAns === undefined || userAns === '';
 
                       let btnClass = "bg-red-50 text-red-700 hover:bg-red-100 border-red-200 shadow-sm";
                       if (isCorrect) btnClass = "bg-green-50 text-green-700 hover:bg-green-100 border-green-200 shadow-sm";
@@ -337,10 +367,12 @@ export default function Results() {
                       <div className="p-6 md:p-8">
                         {(() => {
                           const q = reviewTestDetails.questions[selectedQuestionIdx];
+                          if (!q) return null;
                           const userAns = reviewTestDetails.answers?.[selectedQuestionIdx];
-                          const correctAns = reviewTestDetails.correctAnswers?.[selectedQuestionIdx];
-                          const isCorrect = userAns === correctAns;
-                          const isSkipped = userAns === null || userAns === undefined;
+                          const correctAns = reviewTestDetails.correctAnswers?.[selectedQuestionIdx] ?? q.answer;
+                          const isCorrect = isAnswerCorrect(q, userAns);
+                          const isSkipped = userAns === null || userAns === undefined || userAns === '';
+                          const isFillType = q.type === 'fill' || !Array.isArray(q.options);
 
                           return (
                             <div>
@@ -361,48 +393,97 @@ export default function Results() {
                                 </h3>
                               </div>
 
-                              <div className="space-y-3 pl-12">
-                                {q.options.map((option, optIdx) => {
-                                  const isCorrectOpt = optIdx === correctAns;
-                                  const isUserSelectedOpt = optIdx === userAns;
-                                  
-                                  let optStyle = 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50';
-                                  let icon = null;
-
-                                  if (isCorrectOpt) {
-                                    optStyle = 'border-green-300 bg-green-50 text-green-800 font-medium shadow-sm';
-                                    icon = <CheckCircle2 size={18} className="shrink-0 text-green-600" />;
-                                  } else if (isUserSelectedOpt && !isCorrect) {
-                                    optStyle = 'border-red-300 bg-red-50 text-red-800 font-medium shadow-sm';
-                                    icon = <AlertCircle size={18} className="shrink-0 text-red-600" />;
-                                  }
-
-                                  return (
-                                    <div
-                                      key={option}
-                                      className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm transition-all ${optStyle}`}
-                                    >
-                                      <span className="flex items-center gap-3">
-                                        <span
-                                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                                            isCorrectOpt
-                                              ? 'bg-green-600 text-white shadow-md shadow-green-600/20'
-                                              : isUserSelectedOpt
-                                                ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
-                                                : 'bg-gray-100 text-gray-600'
-                                          }`}
-                                        >
-                                          {String.fromCharCode(65 + optIdx)}
-                                        </span>
-                                        {option}
+                              {isFillType ? (
+                                <div className="space-y-4 pl-0 sm:pl-12">
+                                  <div className="rounded-xl border border-gray-200 bg-gray-50/70 p-4 space-y-3">
+                                    <div className="flex items-center justify-between gap-2 border-b border-gray-200 pb-2">
+                                      <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                        Numerical Answer Comparison
                                       </span>
-                                      {icon}
+                                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                                        Fill-in-the-Blank
+                                      </span>
                                     </div>
-                                  );
-                                })}
-                              </div>
 
-                              <div className="mt-8 pl-12">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                                      <div className={`p-4 rounded-xl border ${
+                                        isSkipped
+                                          ? 'border-gray-200 bg-white'
+                                          : isCorrect
+                                            ? 'border-green-200 bg-green-50/60'
+                                            : 'border-red-200 bg-red-50/60'
+                                      }`}>
+                                        <div className="text-xs font-semibold text-gray-500 mb-1">Your Answer</div>
+                                        <div className={`text-base font-bold flex items-center justify-between gap-2 ${
+                                          isSkipped
+                                            ? 'text-gray-400 italic'
+                                            : isCorrect
+                                              ? 'text-green-800'
+                                              : 'text-red-700'
+                                        }`}>
+                                          <span>{isSkipped ? 'Not Answered (Skipped)' : String(userAns)}</span>
+                                          {isSkipped ? null : isCorrect ? (
+                                            <CheckCircle2 size={18} className="text-green-600 shrink-0" />
+                                          ) : (
+                                            <AlertCircle size={18} className="text-red-600 shrink-0" />
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      <div className="p-4 rounded-xl border border-green-200 bg-green-50/60">
+                                        <div className="text-xs font-semibold text-green-700 mb-1">Correct Answer</div>
+                                        <div className="text-base font-bold text-green-900 flex items-center justify-between gap-2">
+                                          <span>{String(correctAns)}</span>
+                                          <CheckCircle2 size={18} className="text-green-600 shrink-0" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="space-y-3 pl-0 sm:pl-12">
+                                  {q.options.map((option, optIdx) => {
+                                    const isCorrectOpt = optIdx === correctAns;
+                                    const isUserSelectedOpt = optIdx === userAns;
+                                    
+                                    let optStyle = 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50';
+                                    let icon = null;
+
+                                    if (isCorrectOpt) {
+                                      optStyle = 'border-green-300 bg-green-50 text-green-800 font-medium shadow-sm';
+                                      icon = <CheckCircle2 size={18} className="shrink-0 text-green-600" />;
+                                    } else if (isUserSelectedOpt && !isCorrect) {
+                                      optStyle = 'border-red-300 bg-red-50 text-red-800 font-medium shadow-sm';
+                                      icon = <AlertCircle size={18} className="shrink-0 text-red-600" />;
+                                    }
+
+                                    return (
+                                      <div
+                                        key={option}
+                                        className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm transition-all ${optStyle}`}
+                                      >
+                                        <span className="flex items-center gap-3">
+                                          <span
+                                            className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                                              isCorrectOpt
+                                                ? 'bg-green-600 text-white shadow-md shadow-green-600/20'
+                                                : isUserSelectedOpt
+                                                  ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
+                                                  : 'bg-gray-100 text-gray-600'
+                                            }`}
+                                          >
+                                            {String.fromCharCode(65 + optIdx)}
+                                          </span>
+                                          {option}
+                                        </span>
+                                        {icon}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+
+                              <div className="mt-8 pl-0 sm:pl-12">
                                 {isCorrect ? (
                                   <div className="rounded-xl bg-green-50 p-4 border border-green-100">
                                     <p className="text-sm font-bold text-green-800 flex items-center gap-2">
@@ -412,13 +493,15 @@ export default function Results() {
                                 ) : isSkipped ? (
                                   <div className="rounded-xl bg-amber-50 p-4 border border-amber-100">
                                     <p className="text-sm font-bold text-amber-800 flex items-center gap-2">
-                                      <AlertCircle size={18} /> Skipped. Correct answer is Option {String.fromCharCode(65 + correctAns)}.
+                                      <AlertCircle size={18} /> Skipped. Correct answer is {isFillType ? String(correctAns) : `Option ${String.fromCharCode(65 + correctAns)}`}.
                                     </p>
                                   </div>
                                 ) : (
                                   <div className="rounded-xl bg-red-50 p-4 border border-red-100">
                                     <p className="text-sm font-bold text-red-800 flex items-center gap-2">
-                                      <AlertCircle size={18} /> Incorrect. You selected Option {String.fromCharCode(65 + userAns)}. Correct answer is Option {String.fromCharCode(65 + correctAns)}.
+                                      <AlertCircle size={18} /> {isFillType
+                                        ? `Incorrect. You entered "${String(userAns)}". Correct answer is "${String(correctAns)}".`
+                                        : `Incorrect. You selected Option ${String.fromCharCode(65 + userAns)}. Correct answer is Option ${String.fromCharCode(65 + correctAns)}.`}
                                     </p>
                                   </div>
                                 )}

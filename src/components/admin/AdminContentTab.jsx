@@ -242,14 +242,26 @@ export default function AdminContentTab() {
         {/* Header Toolbar */}
         <div className="flex items-center justify-between py-3 mb-4 border-y border-gray-100">
           <div className="flex items-center gap-3">
-            <h3 className="text-sm font-bold text-gray-900">
-              Questions ({questionCount} / 30)
-            </h3>
-            {questionCount >= 30 ? (
-              <span className="text-[11px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">Complete (30)</span>
-            ) : (
-              <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">{30 - questionCount} needed</span>
-            )}
+            {(() => {
+              const targetCount = ['2', '3'].includes(selectedDay) ? 25 : 30;
+              const isComplete = questionCount >= targetCount;
+              return (
+                <>
+                  <h3 className="text-sm font-bold text-gray-900">
+                    Questions ({questionCount} / {targetCount})
+                  </h3>
+                  {isComplete ? (
+                    <span className="text-[11px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                      Complete ({targetCount})
+                    </span>
+                  ) : (
+                    <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
+                      {targetCount - questionCount} needed
+                    </span>
+                  )}
+                </>
+              );
+            })()}
           </div>
           {questionCount > 0 && (
             <button

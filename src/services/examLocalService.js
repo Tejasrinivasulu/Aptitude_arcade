@@ -33,13 +33,23 @@ function stripAnswers(questions) {
 
 function normalizeAnswer(value) {
   if (value === null || value === undefined) return '';
-  return String(value).trim().toLowerCase();
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/^(₹|rs\.?)\s*/i, '')
+    .replace(/\s*:\s*/g, ':')
+    .replace(/\s*μs$/i, '')
+    .replace(/\s*us$/i, '')
+    .trim();
 }
 
 function isAnswerCorrect(question, userAnswer) {
   if (userAnswer === null || userAnswer === undefined || userAnswer === '') return false;
   if (question.type === 'fill') {
     return normalizeAnswer(userAnswer) === normalizeAnswer(question.answer);
+  }
+  if (Array.isArray(question.acceptedAnswers)) {
+    return question.acceptedAnswers.includes(userAnswer);
   }
   return userAnswer === question.answer;
 }
@@ -58,24 +68,18 @@ function scoreAnswers(questions, answers) {
 
 async function loadQuestions(testKey) {
   const key = String(testKey);
-  // Determine the local bank version (if available) so we can compare against Firestore
-  const localBankVersion = LOCAL_BANKS[key]?.questionBankVersion ?? 0;
 
+  // 1. Primary: Firestore published questions (always use if present)
   if (isFirebaseReady() && db) {
     try {
       const bankSnap = await getDoc(doc(db, 'question_banks', key));
       if (bankSnap.exists()) {
         const bank = bankSnap.data();
-        const firestoreVersion = bank.questionBankVersion ?? 0;
-        // Only use Firestore if its version is at least as new as the local bank
-        if (
-          Array.isArray(bank.questions) &&
-          bank.questions.length > 0 &&
-          firestoreVersion >= localBankVersion
-        ) {
+        if (Array.isArray(bank.questions) && bank.questions.length > 0) {
+          const defaultDur = (key === '2' || key === '3') ? 25 : 30;
           return {
             questions: bank.questions,
-            durationSeconds: (bank.durationMinutes || 30) * 60,
+            durationSeconds: (bank.durationMinutes || defaultDur) * 60,
           };
         }
       }
@@ -84,20 +88,16 @@ async function loadQuestions(testKey) {
     }
   }
 
-  // Check static banks
-  if (LOCAL_BANKS[key]) {
-    return LOCAL_BANKS[key];
-  }
-
-  // Check localStorage for banks saved locally
+  // 2. Secondary: localStorage for banks saved locally/offline by admin
   try {
     const localSaved = localStorage.getItem(`local_qbank_${key}`);
     if (localSaved) {
       const parsed = JSON.parse(localSaved);
       if (Array.isArray(parsed.questions) && parsed.questions.length > 0) {
+        const defaultDur = (key === '2' || key === '3') ? 25 : 30;
         return {
           questions: parsed.questions,
-          durationSeconds: (parsed.durationMinutes || 30) * 60,
+          durationSeconds: (parsed.durationMinutes || defaultDur) * 60,
         };
       }
     }
@@ -105,7 +105,12 @@ async function loadQuestions(testKey) {
     // Ignore
   }
 
-  // Generate fallback sample questions for any of the 14 days
+  // 3. Tertiary: Static bundled banks
+  if (LOCAL_BANKS[key]) {
+    return LOCAL_BANKS[key];
+  }
+
+  // 4. Fallback generator
   return {
     questions: generateFallbackQuestions(key),
     durationSeconds: 30 * 60,

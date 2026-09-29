@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Maximize,
   MonitorOff,
@@ -11,19 +11,21 @@ import {
   BookOpen,
   Radio
 } from 'lucide-react';
-
-const examDetails = [
-  { id: 'topic', icon: BookOpen, label: 'Topic: General Aptitude', type: 'info' },
-  { id: 'questions', icon: HelpCircle, label: 'Questions: 20 Multiple Choice', type: 'info' },
-  { id: 'time', icon: Clock, label: 'Time Limit: 30 Minutes', type: 'info' },
-];
+import { getExamMeta } from '../../data/examQuestions';
 
 const checks = [
   { id: 'fullscreen', icon: Maximize, label: 'Fullscreen Mode Required', type: 'check' },
   { id: 'tabswitch', icon: MonitorOff, label: 'Tab Switching Restricted', type: 'check' },
 ];
 
-export default function TestVerificationModal({ onClose, onStart }) {
+export default function TestVerificationModal({ testKey, onClose, onStart }) {
+  const meta = useMemo(() => getExamMeta(testKey || '1'), [testKey]);
+
+  const examDetails = useMemo(() => [
+    { id: 'topic', icon: BookOpen, label: `Topic: ${meta.topicLabel}`, type: 'info' },
+    { id: 'questions', icon: HelpCircle, label: `Questions: ${meta.totalQuestions} Questions`, type: 'info' },
+    { id: 'time', icon: Clock, label: `Time Limit: ${meta.durationMinutes} Minutes`, type: 'info' },
+  ], [meta]);
   const [verifying, setVerifying] = useState(false);
   const [verified, setVerified] = useState({});
   const [failed, setFailed] = useState({});

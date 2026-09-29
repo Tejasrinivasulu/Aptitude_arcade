@@ -171,7 +171,11 @@ export default function TakeTest() {
       </div>
 
       {showVerification && (
-        <TestVerificationModal onClose={() => setShowVerification(false)} onStart={handleStartExam} />
+        <TestVerificationModal
+          testKey={selectedTestKey}
+          onClose={() => setShowVerification(false)}
+          onStart={handleStartExam}
+        />
       )}
     </>
   );

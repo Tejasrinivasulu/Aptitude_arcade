@@ -181,7 +181,7 @@ export default function Dashboard() {
                       10:00 AM – 12:00 PM IST next day
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-lg bg-gray-50 px-2.5 py-1.5 font-medium border border-gray-100">
-                      30 Questions · 30 min
+                      {test.questions || 30} Questions · {test.durationMinutes || 30} min
                     </span>
                   </div>
 

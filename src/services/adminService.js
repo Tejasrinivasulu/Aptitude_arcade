@@ -344,7 +344,7 @@ export const listenToQuestionBank = (dayKey, callback) => {
           : {
               title: `Day ${dayKey} Assessment`,
               topicLabel: DAY_TOPICS[dayKey] || `Day ${dayKey}`,
-              durationMinutes: ['1', '2', '3', '4'].includes(dayKey) ? 30 : 20,
+              durationMinutes: ['2', '3'].includes(dayKey) ? 25 : ['1', '4'].includes(dayKey) ? 30 : 20,
               questions: [],
               lastPublishedAt: null,
             }
@@ -372,6 +372,7 @@ export async function publishQuestionBank(dayKey, bank) {
   const payload = {
     ...bank,
     dayKey: String(dayKey),
+    questionBankVersion: (bank.questionBankVersion || 1) + 1,
     lastPublishedAt: new Date().toISOString(),
     updatedAt: serverTimestamp(),
   };

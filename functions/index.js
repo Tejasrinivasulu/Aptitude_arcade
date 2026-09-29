@@ -23,13 +23,20 @@ const ACTIVE_PROGRAM_DAY = 14;
 const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
-  if (PROGRAM_DAY_KEYS.includes(String(testKey))) return THIRTY_MIN_DURATION_SECONDS;
+  const k = String(testKey);
+  if (k === '2' || k === '3') return 25 * 60;
+  if (PROGRAM_DAY_KEYS.includes(k)) return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }
 
 function normalizeAnswer(value) {
   if (value === null || value === undefined) return '';
-  return String(value).trim().toLowerCase();
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/^(₹|rs\.?)\s*/i, '')
+    .replace(/\s*:\s*/g, ':')
+    .trim();
 }
 
 function isAnswerCorrect(question, userAnswer) {

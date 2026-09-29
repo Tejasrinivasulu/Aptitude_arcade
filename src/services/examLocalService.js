@@ -43,15 +43,18 @@ export function normalizeAnswer(value) {
     .trim();
 }
 
-export function isAnswerCorrect(question, userAnswer) {
+export function isAnswerCorrect(question, userAnswer, expectedAnswer) {
   if (userAnswer === null || userAnswer === undefined || userAnswer === '') return false;
-  if (question.type === 'fill') {
-    return normalizeAnswer(userAnswer) === normalizeAnswer(question.answer);
+  const targetAnswer = expectedAnswer !== undefined ? expectedAnswer : question?.answer;
+  if (targetAnswer === undefined || targetAnswer === null) return false;
+
+  if (question?.type === 'fill') {
+    return normalizeAnswer(userAnswer) === normalizeAnswer(targetAnswer);
   }
-  if (Array.isArray(question.acceptedAnswers)) {
-    return question.acceptedAnswers.includes(userAnswer);
+  if (Array.isArray(question?.acceptedAnswers)) {
+    return question.acceptedAnswers.some((ans) => String(ans).trim() === String(userAnswer).trim());
   }
-  return userAnswer === question.answer;
+  return String(userAnswer).trim() === String(targetAnswer).trim();
 }
 
 function scoreAnswers(questions, answers) {

@@ -71,11 +71,20 @@ export default function Results() {
     let correctAnswers = attempt.correctAnswers;
     let answers = attempt.answers || attempt.userAnswers || [];
 
+    const localBank = LOCAL_BANKS[selectedReviewKey];
+
     if (!questions || questions.length === 0) {
-      const localBank = LOCAL_BANKS[selectedReviewKey];
       if (localBank && localBank.questions) {
         questions = localBank.questions;
+      }
+    }
+
+    // Always guarantee valid correctAnswers, falling back to localBank if missing, empty, or containing undefined
+    if (!correctAnswers || !Array.isArray(correctAnswers) || correctAnswers.length === 0 || correctAnswers.some(a => a === undefined || a === null)) {
+      if (localBank && localBank.questions) {
         correctAnswers = localBank.questions.map((q) => q.answer);
+      } else if (questions) {
+        correctAnswers = questions.map((q) => q.answer);
       }
     }
 
@@ -85,7 +94,7 @@ export default function Results() {
       ...attempt,
       testKey: selectedReviewKey,
       questions,
-      correctAnswers: correctAnswers || questions.map((q) => q.answer),
+      correctAnswers: correctAnswers || (localBank?.questions ? localBank.questions.map(q => q.answer) : []),
       answers,
     };
   }, [selectedReviewKey, progress.attemptedTests, examResult]);
@@ -306,7 +315,8 @@ export default function Results() {
             {(() => {
               const filteredIndices = reviewTestDetails.questions.map((q, idx) => {
                 const userAns = reviewTestDetails.answers?.[idx];
-                const isCorrect = isAnswerCorrect(q, userAns);
+                const correctAns = reviewTestDetails.correctAnswers?.[idx] ?? q?.answer;
+                const isCorrect = isAnswerCorrect(q, userAns, correctAns);
                 const isSkipped = userAns === null || userAns === undefined || userAns === '';
                 const isWrong = !isCorrect && !isSkipped;
 
@@ -326,7 +336,8 @@ export default function Results() {
                     {filteredIndices.map((qIdx) => {
                       const q = reviewTestDetails.questions[qIdx];
                       const userAns = reviewTestDetails.answers?.[qIdx];
-                      const isCorrect = isAnswerCorrect(q, userAns);
+                      const correctAns = reviewTestDetails.correctAnswers?.[qIdx] ?? q?.answer;
+                      const isCorrect = isAnswerCorrect(q, userAns, correctAns);
                       const isSkipped = userAns === null || userAns === undefined || userAns === '';
 
                       let btnClass = "bg-red-50 text-red-700 hover:bg-red-100 border-red-200 shadow-sm";
@@ -370,7 +381,7 @@ export default function Results() {
                           if (!q) return null;
                           const userAns = reviewTestDetails.answers?.[selectedQuestionIdx];
                           const correctAns = reviewTestDetails.correctAnswers?.[selectedQuestionIdx] ?? q.answer;
-                          const isCorrect = isAnswerCorrect(q, userAns);
+                          const isCorrect = isAnswerCorrect(q, userAns, correctAns);
                           const isSkipped = userAns === null || userAns === undefined || userAns === '';
                           const isFillType = q.type === 'fill' || !Array.isArray(q.options);
 
@@ -443,8 +454,8 @@ export default function Results() {
                               ) : (
                                 <div className="space-y-3 pl-0 sm:pl-12">
                                   {q.options.map((option, optIdx) => {
-                                    const isCorrectOpt = optIdx === correctAns;
-                                    const isUserSelectedOpt = optIdx === userAns;
+                                    const isCorrectOpt = String(optIdx) === String(correctAns);
+                                    const isUserSelectedOpt = !isSkipped && String(optIdx) === String(userAns);
                                     
                                     let optStyle = 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50';
                                     let icon = null;
@@ -493,7 +504,7 @@ export default function Results() {
                                 ) : isSkipped ? (
                                   <div className="rounded-xl bg-amber-50 p-4 border border-amber-100">
                                     <p className="text-sm font-bold text-amber-800 flex items-center gap-2">
-                                      <AlertCircle size={18} /> Skipped. Correct answer is {isFillType ? String(correctAns) : `Option ${String.fromCharCode(65 + correctAns)}`}.
+                                      <AlertCircle size={18} /> Skipped. Correct answer is {isFillType ? String(correctAns) : `Option ${String.fromCharCode(65 + Number(correctAns))}`}.
                                     </p>
                                   </div>
                                 ) : (
@@ -501,7 +512,7 @@ export default function Results() {
                                     <p className="text-sm font-bold text-red-800 flex items-center gap-2">
                                       <AlertCircle size={18} /> {isFillType
                                         ? `Incorrect. You entered "${String(userAns)}". Correct answer is "${String(correctAns)}".`
-                                        : `Incorrect. You selected Option ${String.fromCharCode(65 + userAns)}. Correct answer is Option ${String.fromCharCode(65 + correctAns)}.`}
+                                        : `Incorrect. You selected Option ${String.fromCharCode(65 + Number(userAns))}. Correct answer is Option ${String.fromCharCode(65 + Number(correctAns))}.`}
                                     </p>
                                   </div>
                                 )}

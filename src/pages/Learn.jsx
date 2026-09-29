@@ -1,25 +1,35 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Play,
-  Download,
-  FileText,
   Target,
   ExternalLink,
   CalendarDays,
-  BookOpen,
   Lock,
-  Fingerprint,
+  RotateCcw,
 } from 'lucide-react';
 import { dailyLearningPlan, getDayPlan } from '../data/dailyLearningPlan';
 import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
+import TestVerificationModal from '../components/dashboard/TestVerificationModal';
 
 export default function Learn() {
+  const navigate = useNavigate();
   const { progress } = useStudentProgress();
   const [selectedDay, setSelectedDay] = useState(progress.programDay);
+  const [showVerification, setShowVerification] = useState(false);
   const dayPlan = getDayPlan(selectedDay);
+  const isRescheduled = progress.rescheduledTests?.[String(selectedDay)] === true;
+
+  const handleStartRetake = () => {
+    setShowVerification(false);
+    sessionStorage.setItem('exam_verified', 'true');
+    sessionStorage.setItem('exam_test_key', String(selectedDay));
+    navigate('/student/exam');
+  };
 
   return (
+    <>
     <div className="animate-fade-in space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Daily Learning Module</h1>
@@ -38,6 +48,7 @@ export default function Learn() {
           {dailyLearningPlan.map((plan) => {
             const active = plan.day === selectedDay;
             const locked = plan.day > ACTIVE_PROGRAM_DAY;
+            const dayRescheduled = progress.rescheduledTests?.[String(plan.day)] === true;
             return (
               <button
                 key={plan.day}
@@ -45,21 +56,26 @@ export default function Learn() {
                 disabled={locked}
                 className={`group min-w-[120px] shrink-0 rounded-xl border px-3 py-2.5 text-center transition-all flex flex-col items-center justify-center overflow-hidden relative ${
                   active
-                    ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                    ? dayRescheduled
+                      ? 'border-amber-400 bg-amber-50 ring-2 ring-amber-200'
+                      : 'border-primary bg-primary/5 ring-2 ring-primary/20'
                     : locked
                     ? 'border-gray-200 bg-gray-50 cursor-not-allowed'
+                    : dayRescheduled
+                    ? 'border-amber-300 bg-amber-50/70 hover:border-amber-400 cursor-pointer'
                     : 'border-gray-200 bg-white hover:border-primary/30 hover:bg-gray-50 cursor-pointer'
                 }`}
               >
                 {locked && <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-0"></div>}
                 <div className="flex items-center gap-1.5 z-10">
-                  <p className={`text-xs font-bold transition-colors ${active ? 'text-primary' : locked ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <p className={`text-xs font-bold transition-colors ${active ? (dayRescheduled ? 'text-amber-700' : 'text-primary') : locked ? 'text-gray-400' : dayRescheduled ? 'text-amber-700' : 'text-gray-600'}`}>
                     DAY {plan.day}
                   </p>
                   {locked && <Lock size={12} className="text-gray-400" />}
+                  {!locked && dayRescheduled && <RotateCcw size={12} className="text-amber-600" />}
                 </div>
                 <p className={`mt-1 text-[10px] font-medium z-10 ${active ? 'text-gray-800' : locked ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {locked ? plan.title : plan.title}
+                  {dayRescheduled && !locked ? 'Retake available' : plan.title}
                 </p>
               </button>
             );
@@ -76,9 +92,16 @@ export default function Learn() {
             </p>
             <h2 className="mt-2 text-xl font-bold text-gray-900">{dayPlan.title}</h2>
           </div>
-          <span className={`rounded-full px-3 py-1 text-xs font-semibold ${selectedDay === progress.programDay ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`}>
-            {selectedDay === progress.programDay ? 'Active Day' : 'Review Mode'}
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            {isRescheduled && (
+              <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 border border-amber-200">
+                Retake Granted
+              </span>
+            )}
+            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${selectedDay === progress.programDay ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`}>
+              {selectedDay === progress.programDay ? 'Active Day' : 'Review Mode'}
+            </span>
+          </div>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -101,6 +124,25 @@ export default function Learn() {
             <p className="mt-1 text-sm leading-relaxed text-gray-600">{dayPlan.learningGoal}</p>
           </div>
         </div>
+
+        {isRescheduled && (
+          <div className="mt-5 flex flex-col gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-bold text-amber-900">Admin granted a retake for Day {selectedDay}</p>
+              <p className="mt-1 text-xs text-amber-800">
+                You can attempt this day&apos;s exam again. Complete verification to start.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowVerification(true)}
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-amber-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-amber-700"
+            >
+              <RotateCcw size={16} />
+              Retake Test
+            </button>
+          </div>
+        )}
       </section>
 
       <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -155,6 +197,14 @@ export default function Learn() {
         </div>
       </section>
     </div>
+
+    {showVerification && (
+      <TestVerificationModal
+        onClose={() => setShowVerification(false)}
+        onStart={handleStartRetake}
+      />
+    )}
+    </>
   );
 }
 

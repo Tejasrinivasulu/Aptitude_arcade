@@ -50,10 +50,17 @@ function isAnswerCorrect(question, userAnswer) {
 async function loadQuestionsForTest(testKey) {
   const key = String(testKey);
   if (PROGRAM_DAY_KEYS.includes(key)) {
+    const expectedCount = (key === '2' || key === '3') ? 25 : 30;
+    const expectedVersion = (key === '2' || key === '3') ? 2 : 1;
     const bankSnap = await db.collection('question_banks').doc(key).get();
     if (bankSnap.exists) {
       const bank = bankSnap.data();
-      if (Array.isArray(bank.questions) && bank.questions.length > 0) {
+      const firestoreVersion = bank.questionBankVersion ?? 0;
+      if (
+        Array.isArray(bank.questions) &&
+        bank.questions.length === expectedCount &&
+        firestoreVersion >= expectedVersion
+      ) {
         const defaultDuration = dayDurationSeconds(key);
         return {
           questions: bank.questions,

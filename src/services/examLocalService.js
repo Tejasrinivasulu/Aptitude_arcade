@@ -69,13 +69,23 @@ function scoreAnswers(questions, answers) {
 async function loadQuestions(testKey) {
   const key = String(testKey);
 
-  // 1. Primary: Firestore published questions (always use if present)
+  // 1. Check local bundled bank version
+  const localBank = LOCAL_BANKS[key];
+  const minRequiredVersion = localBank?.questionBankVersion ?? 1;
+  const expectedCount = (key === '2' || key === '3') ? 25 : (localBank?.questions?.length || 30);
+
+  // 2. Primary: Firestore published questions (only if matching current version & question count)
   if (isFirebaseReady() && db) {
     try {
       const bankSnap = await getDoc(doc(db, 'question_banks', key));
       if (bankSnap.exists()) {
         const bank = bankSnap.data();
-        if (Array.isArray(bank.questions) && bank.questions.length > 0) {
+        const firestoreVersion = bank.questionBankVersion ?? 0;
+        if (
+          Array.isArray(bank.questions) &&
+          bank.questions.length === expectedCount &&
+          firestoreVersion >= minRequiredVersion
+        ) {
           const defaultDur = (key === '2' || key === '3') ? 25 : 30;
           return {
             questions: bank.questions,

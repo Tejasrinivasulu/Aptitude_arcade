@@ -335,8 +335,17 @@ export const listenToQuestionBank = (dayKey, callback) => {
     doc(db, 'question_banks', String(dayKey)),
     (snap) => {
       if (snap.exists()) {
-        callback({ id: snap.id, ...snap.data() });
-        return;
+        const data = snap.data();
+        const expectedCount = ['2', '3'].includes(String(dayKey)) ? 25 : 30;
+        const expectedVersion = ['2', '3'].includes(String(dayKey)) ? 2 : 1;
+        if (
+          Array.isArray(data.questions) &&
+          data.questions.length === expectedCount &&
+          (data.questionBankVersion ?? 0) >= expectedVersion
+        ) {
+          callback({ id: snap.id, ...data });
+          return;
+        }
       }
       callback(
         OFFLINE_BANKS[dayKey]

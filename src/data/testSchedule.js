@@ -72,14 +72,15 @@ const TOPIC_TITLES = [
 export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) => {
   const day = idx + 1;
   const title = TOPIC_TITLES[idx] || `Day ${day} Assessment`;
+  const is25 = day === 2 || day === 3;
   return {
     id: day,
     day,
     title,
     topics: [title],
     testDate: getRelativeDateStr(idx),
-    questions: 30,
-    durationMinutes: 30,
+    questions: is25 ? 25 : 30,
+    durationMinutes: is25 ? 25 : 30,
   };
 });
 

@@ -23,13 +23,17 @@ export function getExamMeta(testKey) {
   }
   const day = Number(testKey) || 1;
   const topic = DAY_TOPICS[String(day)] || `Day ${day} Aptitude`;
+  const is25Min = day === 2 || day === 3;
+  const totalQuestions = is25Min ? 25 : EXAM_TOTAL_QUESTIONS;
+  const durationMinutes = is25Min ? 25 : 30;
+  const durationSeconds = durationMinutes * 60;
   return {
     testKey: String(day),
     title: `Day ${day} Assessment`,
     topicLabel: topic,
-    totalQuestions: EXAM_TOTAL_QUESTIONS,
-    durationSeconds: EXAM_DURATION_SECONDS,
-    durationMinutes: 30,
+    totalQuestions,
+    durationSeconds,
+    durationMinutes,
   };
 }
 

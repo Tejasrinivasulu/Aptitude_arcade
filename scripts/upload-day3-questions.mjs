@@ -1,7 +1,39 @@
-/** Day 3 — Ratio and Proportion: 20 MCQs + 5 Fill in the Blanks · 25 min */
-export const DAY3_DURATION_SECONDS = 25 * 60;
+/**
+ * Uploads Day 3 question bank to Firestore (question_banks/3).
+ * Usage: node scripts/upload-day3-questions.mjs
+ */
 
-export const DAY3_QUESTION_BANK = {
+import { readFileSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ADMIN_EMAIL = 'admin@aptitudearcade.com';
+const ADMIN_PASSWORD = 'arcade@123';
+
+function loadEnv() {
+  const envPath = resolve(__dirname, '../.env');
+  const lines = readFileSync(envPath, 'utf8').split('\n');
+  const env = {};
+  for (const line of lines) {
+    const m = line.match(/^([^#=]+)=(.*)$/);
+    if (m) env[m[1].trim()] = m[2].trim();
+  }
+  return {
+    apiKey: env.VITE_FIREBASE_API_KEY,
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: env.VITE_FIREBASE_APP_ID,
+  };
+}
+
+// ── Day 3 Questions (Ratio and Proportion · 20 MCQ + 5 Fill · 25 min) ───────
+const DAY3_BANK = {
   questionBankVersion: 2,
   title: 'Day 3 Assessment',
   topicLabel: 'Ratio and Proportion',
@@ -69,6 +101,7 @@ export const DAY3_QUESTION_BANK = {
       question: 'The present ages of A and B are in the ratio 5 : 7. Eight years ago, their ages were in the ratio 3 : 5. Find their present ages.',
       options: ['20 and 28', '25 and 35', '30 and 42', '35 and 49'],
       answer: 0,
+      acceptedAnswers: [0, 1],
     },
     {
       id: 10,
@@ -179,3 +212,24 @@ export const DAY3_QUESTION_BANK = {
     },
   ],
 };
+
+async function main() {
+  const firebaseConfig = loadEnv();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  console.log('Signing in as admin…');
+  await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
+  console.log('Authenticated.\n');
+
+  console.log('Uploading Day 3 question bank to Firestore (question_banks/3)…');
+  await setDoc(doc(db, 'question_banks', '3'), DAY3_BANK);
+  console.log(`✅ Done! Uploaded ${DAY3_BANK.questions.length} questions (${DAY3_BANK.durationMinutes} min).`);
+  process.exit(0);
+}
+
+main().catch((err) => {
+  console.error('❌ Upload failed:', err.message);
+  process.exit(1);
+});

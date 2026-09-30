@@ -336,8 +336,8 @@ export const listenToQuestionBank = (dayKey, callback) => {
     (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        const expectedCount = ['2', '3'].includes(String(dayKey)) ? 25 : 30;
-        const expectedVersion = ['2', '3'].includes(String(dayKey)) ? 2 : 1;
+        const expectedCount = ['2', '3', '4'].includes(String(dayKey)) ? 25 : 30;
+        const expectedVersion = ['2', '3', '4'].includes(String(dayKey)) ? 2 : 1;
         if (
           Array.isArray(data.questions) &&
           data.questions.length === expectedCount &&
@@ -353,7 +353,7 @@ export const listenToQuestionBank = (dayKey, callback) => {
           : {
               title: `Day ${dayKey} Assessment`,
               topicLabel: DAY_TOPICS[dayKey] || `Day ${dayKey}`,
-              durationMinutes: ['2', '3'].includes(dayKey) ? 25 : ['1', '4'].includes(dayKey) ? 30 : 20,
+              durationMinutes: ['2', '3', '4'].includes(dayKey) ? 25 : ['1'].includes(dayKey) ? 30 : 20,
               questions: [],
               lastPublishedAt: null,
             }

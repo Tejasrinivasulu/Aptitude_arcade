@@ -24,7 +24,7 @@ const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
   const k = String(testKey);
-  if (k === '2' || k === '3') return 25 * 60;
+  if (k === '2' || k === '3' || k === '4') return 25 * 60;
   if (PROGRAM_DAY_KEYS.includes(k)) return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }
@@ -50,8 +50,8 @@ function isAnswerCorrect(question, userAnswer) {
 async function loadQuestionsForTest(testKey) {
   const key = String(testKey);
   if (PROGRAM_DAY_KEYS.includes(key)) {
-    const expectedCount = (key === '2' || key === '3') ? 25 : 30;
-    const expectedVersion = (key === '2' || key === '3') ? 2 : 1;
+    const expectedCount = (key === '2' || key === '3' || key === '4') ? 25 : 30;
+    const expectedVersion = (key === '2' || key === '3' || key === '4') ? 2 : 1;
     const bankSnap = await db.collection('question_banks').doc(key).get();
     if (bankSnap.exists) {
       const bank = bankSnap.data();

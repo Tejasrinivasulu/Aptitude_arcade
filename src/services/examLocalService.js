@@ -75,7 +75,7 @@ async function loadQuestions(testKey) {
   // 1. Check local bundled bank version
   const localBank = LOCAL_BANKS[key];
   const minRequiredVersion = localBank?.questionBankVersion ?? 1;
-  const expectedCount = (key === '2' || key === '3') ? 25 : (localBank?.questions?.length || 30);
+  const expectedCount = (key === '2' || key === '3' || key === '4') ? 25 : (localBank?.questions?.length || 30);
 
   // 2. Primary: Firestore published questions (only if matching current version & question count)
   if (isFirebaseReady() && db) {
@@ -89,7 +89,7 @@ async function loadQuestions(testKey) {
           bank.questions.length === expectedCount &&
           firestoreVersion >= minRequiredVersion
         ) {
-          const defaultDur = (key === '2' || key === '3') ? 25 : 30;
+          const defaultDur = (key === '2' || key === '3' || key === '4') ? 25 : 30;
           return {
             questions: bank.questions,
             durationSeconds: (bank.durationMinutes || defaultDur) * 60,

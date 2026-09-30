@@ -35,6 +35,7 @@ const BRANCHES = [
   'Information Technology (IT)',
   'Electronics & Communication Engineering (ECE)',
   'Electrical Engineering (EEE)',
+  'Electronics & Instrumentation Engineering (EIE)',
   'Mechanical Engineering',
   'Civil Engineering',
   'Other',

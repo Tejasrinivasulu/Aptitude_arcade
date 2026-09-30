@@ -21,6 +21,7 @@ import {
   TOTAL_PROGRAM_DAYS,
   formatDisplayDate,
   formatWindowRangeLabel,
+  isCatchupActive,
 } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
 import TestVerificationModal from '../components/dashboard/TestVerificationModal';
@@ -167,6 +168,31 @@ export default function TakeTest() {
           </section>
         </section>
 
+        <section className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div className="border-b border-gray-100 px-6 py-4 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 className="font-bold text-gray-900">📅 Daily Test Schedule</h2>
+              <p className="text-xs text-gray-500">
+                Aptitude Arcade 2026 — 14-day progressive test series.
+              </p>
+            </div>
+            {isCatchupActive() && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                ✨ Catch-Up Window Active (Days 1–4 open until Friday 11:59 PM)
+              </span>
+            )}
+          </div>
+          <div className="divide-y divide-gray-100">
+            {dailyTests.map((test) => (
+              <DailyTestRow
+                key={test.day}
+                test={test}
+                progress={progress}
+                onStart={openVerification}
+              />
+            ))}
+          </div>
+        </section>
 
       </div>
 
@@ -193,7 +219,7 @@ function DailyTestRow({ test, progress, onStart }) {
   const active = test.day === assignedDay;
   const locked = test.day > assignedDay;
   const isRescheduled = progress.rescheduledTests?.[String(test.day)] === true;
-  const canStart = availability.canStart && (isRescheduled || (countdown.isReady && !countdown.isExpired));
+  const canStart = availability.canStart && (isRescheduled || availability.status === 'open' || (countdown.isReady && !countdown.isExpired));
   const showExpired = availability.status === 'missed' || availability.label === 'Expired';
 
   return (
@@ -220,7 +246,9 @@ function DailyTestRow({ test, progress, onStart }) {
           {formatDisplayDate(test.testDate)} · {locked ? '?? Q' : `${test.questions} Q`} · {test.durationMinutes} min
         </p>
         <div className="mt-2">
-          {showExpired ? (
+          {availability.status === 'completed' ? (
+            <span className="font-mono text-xs font-semibold text-green-700">{availability.message}</span>
+          ) : showExpired ? (
             <span className="font-mono text-xs font-semibold text-red-600">Expired</span>
           ) : (
             <TestCountdown testDate={test.testDate} testKey={test.day} compact />
@@ -235,7 +263,7 @@ function DailyTestRow({ test, progress, onStart }) {
           disabled={!canStart}
           className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Start
+          {availability.status === 'completed' ? 'Completed' : 'Start'}
         </button>
       </div>
     </div>

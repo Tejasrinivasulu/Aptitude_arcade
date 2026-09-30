@@ -38,6 +38,22 @@ export const TOTAL_PROGRAM_DAYS = 14;
 
 export const PROGRAM_DAY_KEYS = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, i) => String(i + 1));
 
+/** Catch-Up Grace Period: Unattempted Days 1–4 are open from Thursday 10:00 AM to Friday 11:59:59 PM IST */
+export const CATCHUP_WINDOW_START = '2026-10-01T10:00:00+05:30';
+export const CATCHUP_WINDOW_END = '2026-10-02T23:59:59+05:30';
+export const CATCHUP_MAX_DAY = 4;
+
+export function isCatchupActive(now = new Date()) {
+  const start = new Date(CATCHUP_WINDOW_START);
+  const end = new Date(CATCHUP_WINDOW_END);
+  return now >= start && now <= end;
+}
+
+export function isCatchupEligible(testKey) {
+  const num = Number(testKey);
+  return num >= 1 && num <= CATCHUP_MAX_DAY;
+}
+
 /** Calculate active program day based on calendar timeline (1 to 14) */
 export function calculateActiveProgramDay(now = new Date()) {
   const start = new Date(`${SERIES_START_DATE}T00:00:00+05:30`);
@@ -207,6 +223,24 @@ export function getStudentProgramDay(currentDay = 1) {
 }
 
 export function computeTestCountdown(testDate, now = new Date(), testKey = null) {
+  const numKey = Number(testKey);
+  if (numKey && isCatchupActive(now) && isCatchupEligible(numKey)) {
+    const catchupEnd = new Date(CATCHUP_WINDOW_END);
+    const diffMs = Math.max(0, catchupEnd.getTime() - now.getTime());
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return {
+      hours,
+      minutes,
+      seconds,
+      isReady: true,
+      isExpired: false,
+      totalMs: diffMs,
+    };
+  }
+
   const { start, end } = getWindowBoundsForDate(testDate);
 
   // During bypass for Day 1: keep window live until the configured end bound
@@ -354,6 +388,20 @@ export function getTestAvailability({
       message: `Grand Finale unlocks after all ${TOTAL_PROGRAM_DAYS} daily tests are complete.`,
       test,
       countdown: computeTestCountdown(test.testDate, now, testKey),
+    };
+  }
+
+  // Catch-Up Grace Period: Unattempted tests for Days 1–4 are open until Friday, Oct 2 at 11:59 PM IST
+  if (isCatchupActive(now) && isCatchupEligible(testDayNum)) {
+    const catchupCountdown = computeTestCountdown(test.testDate, now, testKey);
+    return {
+      status: 'open',
+      label: 'Open Now',
+      color: 'green',
+      canStart: true,
+      message: 'Catch-up window is open until Friday, Oct 2 at 11:59 PM IST.',
+      test,
+      countdown: catchupCountdown,
     };
   }
 

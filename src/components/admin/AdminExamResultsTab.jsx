@@ -1,11 +1,42 @@
+<<<<<<< HEAD
 import { useState, useMemo } from 'react';
 import { ClipboardList, Search, X } from 'lucide-react';
 import { formatIST, getTotalViolations } from '../../utils/adminData';
 import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
+=======
+import { useMemo, useState } from 'react';
+import { ClipboardList, Users } from 'lucide-react';
+import { filterStudents, formatIST, getTotalViolations } from '../../utils/adminData';
+>>>>>>> a5ab288 (results modified)
 
 const PER_PAGE = 10;
+const SUMMARY_DAYS = ['1', '2', '3'];
 
+<<<<<<< HEAD
 export default function AdminExamResultsTab({ allResults = [] }) {
+=======
+/** Unique members who completed a day (from user profiles + exam result rows). */
+function countMembersCompleted(students, results, testKey) {
+  const key = String(testKey);
+  const ids = new Set();
+
+  students.forEach((u) => {
+    if (u.attemptedTests?.[key]) {
+      ids.add(String(u.id));
+    }
+  });
+
+  results.forEach((r) => {
+    if (String(r.testKey) !== key) return;
+    const id = r.uid || r.rollNumber || r.email;
+    if (id) ids.add(String(id));
+  });
+
+  return ids.size;
+}
+
+export default function AdminExamResultsTab({ allResults, users = [] }) {
+>>>>>>> a5ab288 (results modified)
   const [page, setPage] = useState(1);
   const [selectedDay, setSelectedDay] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -67,7 +98,19 @@ export default function AdminExamResultsTab({ allResults = [] }) {
     setPage(1);
   };
 
+  const students = useMemo(() => filterStudents(users), [users]);
+
+  const dayCompletionCounts = useMemo(
+    () =>
+      SUMMARY_DAYS.map((day) => ({
+        day,
+        count: countMembersCompleted(students, results, day),
+      })),
+    [students, results]
+  );
+
   return (
+<<<<<<< HEAD
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden animate-fade-in">
       <div className="p-6 border-b border-gray-100 bg-gray-50">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -229,6 +272,86 @@ export default function AdminExamResultsTab({ allResults = [] }) {
           >
             Next
           </button>
+=======
+    <div className="space-y-6 animate-fade-in">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {dayCompletionCounts.map(({ day, count }) => (
+          <div
+            key={day}
+            className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-5 shadow-sm"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                  Day {day} Exam
+                </p>
+                <p className="mt-2 text-4xl font-black text-gray-900 tabular-nums">{count}</p>
+                <p className="mt-1 text-sm font-semibold text-gray-600">
+                  {count === 1 ? 'member completed' : 'members completed'}
+                </p>
+              </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
+                <Users size={22} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-gray-100 bg-gray-50">
+          <h2 className="text-xl font-black flex items-center gap-2">
+            <ClipboardList size={24} className="text-blue-600" /> Exam Results
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">{results.length} submissions · demo data filtered out</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="text-xs uppercase text-gray-400 border-b border-gray-200">
+                <th className="p-4 font-bold">Student</th>
+                <th className="p-4 font-bold">Roll No</th>
+                <th className="p-4 font-bold">Test</th>
+                <th className="p-4 font-bold">Score</th>
+                <th className="p-4 font-bold">Submitted At (IST)</th>
+                <th className="p-4 font-bold">Tab</th>
+                <th className="p-4 font-bold">Face</th>
+                <th className="p-4 font-bold">Total</th>
+                <th className="p-4 font-bold">Reason</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {current.length === 0 ? (
+                <tr><td colSpan={9} className="p-12 text-center text-gray-500">No exam results yet.</td></tr>
+              ) : (
+                current.map((r) => (
+                  <tr key={r.id} className="hover:bg-gray-50">
+                    <td className="p-4 font-bold">{r.fullName || '—'}</td>
+                    <td className="p-4">{r.rollNumber || '—'}</td>
+                    <td className="p-4">{r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}</td>
+                    <td className="p-4 font-bold">{r.score}/{r.total} ({r.percentage}%)</td>
+                    <td className="p-4 text-xs text-gray-500">{formatIST(r.submittedAt)}</td>
+                    <td className="p-4">{r.tabViolations || 0}</td>
+                    <td className="p-4">{r.faceWarnings || 0}</td>
+                    <td className="p-4">
+                      <span className={`font-bold ${getTotalViolations(r) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                        {getTotalViolations(r)}
+                      </span>
+                    </td>
+                    <td className="p-4 text-xs">{r.submitReason || (r.autoSubmit ? 'tab_limit' : 'manual')}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 border-t bg-gray-50 flex justify-between items-center">
+          <span className="text-xs font-bold text-gray-500">Page {page} of {totalPages}</span>
+          <div className="flex gap-2">
+            <button type="button" disabled={page === 1} onClick={() => setPage((p) => p - 1)} className="px-4 py-2 text-xs font-bold border rounded disabled:opacity-50">Previous</button>
+            <button type="button" disabled={page === totalPages} onClick={() => setPage((p) => p + 1)} className="px-4 py-2 text-xs font-bold border rounded disabled:opacity-50">Next</button>
+          </div>
+>>>>>>> a5ab288 (results modified)
         </div>
       </div>
     </div>

@@ -252,7 +252,7 @@ export default function AdminDashboard() {
                 studentProgress={studentProgress}
               />
             )}
-            {activeTab === 'results' && <AdminExamResultsTab allResults={enrichedResults} />}
+            {activeTab === 'results' && <AdminExamResultsTab allResults={enrichedResults} users={users} />}
             {activeTab === 'content' && <AdminContentTab />}
             {activeTab === 'queries' && <AdminQueriesTab helpRequests={enrichedHelpRequests} />}
           </>

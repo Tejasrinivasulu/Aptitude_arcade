@@ -1,4 +1,5 @@
 import { getDayPlan } from './dailyLearningPlan.js';
+import { getTrustedNow } from '../utils/serverTime.js';
 
 export const TEST_START_HOUR = 10;
 export const TEST_START_MINUTE = 0;
@@ -43,7 +44,7 @@ export const CATCHUP_WINDOW_START = '2026-10-01T10:00:00+05:30';
 export const CATCHUP_WINDOW_END = '2026-10-02T23:59:59+05:30';
 export const CATCHUP_MAX_DAY = 4;
 
-export function isCatchupActive(now = new Date()) {
+export function isCatchupActive(now = getTrustedNow()) {
   const start = new Date(CATCHUP_WINDOW_START);
   const end = new Date(CATCHUP_WINDOW_END);
   return now >= start && now <= end;
@@ -55,7 +56,7 @@ export function isCatchupEligible(testKey) {
 }
 
 /** Calculate active program day based on calendar timeline (1 to 14) */
-export function calculateActiveProgramDay(now = new Date()) {
+export function calculateActiveProgramDay(now = getTrustedNow()) {
   const start = new Date(`${SERIES_START_DATE}T00:00:00+05:30`);
   const diffDays = Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
   if (diffDays < 1) return 1;
@@ -179,7 +180,7 @@ export function getWindowBoundsForDate(dateStr) {
   return { start, end };
 }
 
-export function getCalendarDayFromDate(now = new Date()) {
+export function getCalendarDayFromDate(now = getTrustedNow()) {
   const match = dailyTests.find((test) => isSameDay(parseDateOnly(test.testDate), now));
   return match?.day ?? null;
 }
@@ -195,7 +196,7 @@ export function getPerformanceLevel(percentage) {
   return { label: 'Improve', emoji: '📈' };
 }
 
-export function getTestWindowPhase(testDate, now = new Date()) {
+export function getTestWindowPhase(testDate, now = getTrustedNow()) {
   const { start, end } = getWindowBoundsForDate(testDate);
 
   if (now < start) return 'before_window';
@@ -209,20 +210,20 @@ export function getTestWindowPhase(testDate, now = new Date()) {
   return 'upcoming';
 }
 
-export function getActiveProgramDay() {
-  return calculateActiveProgramDay();
+export function getActiveProgramDay(now = getTrustedNow()) {
+  return calculateActiveProgramDay(now);
 }
 
 /** Calendar program day — today's live assigned test */
-export function getTodaysAssignedDay() {
-  return calculateActiveProgramDay();
+export function getTodaysAssignedDay(now = getTrustedNow()) {
+  return calculateActiveProgramDay(now);
 }
 
 export function getStudentProgramDay(currentDay = 1) {
   return Math.min(Number(currentDay) || 1, getActiveProgramDay());
 }
 
-export function computeTestCountdown(testDate, now = new Date(), testKey = null) {
+export function computeTestCountdown(testDate, now = getTrustedNow(), testKey = null) {
   const numKey = Number(testKey);
   if (numKey && isCatchupActive(now) && isCatchupEligible(numKey)) {
     const catchupEnd = new Date(CATCHUP_WINDOW_END);
@@ -323,7 +324,7 @@ export function getTestAvailability({
   attemptedTests = {},
   rescheduledTests = {},
   currentDay = 1,
-  now = new Date(),
+  now = getTrustedNow(),
 }) {
   const isFinale = testKey === 'finale';
   const key = String(testKey);
@@ -331,7 +332,7 @@ export function getTestAvailability({
   const attempt = attemptedTests[key];
   const isRescheduled = rescheduledTests[key] === true;
   const testDayNum = Number(testKey);
-  const activeDay = getActiveProgramDay();
+  const activeDay = getActiveProgramDay(now);
 
   const expiredCountdown = {
     hours: 0,

@@ -158,6 +158,33 @@ exports.startExam = onCall(async (request) => {
       throw new HttpsError('failed-precondition', 'Test already completed.');
     }
 
+    // Verify test availability according to Google Cloud atomic server time
+    const serverNowMs = Date.now();
+    const catchupStart = new Date('2026-10-01T10:00:00+05:30').getTime();
+    const catchupEnd = new Date('2026-10-02T23:59:59+05:30').getTime();
+    const isCatchup = serverNowMs >= catchupStart && serverNowMs <= catchupEnd && Number(testKey) >= 1 && Number(testKey) <= 4;
+
+    if (!rescheduled && !isCatchup && testKey !== 'finale') {
+      const dayNum = Number(testKey);
+      const seriesStartMs = new Date('2026-09-28T00:00:00+05:30').getTime();
+      const diffDays = Math.floor((serverNowMs - seriesStartMs) / (1000 * 60 * 60 * 24)) + 1;
+
+      if (dayNum > diffDays) {
+        throw new HttpsError('failed-precondition', `Day ${testKey} is locked and opens on its scheduled date.`);
+      }
+
+      // Check window bounds: opens day X 10:00 AM IST, closes day X+1 12:00 PM (noon) IST
+      const windowStartMs = seriesStartMs + (dayNum - 1) * 24 * 3600 * 1000 + 10 * 3600 * 1000;
+      const windowEndMs = seriesStartMs + dayNum * 24 * 3600 * 1000 + 12 * 3600 * 1000;
+
+      if (serverNowMs < windowStartMs) {
+        throw new HttpsError('failed-precondition', `Day ${testKey} exam has not opened yet.`);
+      }
+      if (serverNowMs > windowEndMs) {
+        throw new HttpsError('failed-precondition', `Day ${testKey} exam window has expired.`);
+      }
+    }
+
     if (testKey === 'finale') {
       const completedCount = Object.keys(attemptedTests).filter(k => k !== 'finale').length;
       if (completedCount < 14) {

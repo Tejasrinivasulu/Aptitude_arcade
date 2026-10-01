@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { syncServerTime } from './utils/serverTime';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { StudentProgressProvider } from './context/StudentProgressContext';
@@ -26,6 +28,10 @@ function isBeforeEventStart() {
 }
 
 export default function App() {
+  useEffect(() => {
+    syncServerTime();
+  }, []);
+
   // KILL SWITCH: Set this to true to lock down the site after event ends.
   const isEventOver = false;
 

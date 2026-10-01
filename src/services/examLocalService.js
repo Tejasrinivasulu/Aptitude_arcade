@@ -7,7 +7,8 @@ import { DAY3_DURATION_SECONDS, DAY3_QUESTION_BANK } from '../data/day3QuestionB
 import { DAY4_DURATION_SECONDS, DAY4_QUESTION_BANK } from '../data/day4QuestionBank';
 import { DAY5_DURATION_SECONDS, DAY5_QUESTION_BANK } from '../data/day5QuestionBank';
 import { getExamMeta } from '../data/examQuestions';
-import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '../data/testSchedule';
+import { getTestAvailability, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '../data/testSchedule';
+import { getTrustedNow } from '../utils/serverTime';
 
 const SESSION_KEY = 'exam_local_session';
 
@@ -157,24 +158,38 @@ export async function startExamLocal(testKey) {
     throw new Error(`Day ${key} is not part of the 14-day program.`);
   }
 
-  if (!DEMO_SCHEDULE_BYPASS && Number(key) > ACTIVE_PROGRAM_DAY && key !== 'finale') {
-    throw new Error(`Only Day ${ACTIVE_PROGRAM_DAY} exam is active right now.`);
-  }
+  let attemptedTests = {};
+  let rescheduledTests = {};
 
   if (isFirebaseReady() && db) {
     const userSnap = await getDoc(doc(db, 'users', uid));
     if (userSnap.exists()) {
       const userData = userSnap.data();
       if (userData.suspended) throw new Error('Account is suspended.');
+      attemptedTests = userData.attemptedTests || {};
+    }
 
-      const progressSnap = await getDoc(doc(db, 'student_progress', uid));
-      const rescheduled = progressSnap.exists()
-        ? progressSnap.data().rescheduledTests?.[key] === true
-        : false;
+    const progressSnap = await getDoc(doc(db, 'student_progress', uid));
+    if (progressSnap.exists()) {
+      rescheduledTests = progressSnap.data().rescheduledTests || {};
+    }
+  }
 
-      if (userData.attemptedTests?.[key] && !rescheduled) {
-        throw new Error('Test already completed.');
-      }
+  const rescheduled = rescheduledTests[key] === true;
+  if (attemptedTests[key] && !rescheduled) {
+    throw new Error('Test already completed.');
+  }
+
+  if (!DEMO_SCHEDULE_BYPASS) {
+    const availability = getTestAvailability({
+      testKey: key,
+      attemptedTests,
+      rescheduledTests,
+      now: getTrustedNow(),
+    });
+
+    if (!availability.canStart) {
+      throw new Error(availability.message || `Test for Day ${key} is currently locked or expired.`);
     }
   }
 

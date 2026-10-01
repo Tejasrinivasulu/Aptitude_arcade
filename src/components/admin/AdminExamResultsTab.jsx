@@ -36,22 +36,9 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
   const dayCounts = useMemo(() => {
     const keys = [...PROGRAM_DAY_KEYS, 'finale'];
     const counts = {};
-    let allUnique = new Set();
 
     keys.forEach((key) => {
-      const count = countMembersTaken(students, allResults, key);
-      counts[key] = count;
-    });
-
-    students.forEach((u) => {
-      const attempted = u.attemptedTests || {};
-      Object.keys(attempted).forEach((key) => {
-        if (key) allUnique.add(String(u.id));
-      });
-    });
-    allResults.forEach((r) => {
-      const id = r.uid || r.rollNumber || r.email;
-      if (id) allUnique.add(String(id));
+      counts[key] = countMembersTaken(students, allResults, key);
     });
 
     // Also include any unexpected test keys from results
@@ -62,7 +49,12 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
       }
     });
 
-    counts.all = allUnique.size;
+    // All Days = total exams taken across every day (sum of each day's members taken)
+    counts.all = Object.entries(counts).reduce((sum, [key, value]) => {
+      if (key === 'all') return sum;
+      return sum + (Number(value) || 0);
+    }, 0);
+
     return counts;
   }, [students, allResults]);
 

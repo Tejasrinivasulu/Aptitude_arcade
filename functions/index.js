@@ -24,7 +24,7 @@ const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
   const k = String(testKey);
-  if (k === '2' || k === '3' || k === '4') return 25 * 60;
+  if (['2', '3', '4', '5'].includes(k)) return 25 * 60;
   if (PROGRAM_DAY_KEYS.includes(k)) return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }
@@ -35,6 +35,7 @@ function normalizeAnswer(value) {
     .trim()
     .toLowerCase()
     .replace(/^(₹|rs\.?)\s*/i, '')
+    .replace(/%\s*$/, '')
     .replace(/\s*:\s*/g, ':')
     .trim();
 }
@@ -42,7 +43,18 @@ function normalizeAnswer(value) {
 function isAnswerCorrect(question, userAnswer) {
   if (userAnswer === null || userAnswer === undefined || userAnswer === '') return false;
   if (question.type === 'fill') {
-    return normalizeAnswer(userAnswer) === normalizeAnswer(question.answer);
+    const normUser = normalizeAnswer(userAnswer);
+    const normTarget = normalizeAnswer(question.answer);
+    if (normUser === normTarget) return true;
+    if (Array.isArray(question.acceptableAnswers)) {
+      if (question.acceptableAnswers.some((ans) => normalizeAnswer(ans) === normUser)) return true;
+    }
+    const numUser = parseFloat(normUser);
+    const numTarget = parseFloat(normTarget);
+    if (!isNaN(numUser) && !isNaN(numTarget)) {
+      if (Math.abs(numUser - numTarget) <= 0.05) return true;
+    }
+    return false;
   }
   return userAnswer === question.answer;
 }
@@ -50,8 +62,8 @@ function isAnswerCorrect(question, userAnswer) {
 async function loadQuestionsForTest(testKey) {
   const key = String(testKey);
   if (PROGRAM_DAY_KEYS.includes(key)) {
-    const expectedCount = (key === '2' || key === '3' || key === '4') ? 25 : 30;
-    const expectedVersion = (key === '2' || key === '3' || key === '4') ? 2 : 1;
+    const expectedCount = ['2', '3', '4', '5'].includes(key) ? 25 : 30;
+    const expectedVersion = ['2', '3', '4', '5'].includes(key) ? 2 : 1;
     const bankSnap = await db.collection('question_banks').doc(key).get();
     if (bankSnap.exists) {
       const bank = bankSnap.data();

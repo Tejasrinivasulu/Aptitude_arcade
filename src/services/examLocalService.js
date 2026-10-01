@@ -5,6 +5,7 @@ import { DAY1_DURATION_SECONDS, DAY1_QUESTION_BANK } from '../data/day1QuestionB
 import { DAY2_DURATION_SECONDS, DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
 import { DAY3_DURATION_SECONDS, DAY3_QUESTION_BANK } from '../data/day3QuestionBank';
 import { DAY4_DURATION_SECONDS, DAY4_QUESTION_BANK } from '../data/day4QuestionBank';
+import { DAY5_DURATION_SECONDS, DAY5_QUESTION_BANK } from '../data/day5QuestionBank';
 import { getExamMeta } from '../data/examQuestions';
 import { ACTIVE_PROGRAM_DAY, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '../data/testSchedule';
 
@@ -15,6 +16,7 @@ export const LOCAL_BANKS = {
   '2': { questions: DAY2_QUESTION_BANK.questions, durationSeconds: DAY2_DURATION_SECONDS, questionBankVersion: DAY2_QUESTION_BANK.questionBankVersion ?? 1 },
   '3': { questions: DAY3_QUESTION_BANK.questions, durationSeconds: DAY3_DURATION_SECONDS, questionBankVersion: DAY3_QUESTION_BANK.questionBankVersion ?? 1 },
   '4': { questions: DAY4_QUESTION_BANK.questions, durationSeconds: DAY4_DURATION_SECONDS, questionBankVersion: DAY4_QUESTION_BANK.questionBankVersion ?? 1 },
+  '5': { questions: DAY5_QUESTION_BANK.questions, durationSeconds: DAY5_DURATION_SECONDS, questionBankVersion: DAY5_QUESTION_BANK.questionBankVersion ?? 1 },
 };
 
 function generateFallbackQuestions(day) {
@@ -37,6 +39,7 @@ export function normalizeAnswer(value) {
     .trim()
     .toLowerCase()
     .replace(/^(₹|rs\.?)\s*/i, '')
+    .replace(/%\s*$/, '')
     .replace(/\s*:\s*/g, ':')
     .replace(/\s*μs$/i, '')
     .replace(/\s*us$/i, '')
@@ -49,7 +52,21 @@ export function isAnswerCorrect(question, userAnswer, expectedAnswer) {
   if (targetAnswer === undefined || targetAnswer === null) return false;
 
   if (question?.type === 'fill') {
-    return normalizeAnswer(userAnswer) === normalizeAnswer(targetAnswer);
+    const normUser = normalizeAnswer(userAnswer);
+    const normTarget = normalizeAnswer(targetAnswer);
+    if (normUser === normTarget) return true;
+    if (Array.isArray(question?.acceptableAnswers)) {
+      if (question.acceptableAnswers.some((ans) => normalizeAnswer(ans) === normUser)) return true;
+    }
+    if (Array.isArray(question?.acceptedAnswers)) {
+      if (question.acceptedAnswers.some((ans) => normalizeAnswer(ans) === normUser)) return true;
+    }
+    const numUser = parseFloat(normUser);
+    const numTarget = parseFloat(normTarget);
+    if (!isNaN(numUser) && !isNaN(numTarget)) {
+      if (Math.abs(numUser - numTarget) <= 0.05) return true;
+    }
+    return false;
   }
   if (Array.isArray(question?.acceptedAnswers)) {
     return question.acceptedAnswers.some((ans) => String(ans).trim() === String(userAnswer).trim());
@@ -75,7 +92,7 @@ async function loadQuestions(testKey) {
   // 1. Check local bundled bank version
   const localBank = LOCAL_BANKS[key];
   const minRequiredVersion = localBank?.questionBankVersion ?? 1;
-  const expectedCount = (key === '2' || key === '3' || key === '4') ? 25 : (localBank?.questions?.length || 30);
+  const expectedCount = ['2', '3', '4', '5'].includes(key) ? 25 : (localBank?.questions?.length || 30);
 
   // 2. Primary: Firestore published questions (only if matching current version & question count)
   if (isFirebaseReady() && db) {
@@ -89,7 +106,7 @@ async function loadQuestions(testKey) {
           bank.questions.length === expectedCount &&
           firestoreVersion >= minRequiredVersion
         ) {
-          const defaultDur = (key === '2' || key === '3' || key === '4') ? 25 : 30;
+          const defaultDur = ['2', '3', '4', '5'].includes(key) ? 25 : 30;
           return {
             questions: bank.questions,
             durationSeconds: (bank.durationMinutes || defaultDur) * 60,
@@ -107,7 +124,7 @@ async function loadQuestions(testKey) {
     if (localSaved) {
       const parsed = JSON.parse(localSaved);
       if (Array.isArray(parsed.questions) && parsed.questions.length > 0) {
-        const defaultDur = (key === '2' || key === '3') ? 25 : 30;
+        const defaultDur = ['2', '3', '4', '5'].includes(key) ? 25 : 30;
         return {
           questions: parsed.questions,
           durationSeconds: (parsed.durationMinutes || defaultDur) * 60,

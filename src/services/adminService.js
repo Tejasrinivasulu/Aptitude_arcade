@@ -22,6 +22,7 @@ import { DAY1_QUESTION_BANK } from '../data/day1QuestionBank';
 import { DAY2_QUESTION_BANK } from '../data/day2QuestionBank';
 import { DAY3_QUESTION_BANK } from '../data/day3QuestionBank';
 import { DAY4_QUESTION_BANK } from '../data/day4QuestionBank';
+import { DAY5_QUESTION_BANK } from '../data/day5QuestionBank';
 
 const RESULTS_COLLECTIONS = ['results', 'exam_results'];
 
@@ -318,12 +319,14 @@ const DAY1_SEED = { ...DAY1_QUESTION_BANK };
 const DAY2_SEED = { ...DAY2_QUESTION_BANK };
 const DAY3_SEED = { ...DAY3_QUESTION_BANK };
 const DAY4_SEED = { ...DAY4_QUESTION_BANK };
+const DAY5_SEED = { ...DAY5_QUESTION_BANK };
 
 const OFFLINE_BANKS = {
   '1': DAY1_SEED,
   '2': DAY2_SEED,
   '3': DAY3_SEED,
   '4': DAY4_SEED,
+  '5': DAY5_SEED,
 };
 
 export const listenToQuestionBank = (dayKey, callback) => {
@@ -336,8 +339,8 @@ export const listenToQuestionBank = (dayKey, callback) => {
     (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        const expectedCount = ['2', '3', '4'].includes(String(dayKey)) ? 25 : 30;
-        const expectedVersion = ['2', '3', '4'].includes(String(dayKey)) ? 2 : 1;
+        const expectedCount = ['2', '3', '4', '5'].includes(String(dayKey)) ? 25 : 30;
+        const expectedVersion = ['2', '3', '4', '5'].includes(String(dayKey)) ? 2 : 1;
         if (
           Array.isArray(data.questions) &&
           data.questions.length === expectedCount &&
@@ -353,7 +356,7 @@ export const listenToQuestionBank = (dayKey, callback) => {
           : {
               title: `Day ${dayKey} Assessment`,
               topicLabel: DAY_TOPICS[dayKey] || `Day ${dayKey}`,
-              durationMinutes: ['2', '3', '4'].includes(dayKey) ? 25 : ['1'].includes(dayKey) ? 30 : 20,
+              durationMinutes: ['2', '3', '4', '5'].includes(dayKey) ? 25 : ['1'].includes(dayKey) ? 30 : 20,
               questions: [],
               lastPublishedAt: null,
             }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { LifeBuoy, CheckCircle, Clock, AlertCircle, Send, MessageSquare, X, ChevronDown, ChevronUp, History } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { LifeBuoy, CheckCircle, Clock, AlertCircle, Send, MessageSquare, X, ChevronDown, ChevronUp, History, ShieldCheck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { submitHelpRequest } from '../services/adminService';
 import { auth, db, isFirebaseReady } from '../utils/firebase';
@@ -323,23 +324,62 @@ export default function HelpCenter() {
                       </div>
                     </div>
 
-                    <p className="text-sm text-gray-700 bg-white/90 p-3 rounded-lg border border-gray-100 mb-3 whitespace-pre-wrap leading-relaxed">
-                      {q.query || q.description}
-                    </p>
+                    <div className="mb-3">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-1">
+                        Your Query
+                      </span>
+                      <p className="text-sm text-gray-700 bg-white/90 p-3 rounded-lg border border-gray-100 whitespace-pre-wrap leading-relaxed">
+                        {q.query || q.description}
+                      </p>
+                    </div>
+
+                    {/* Official Admin Response Card */}
+                    {q.adminReply && (
+                      <div className="mb-3 rounded-xl border border-emerald-300 bg-white p-4 shadow-xs">
+                        <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-emerald-100">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800">
+                            <ShieldCheck size={16} className="text-emerald-600" />
+                            Official Admin Response
+                          </span>
+                          {q.adminReplyAtIST && (
+                            <span className="text-[11px] font-medium text-gray-400">
+                              {q.adminReplyAtIST}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-800 whitespace-pre-wrap leading-relaxed font-medium bg-emerald-50/40 p-3 rounded-lg border border-emerald-100">
+                          {q.adminReply}
+                        </p>
+                        {q.resolvedTestKey && (
+                          <div className="mt-3 flex items-center justify-between gap-3 rounded-lg bg-emerald-100/70 p-2.5 border border-emerald-200">
+                            <div className="flex items-center gap-2 text-xs font-bold text-emerald-900">
+                              <RotateCcw size={14} className="text-emerald-700" />
+                              <span>Retake granted for Day {q.resolvedTestKey}</span>
+                            </div>
+                            <Link
+                              to="/student/take-test"
+                              className="inline-flex items-center gap-1 rounded-md bg-emerald-700 px-3 py-1 text-xs font-bold text-white shadow-xs hover:bg-emerald-800 transition"
+                            >
+                              Take Exam <ArrowRight size={12} />
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
                     {isResolved ? (
                       <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-100/90 px-3.5 py-2.5 rounded-lg border border-emerald-200">
                         <CheckCircle size={16} className="text-emerald-600 shrink-0" />
                         <span>
-                          🎉 <strong>Query has been solved!</strong> Admin has reviewed and resolved this query.
-                          {q.resolvedTestKey && ` A retake has been granted for Day ${q.resolvedTestKey}.`}
+                          🎉 <strong>Query has been resolved!</strong> Admin has reviewed this query.
+                          {!q.adminReply && q.resolvedTestKey && ` A retake has been granted for Day ${q.resolvedTestKey}.`}
                         </span>
                       </div>
                     ) : (
                       <div className="flex items-center gap-2 text-xs font-medium text-amber-800 bg-amber-100/80 px-3.5 py-2.5 rounded-lg border border-amber-200">
                         <Clock size={16} className="text-amber-600 shrink-0" />
                         <span>
-                          ⏳ <strong>Under Review:</strong> Our examination admin team is reviewing your query. Once marked resolved, this status will update immediately.
+                          ⏳ <strong>Under Review:</strong> Our examination admin team is reviewing your query. Once reviewed, their response will update here immediately.
                         </span>
                       </div>
                     )}

@@ -454,13 +454,13 @@ export async function deleteStudentCompletely(uid) {
   return { success: true, uid };
 }
 
-export async function grantStudentRetake({ uid, testKey, helpRequestId }) {
+export async function grantStudentRetake({ uid, testKey, helpRequestId, extra = {} }) {
   await resetStudentAttempt(uid, testKey);
-  await rescheduleStudentTest({ uid, testKey, helpRequestId });
+  await rescheduleStudentTest({ uid, testKey, helpRequestId, extra });
   return { success: true };
 }
 
-export async function rescheduleStudentTest({ uid, testKey, helpRequestId }) {
+export async function rescheduleStudentTest({ uid, testKey, helpRequestId, extra = {} }) {
   if (!isFirebaseReady() || !db) throw new Error('Firebase not configured');
   const progressRef = doc(db, 'student_progress', uid);
   const snap = await getDoc(progressRef);
@@ -480,6 +480,7 @@ export async function rescheduleStudentTest({ uid, testKey, helpRequestId }) {
       status: 'resolved',
       resolvedAt: new Date().toISOString(),
       resolvedTestKey: String(testKey),
+      ...extra,
     });
   }
 }

@@ -331,14 +331,22 @@ export default function AdminQueriesTab({ helpRequests }) {
             </div>
 
             {/* Student & Query Summary */}
-            <div className="rounded-xl bg-gray-50 p-3.5 border border-gray-100 mb-4 text-xs space-y-1">
-              <div className="flex justify-between font-semibold text-gray-800">
-                <span>{replyModalRow.fullName || 'Student'} ({replyModalRow.rollNumber || '—'})</span>
-                <span className="text-orange-600 font-bold">{replyModalRow.issueType}</span>
+            <div className="rounded-xl bg-gray-50 p-3.5 border border-gray-100 mb-4 text-xs space-y-1.5">
+              <div className="flex justify-between items-start gap-2 font-semibold text-gray-800">
+                <div>
+                  <span className="font-bold">{replyModalRow.fullName || 'Student'}</span>
+                  <span className="text-gray-500 font-normal"> ({replyModalRow.rollNumber || '—'})</span>
+                  {replyModalRow.email && (
+                    <span className="text-gray-400 font-normal block text-[11px]">{replyModalRow.email}</span>
+                  )}
+                </div>
+                <span className="text-orange-600 font-bold bg-orange-50 px-2 py-0.5 rounded border border-orange-100 shrink-0">
+                  {replyModalRow.issueType}
+                </span>
               </div>
-              <p className="text-gray-600 italic line-clamp-3 bg-white p-2 rounded border border-gray-100 mt-1">
+              <div className="mt-1 max-h-36 overflow-y-auto rounded-lg border border-gray-200 bg-white p-2.5 text-gray-700 italic leading-relaxed whitespace-pre-wrap select-text">
                 &ldquo;{replyModalRow.query || replyModalRow.description}&rdquo;
-              </p>
+              </div>
             </div>
 
             {/* Quick Templates */}

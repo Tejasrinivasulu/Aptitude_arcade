@@ -243,7 +243,7 @@ export default function AdminContentTab() {
         <div className="flex items-center justify-between py-3 mb-4 border-y border-gray-100">
           <div className="flex items-center gap-3">
             {(() => {
-              const targetCount = ['2', '3', '4', '5'].includes(selectedDay) ? 25 : 30;
+              const targetCount = ['2', '3', '4', '5', '6'].includes(selectedDay) ? 25 : 30;
               const isComplete = questionCount >= targetCount;
               return (
                 <>

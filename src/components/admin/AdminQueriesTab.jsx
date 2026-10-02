@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { LifeBuoy, Mail, RotateCcw, CheckCircle, MessageSquare, X, Send, Clock } from 'lucide-react';
 import { formatIST } from '../../utils/adminData';
 import { grantStudentRetake, updateHelpRequestStatus } from '../../services/adminService';
@@ -154,7 +155,8 @@ export default function AdminQueriesTab({ helpRequests }) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden animate-fade-in">
+    <>
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden animate-fade-in">
       <div className="p-6 border-b border-gray-100 bg-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-black flex items-center gap-2">
@@ -293,11 +295,20 @@ export default function AdminQueriesTab({ helpRequests }) {
           </tbody>
         </table>
       </div>
+    </div>
 
-      {/* Reply & Resolution Modal */}
-      {replyModalRow && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-fade-in">
-          <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl">
+    {/* Reply & Resolution Modal via Portal */}
+    {replyModalRow && typeof document !== 'undefined' && createPortal(
+      <div
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-slate-950/75 backdrop-blur-sm overflow-y-auto animate-fade-in"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeReplyModal();
+        }}
+      >
+        <div
+          className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl my-auto max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
             <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
@@ -450,8 +461,9 @@ export default function AdminQueriesTab({ helpRequests }) {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 }

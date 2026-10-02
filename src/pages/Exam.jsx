@@ -240,12 +240,17 @@ export default function Exam() {
   const handleStartClick = async () => {
     setServerError('');
     setPhase('active');
-    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    // Wait until ProctorCamera <video> is mounted so the stream can attach
+    for (let i = 0; i < 40; i += 1) {
+      if (videoRef.current) break;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+
     const ready = await initializeSecurity();
-    
+
     if (ready) {
       try {
-        // Fetch session and questions from Cloud Functions
         const sessionData = await startExam(testKey);
         setServerSession(sessionData);
         const examSecs = (sessionData?.durationSeconds && sessionData.durationSeconds > 0)
@@ -253,7 +258,7 @@ export default function Exam() {
           : (defaultDuration || 30 * 60);
         setTimeLeft(examSecs);
         setAnswers(Array(sessionData.totalQuestions || defaultTotal).fill(null));
-        
+
         sessionStorage.setItem('exam_in_progress', 'true');
         setCenterWarning(null);
         tabViolationsRef.current = 0;
@@ -270,6 +275,7 @@ export default function Exam() {
       }
     } else {
       setPhase('setup');
+      stopCamera();
     }
   };
 

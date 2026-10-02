@@ -32,8 +32,15 @@ export default function ProctorCamera({ videoRef, cameraOk, faceStatus }) {
             autoPlay
             muted
             playsInline
+            disablePictureInPicture
             className="h-full w-full scale-x-[-1] object-cover"
           />
+          {!cameraOk && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/70 px-2 text-center">
+              <Camera size={18} className="text-red-400" />
+              <p className="text-[10px] font-semibold text-red-300">Camera unavailable</p>
+            </div>
+          )}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <div className="h-24 w-20 rounded-[50%] border-2 border-dashed border-white/40" />
           </div>
@@ -47,7 +54,7 @@ export default function ProctorCamera({ videoRef, cameraOk, faceStatus }) {
           )}
         </div>
         <div className="space-y-0.5 bg-slate-900 px-2 py-2 text-[10px] text-slate-300">
-          <p>{directionLabels[faceStatus.direction]}</p>
+          <p>{directionLabels[faceStatus.direction] || (cameraOk ? 'Waiting for face…' : 'Enable camera to continue')}</p>
           <p>Face warnings: {faceStatus.warnings}</p>
           {!faceStatus.supported && (
             <p className="text-amber-300">Use Chrome/Edge for face tracking.</p>

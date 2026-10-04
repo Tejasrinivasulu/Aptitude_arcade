@@ -24,6 +24,7 @@ import { DAY3_QUESTION_BANK } from '../data/day3QuestionBank';
 import { DAY4_QUESTION_BANK } from '../data/day4QuestionBank';
 import { DAY5_QUESTION_BANK } from '../data/day5QuestionBank';
 import { DAY6_QUESTION_BANK } from '../data/day6QuestionBank';
+import { DAY7_QUESTION_BANK } from '../data/day7QuestionBank';
 
 const RESULTS_COLLECTIONS = ['results', 'exam_results'];
 
@@ -322,6 +323,7 @@ const DAY3_SEED = { ...DAY3_QUESTION_BANK };
 const DAY4_SEED = { ...DAY4_QUESTION_BANK };
 const DAY5_SEED = { ...DAY5_QUESTION_BANK };
 const DAY6_SEED = { ...DAY6_QUESTION_BANK };
+const DAY7_SEED = { ...DAY7_QUESTION_BANK };
 
 const OFFLINE_BANKS = {
   '1': DAY1_SEED,
@@ -330,6 +332,7 @@ const OFFLINE_BANKS = {
   '4': DAY4_SEED,
   '5': DAY5_SEED,
   '6': DAY6_SEED,
+  '7': DAY7_SEED,
 };
 
 export const listenToQuestionBank = (dayKey, callback) => {
@@ -342,8 +345,8 @@ export const listenToQuestionBank = (dayKey, callback) => {
     (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        const expectedCount = ['2', '3', '4', '5', '6'].includes(String(dayKey)) ? 25 : 30;
-        const expectedVersion = ['2', '3', '4', '5', '6'].includes(String(dayKey)) ? 2 : 1;
+        const expectedCount = ['2', '3', '4', '5', '6', '7'].includes(String(dayKey)) ? 25 : 30;
+        const expectedVersion = ['2', '3', '4', '5', '6', '7'].includes(String(dayKey)) ? 2 : 1;
         if (
           Array.isArray(data.questions) &&
           data.questions.length === expectedCount &&
@@ -359,7 +362,7 @@ export const listenToQuestionBank = (dayKey, callback) => {
           : {
               title: `Day ${dayKey} Assessment`,
               topicLabel: DAY_TOPICS[dayKey] || `Day ${dayKey}`,
-              durationMinutes: ['2', '3', '4', '5', '6'].includes(dayKey) ? 25 : ['1'].includes(dayKey) ? 30 : 20,
+              durationMinutes: ['2', '3', '4', '5', '6', '7'].includes(dayKey) ? 25 : ['1'].includes(dayKey) ? 30 : 20,
               questions: [],
               lastPublishedAt: null,
             }

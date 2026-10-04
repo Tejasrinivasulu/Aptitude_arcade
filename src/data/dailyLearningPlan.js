@@ -102,18 +102,17 @@ export const dailyLearningPlan = [
   },
   {
     day: 8,
-    title: 'Time & Work + Pipes & Cisterns',
-    subtitle: 'Work Efficiency, Alternate Days, Men-Women-Children Equivalence, Inlet/Outlet Pipes',
-    topics: ['LCM Method for Work', 'Work & Wages', 'Alternate Day Work', 'Pipes & Leakages'],
-    learningGoal: 'Master LCM efficiency models for simultaneous workers, negative work, and pipes.',
+    title: 'Time & Work',
+    subtitle: 'Work Efficiency, Alternate Days, Men-Women-Children Equivalence, Work & Wages',
+    topics: ['LCM Method for Work', 'Work & Wages', 'Alternate Day Work', 'Worker Equivalence'],
+    learningGoal: 'Master LCM efficiency models for simultaneous workers, work sharing, and wages.',
     totalPracticeQuestions: 35,
     tutorials: [
       { title: 'Time and Work LCM Method', url: 'https://www.youtube.com/results?search_query=time+and+work+aptitude' },
-      { title: 'Pipes and Cisterns Tricks', url: 'https://www.youtube.com/results?search_query=pipes+and+cisterns+aptitude' },
+      { title: 'Work and Wages Shortcuts', url: 'https://www.youtube.com/results?search_query=work+and+wages+aptitude' },
     ],
     studyMaterials: [
-      { topic: 'Time and Work', practiceLabel: 'Practice Time & Work', practiceCount: 20, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-work/' },
-      { topic: 'Pipes and Cisterns', practiceLabel: 'Practice Pipes & Cisterns', practiceCount: 20, practiceUrl: 'https://www.indiabix.com/aptitude/pipes-and-cistern/' },
+      { topic: 'Time and Work', practiceLabel: 'Practice Time & Work', practiceCount: 35, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-work/' },
     ],
   },
   {

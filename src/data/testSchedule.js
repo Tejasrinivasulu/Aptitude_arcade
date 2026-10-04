@@ -77,7 +77,7 @@ const TOPIC_TITLES = [
   'Profit, Loss & Discount',
   'Simple & Compound Interest',
   'Problems on Ages',
-  'Time & Work + Pipes & Cisterns',
+  'Time & Work',
   'Time, Speed & Distance',
   'Problems on Trains',
   'Mixtures & Alligation',
@@ -89,7 +89,7 @@ const TOPIC_TITLES = [
 export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) => {
   const day = idx + 1;
   const title = TOPIC_TITLES[idx] || `Day ${day} Assessment`;
-  const is25 = day === 2 || day === 3 || day === 4 || day === 5 || day === 6 || day === 7;
+  const is25 = day === 2 || day === 3 || day === 4 || day === 5 || day === 6 || day === 7 || day === 8;
   return {
     id: day,
     day,

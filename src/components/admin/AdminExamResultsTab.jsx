@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ClipboardList, Search, X } from 'lucide-react';
-import { filterStudents, formatIST, getTotalViolations } from '../../utils/adminData';
+import { filterStudents, formatIST, getTotalViolations, filterExamResults, enrichExamResults } from '../../utils/adminData';
 import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
+import { listenToResultsByDay } from '../../services/adminService';
 
 const PER_PAGE = 10;
 
@@ -29,6 +30,17 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
   const [page, setPage] = useState(1);
   const [selectedDay, setSelectedDay] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [dayResults, setDayResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const unsub = listenToResultsByDay(selectedDay, (results) => {
+      setDayResults(results);
+      setLoading(false);
+    });
+    return () => unsub?.();
+  }, [selectedDay]);
 
   const students = useMemo(() => filterStudents(users), [users]);
 
@@ -79,8 +91,15 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
     return list;
   }, [dayCounts]);
 
+  const activeResultsSource = dayResults.length > 0 || selectedDay !== 'all' ? dayResults : allResults;
+
+  const enrichedResults = useMemo(
+    () => filterExamResults(enrichExamResults(activeResultsSource, users)),
+    [activeResultsSource, users]
+  );
+
   const filteredResults = useMemo(() => {
-    return allResults.filter((r) => {
+    return enrichedResults.filter((r) => {
       if (selectedDay !== 'all' && String(r.testKey) !== String(selectedDay)) {
         return false;
       }
@@ -93,7 +112,7 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
       }
       return true;
     });
-  }, [allResults, selectedDay, searchTerm]);
+  }, [enrichedResults, selectedDay, searchTerm]);
 
   const totalPages = Math.max(1, Math.ceil(filteredResults.length / PER_PAGE));
   const current = filteredResults.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -202,7 +221,16 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {current.length === 0 ? (
+            {loading && current.length === 0 ? (
+              <tr>
+                <td colSpan={9} className="p-12 text-center text-gray-500">
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                    <span>Loading {selectedDay === 'all' ? 'results' : `Day ${selectedDay} results`}...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : current.length === 0 ? (
               <tr>
                 <td colSpan={9} className="p-12 text-center text-gray-500">
                   {searchTerm

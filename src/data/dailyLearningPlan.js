@@ -131,6 +131,20 @@ export const dailyLearningPlan = [
   },
   {
     day: 10,
+    title: 'Time, Speed & Distance',
+    subtitle: 'Unit Conversions, Average Speed, Proportional Relations, Relative Speed',
+    topics: ['Speed Conversions (km/h to m/s)', 'Average Speed Formula', 'Relative Speed', 'Stoppage Time'],
+    learningGoal: 'Master speed-distance-time relationships and relative motion problems.',
+    totalPracticeQuestions: 30,
+    tutorials: [
+      { title: 'Time Speed Distance Complete Concept', url: 'https://www.youtube.com/results?search_query=time+speed+distance+aptitude' },
+    ],
+    studyMaterials: [
+      { topic: 'Time and Distance', practiceLabel: 'Practice Time & Distance', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-distance/' },
+    ],
+  },
+  {
+    day: 11,
     title: 'Problems on Trains',
     subtitle: 'Crossing Stationary Objects, Crossing Moving Objects, Crossing Platforms & Bridges',
     topics: ['Train Length as Distance', 'Same Direction Relative Speed', 'Opposite Direction Relative Speed'],
@@ -144,7 +158,7 @@ export const dailyLearningPlan = [
     ],
   },
   {
-    day: 11,
+    day: 12,
     title: 'Mixtures & Alligation',
     subtitle: 'Rule of Alligation, Weighted Price, Repeated Dilution & Replacement Formula',
     topics: ['Alligation Cross Method', 'Mean Price', 'Successive Replacement of Liquid'],
@@ -158,7 +172,7 @@ export const dailyLearningPlan = [
     ],
   },
   {
-    day: 12,
+    day: 13,
     title: 'Permutation & Combination',
     subtitle: 'Fundamental Counting Principle, Factorials, nPr & nCr Formulas, Arrangement Rules',
     topics: ['Permutations (Arrangements)', 'Combinations (Selections)', 'Word Formations', 'Circular Permutation'],
@@ -172,7 +186,7 @@ export const dailyLearningPlan = [
     ],
   },
   {
-    day: 13,
+    day: 14,
     title: 'Probability',
     subtitle: 'Coins, Dice, Playing Cards, Balls & Urns, Mutually Exclusive & Independent Events',
     topics: ['Sample Space', 'Coin & Dice Probability', 'Pack of Cards', 'Conditional Basics'],
@@ -183,20 +197,6 @@ export const dailyLearningPlan = [
     ],
     studyMaterials: [
       { topic: 'Probability', practiceLabel: 'Practice Probability Questions', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/probability/' },
-    ],
-  },
-  {
-    day: 14,
-    title: 'Data Interpretation',
-    subtitle: 'Bar Charts, Pie Charts, Line Graphs, Data Tables, Growth & Ratio Analysis',
-    topics: ['Bar Graphs', 'Pie Charts', 'Tables', 'Line Graphs', 'Fast Percentage Approximations'],
-    learningGoal: 'Extract and analyze data rapidly from visual charts, calculating percentages and ratios.',
-    totalPracticeQuestions: 35,
-    tutorials: [
-      { title: 'Data Interpretation Tricks for Placements', url: 'https://www.youtube.com/results?search_query=data+interpretation+aptitude' },
-    ],
-    studyMaterials: [
-      { topic: 'Data Interpretation', practiceLabel: 'Practice DI Sets', practiceCount: 35, practiceUrl: 'https://www.indiabix.com/data-interpretation/table-charts/' },
     ],
   },
 ];

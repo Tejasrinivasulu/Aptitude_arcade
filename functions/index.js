@@ -16,6 +16,7 @@ const questionsDb = {
   '6': require('./questions/day6'),
   '7': require('./questions/day7'),
   '8': require('./questions/day8'),
+  '9': require('./questions/day9'),
   'finale': require('./questions/finale'),
 };
 
@@ -28,7 +29,7 @@ const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
   const k = String(testKey);
-  if (['2', '3', '4', '5', '6', '7', '8'].includes(k)) return 25 * 60;
+  if (['2', '3', '4', '5', '6', '7', '8', '9'].includes(k)) return 25 * 60;
   if (PROGRAM_DAY_KEYS.includes(k)) return THIRTY_MIN_DURATION_SECONDS;
   return EXAM_DURATION_SECONDS;
 }

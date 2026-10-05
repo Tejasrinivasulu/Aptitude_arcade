@@ -81,11 +81,11 @@ export const DAY_TOPICS = {
   '7': 'Problems on Ages',
   '8': 'Time & Work',
   '9': 'Pipes & Cisterns',
-  '10': 'Problems on Trains',
-  '11': 'Mixtures & Alligation',
-  '12': 'Permutation & Combination',
-  '13': 'Probability',
-  '14': 'Data Interpretation',
+  '10': 'Time, Speed & Distance',
+  '11': 'Problems on Trains',
+  '12': 'Mixtures & Alligation',
+  '13': 'Permutation & Combination',
+  '14': 'Probability',
   finale: 'Grand Finale',
 };
 

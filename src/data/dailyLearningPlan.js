@@ -117,16 +117,16 @@ export const dailyLearningPlan = [
   },
   {
     day: 9,
-    title: 'Time, Speed & Distance',
-    subtitle: 'Unit Conversions, Average Speed, Proportional Relations, Relative Speed',
-    topics: ['Speed Conversions (km/h to m/s)', 'Average Speed Formula', 'Relative Speed', 'Stoppage Time'],
-    learningGoal: 'Master speed-distance-time relationships and relative motion problems.',
-    totalPracticeQuestions: 30,
+    title: 'Pipes & Cisterns',
+    subtitle: 'Inlet & Outlet Pipes, Alternate Opening, Leakage Problems, Tank Capacity',
+    topics: ['Inlet & Outlet Rates', 'Leakage at Bottom', 'Alternate Hour Filling', 'Multiple Pipes'],
+    learningGoal: 'Master LCM efficiency models for filling and emptying pipes and cisterns.',
+    totalPracticeQuestions: 25,
     tutorials: [
-      { title: 'Time Speed Distance Complete Concept', url: 'https://www.youtube.com/results?search_query=time+speed+distance+aptitude' },
+      { title: 'Pipes and Cisterns Complete Concept & Tricks', url: 'https://www.youtube.com/results?search_query=pipes+and+cisterns+aptitude' },
     ],
     studyMaterials: [
-      { topic: 'Time and Distance', practiceLabel: 'Practice Time & Distance', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-distance/' },
+      { topic: 'Pipes and Cistern', practiceLabel: 'Practice Pipes & Cisterns', practiceCount: 25, practiceUrl: 'https://www.indiabix.com/aptitude/pipes-and-cistern/' },
     ],
   },
   {

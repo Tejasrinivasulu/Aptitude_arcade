@@ -79,11 +79,11 @@ const TOPIC_TITLES = [
   'Problems on Ages',
   'Time & Work',
   'Pipes & Cisterns',
+  'Time, Speed & Distance',
   'Problems on Trains',
   'Mixtures & Alligation',
   'Permutation & Combination',
   'Probability',
-  'Data Interpretation',
 ];
 
 export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) => {

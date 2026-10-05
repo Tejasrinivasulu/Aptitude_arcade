@@ -1,0 +1,243 @@
+/**
+ * Uploads Day 9 question bank to Firestore (question_banks/9).
+ * Usage: node scripts/upload-day9-questions.mjs
+ */
+
+import { readFileSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ADMIN_EMAIL = 'admin@aptitudearcade.com';
+const ADMIN_PASSWORD = 'arcade@123';
+
+function loadEnv() {
+  const envPath = resolve(__dirname, '../.env');
+  const lines = readFileSync(envPath, 'utf8').split('\n');
+  const env = {};
+  for (const line of lines) {
+    const m = line.match(/^([^#=]+)=(.*)$/);
+    if (m) env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
+  }
+  return {
+    apiKey: env.VITE_FIREBASE_API_KEY,
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: env.VITE_FIREBASE_APP_ID,
+  };
+}
+
+// ── Day 9 Questions (Pipes & Cisterns · 20 MCQ + 5 Fill · 25 min) ───────
+const DAY9_BANK = {
+  questionBankVersion: 1,
+  title: 'Day 9 Assessment',
+  topicLabel: 'Pipes & Cisterns',
+  durationMinutes: 25,
+  questions: [
+    {
+      id: 1,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 12 hours, while Pipe B can fill the same tank in 18 hours. If both pipes are opened together, how long will they take to fill the tank?',
+      options: ['6 hours 13 minutes', '7 hours 12 minutes', '8 hours 14 minutes', '9 hours 12 minutes'],
+      answer: 1,
+    },
+    {
+      id: 2,
+      type: 'mcq',
+      question: 'A pipe can fill a tank in 8 hours, while an outlet can empty the full tank in 24 hours. If both are opened together, how long will it take to fill the tank?',
+      options: ['10 hours', '12 hours', '16 hours', '24 hours'],
+      answer: 1,
+    },
+    {
+      id: 3,
+      type: 'mcq',
+      question: 'Two pipes together can fill a tank in 6 hours. Pipe A alone can fill the tank in 10 hours. How long will Pipe B alone take?',
+      options: ['12 hours', '15 hours', '18 hours', '20 hours'],
+      answer: 1,
+    },
+    {
+      id: 4,
+      type: 'mcq',
+      question: 'A tank has a capacity of 600 litres. A pipe fills water at the rate of 50 litres per minute. How long will it take to fill the empty tank?',
+      options: ['10 minutes', '12 minutes', '15 minutes', '20 minutes'],
+      answer: 1,
+    },
+    {
+      id: 5,
+      type: 'mcq',
+      question: 'A pipe can fill a tank in 12 hours. Due to a leak, the same tank takes 15 hours to fill. How long would the leak alone take to empty the full tank?',
+      options: ['30 hours', '45 hours', '60 hours', '75 hours'],
+      answer: 2,
+    },
+    {
+      id: 6,
+      type: 'mcq',
+      question: 'Pipes A and B can fill a tank in 10 hours and 15 hours respectively. Pipe C can empty it in 30 hours. If all three are opened together, how long will the tank take to fill?',
+      options: ['6 hours 30 minutes', '7 hours 30 minutes', '8 hours 30 minutes', '10 hours 30 minutes'],
+      answer: 1,
+    },
+    {
+      id: 7,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 8 hours and Pipe B can fill it in 12 hours. Both are opened together. After 2 hours, Pipe B is closed. How much additional time will Pipe A need to completely fill the tank?',
+      options: ['4 hours 40 minutes', '5 hours 50 minutes', '5 hours 20 minutes', '6 hours 30 minutes'],
+      answer: 0,
+    },
+    {
+      id: 8,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 6 hours, while Pipe B can fill it in 12 hours. They are opened alternately for one hour each, starting with A. How long will it take to fill the tank?',
+      options: ['7 hours', '8 hours', '9 hours', '10 hours'],
+      answer: 1,
+    },
+    {
+      id: 9,
+      type: 'mcq',
+      question: 'A pipe fills a tank in 16 hours. When a leak is present, the tank takes 24 hours to fill. How long will the leak take to empty a full tank?',
+      options: ['36 hours', '40 hours', '48 hours', '64 hours'],
+      answer: 2,
+    },
+    {
+      id: 10,
+      type: 'mcq',
+      question: 'A pipe fills a tank in 16 hours. When a leak is present, the tank takes 24 hours to fill. How long will the leak take to empty a full tank?',
+      options: ['36 hours', '40 hours', '48 hours', '64 hours'],
+      answer: 2,
+    },
+    {
+      id: 11,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 15 hours and Pipe B can fill it in 20 hours. How much of the tank will be filled in 4 hours if both are opened simultaneously?',
+      options: ['1/3', '2/5', '7/15', '2/3'],
+      answer: 2,
+    },
+    {
+      id: 12,
+      type: 'mcq',
+      question: 'Two pipes A and B can fill a tank in 18 hours and 24 hours respectively. Both are opened together. After 6 hours, Pipe A is closed. How much more time will Pipe B take to fill the remaining tank?',
+      options: ['8 hours', '10 hours', '12 hours', '14 hours'],
+      answer: 1,
+    },
+    {
+      id: 13,
+      type: 'mcq',
+      question: 'A hole can empty a full tank in 60 minutes. Three identical filling pipes are required to maintain the water level when the tank is full. How many such filling pipes are required to fill an empty tank in 180 minutes, assuming the hole remains open?',
+      options: ['3', '4', '5', '6'],
+      answer: 1,
+    },
+    {
+      id: 14,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 12 hours, Pipe B in 18 hours, and Pipe C can empty it in 36 hours. A and B are opened together for 3 hours. After that, B is closed and C is opened. How much additional time is required to fill the tank completely?',
+      options: ['8 hours 30 minutes', '9 hours 30 minutes', '10 hours 30 minutes', '11 hours 30 minutes'],
+      answer: 2,
+    },
+    {
+      id: 15,
+      type: 'mcq',
+      question: 'Pipe A fills a tank in 16 hours, Pipe B in 24 hours, and Pipe C empties it in 48 hours. Initially A and B are opened together for 4 hours. Then A is closed and C is opened along with B for another 4 hours. Finally, B is closed. How much longer will C alone take to empty the remaining water?',
+      options: ['16 hours', '20 hours', '24 hours', '28 hours'],
+      answer: 2,
+    },
+    {
+      id: 16,
+      type: 'mcq',
+      question: 'Pipe A fills a tank 20 minutes faster than Pipe B. Working together, they fill the tank in 3 hours. How much time does Pipe A alone take?',
+      options: ['4 hours 40 minutes', '5 hours 45 minutes', '5 hours 50 minutes', '6 hours 30 minutes'],
+      answer: 2,
+    },
+    {
+      id: 17,
+      type: 'mcq',
+      question: 'Pipe A can fill a tank in 12 hours, Pipe B in 18 hours, and Pipe C can empty it in 36 hours. All three are opened together. After 4 hours, Pipe C is closed. How much more time is required to completely fill the tank?',
+      options: ['4 hours', '5 hours', '6 hours', '7 hours'],
+      answer: 0,
+    },
+    {
+      id: 18,
+      type: 'mcq',
+      question: 'A pipe can fill an empty tank in 15 hours. A leak is opened after the pipe has been running alone for 5 hours. Because of the leak, the remaining part of the tank takes another 12 hours to fill. How long would the leak alone take to empty a full tank?',
+      options: ['60 hours', '72 hours', '90 hours', '120 hours'],
+      answer: 2,
+    },
+    {
+      id: 19,
+      type: 'mcq',
+      question: 'Pipe A fills a tank in 20 hours. Pipe B fills it in 30 hours. Pipe C is an outlet. When A, B and C are opened together, the tank fills in 15 hours. How long would Pipe C alone take to empty the full tank?',
+      options: ['30 hours', '40 hours', '60 hours', '90 hours'],
+      answer: 2,
+    },
+    {
+      id: 20,
+      type: 'mcq',
+      question: 'A tank contains some water. Pipe A can fill the tank in 12 hours, while Pipe B can empty it in 18 hours. When both are opened simultaneously, the tank becomes half-full in 9 hours. What fraction of the tank was initially filled?',
+      options: ['1/4', '1/3', '1/2', '2/3'],
+      answer: 0,
+    },
+    {
+      id: 21,
+      type: 'fill',
+      question: 'Pipe A can fill a tank in 10 hours and Pipe B can fill the same tank in 15 hours. If both pipes are opened together, the tank will be completely filled in ______ hours.',
+      answer: '6',
+      acceptableAnswers: ['6', '6 hours', '6hours', '6 hrs', '6hrs'],
+    },
+    {
+      id: 22,
+      type: 'fill',
+      question: 'Pipe A can fill a tank in 12 hours, while Pipe B can empty the full tank in 20 hours. If both pipes operate simultaneously, the tank will be filled in ______ hours.',
+      answer: '30',
+      acceptableAnswers: ['30', '30 hours', '30hours', '30 hrs', '30hrs'],
+    },
+    {
+      id: 23,
+      type: 'fill',
+      question: 'Pipe A fills a tank in 8 hours. Due to a leak at the bottom, it takes 10 hours to fill the tank. If the tank is completely full, the leak alone will empty it in ______ hours.',
+      answer: '40',
+      acceptableAnswers: ['40', '40 hours', '40hours', '40 hrs', '40hrs'],
+    },
+    {
+      id: 24,
+      type: 'fill',
+      question: 'Two pipes, A and B, can fill a tank in 12 minutes and 16 minutes respectively. Both pipes are opened together, but Pipe A is closed after x minutes. If the tank gets completely filled in a total of 12 minutes, the value of x is ______ minutes.',
+      answer: '3',
+      acceptableAnswers: ['3', '3 minutes', '3minutes', '3 min', '3min', '3 mins'],
+    },
+    {
+      id: 25,
+      type: 'fill',
+      question: 'Two pipes, A and B, can fill a tank in 10 hours and 15 hours respectively. They are opened on alternate hours, starting with Pipe A at 1st hour. The tank will be completely filled in ______ hours.',
+      answer: '12',
+      acceptableAnswers: ['12', '12 hours', '12hours', '12 hrs', '12hrs'],
+    },
+  ],
+};
+
+async function main() {
+  const firebaseConfig = loadEnv();
+  if (!firebaseConfig.apiKey) {
+    throw new Error('Firebase config missing in .env');
+  }
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  console.log(`Authenticating as ${ADMIN_EMAIL}…`);
+  await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
+  console.log('Authenticated successfully.');
+
+  console.log('Uploading Day 9 question bank to Firestore (question_banks/9)…');
+  await setDoc(doc(db, 'question_banks', '9'), DAY9_BANK);
+  console.log(`Successfully uploaded ${DAY9_BANK.questions.length} questions for Day 9.`);
+  process.exit(0);
+}
+
+main().catch((err) => {
+  console.error('Failed to upload Day 9 questions:', err);
+  process.exit(1);
+});

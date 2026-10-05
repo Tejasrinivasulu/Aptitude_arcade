@@ -80,7 +80,7 @@ export const DAY_TOPICS = {
   '6': 'Simple & Compound Interest',
   '7': 'Problems on Ages',
   '8': 'Time & Work',
-  '9': 'Time, Speed & Distance',
+  '9': 'Pipes & Cisterns',
   '10': 'Problems on Trains',
   '11': 'Mixtures & Alligation',
   '12': 'Permutation & Combination',

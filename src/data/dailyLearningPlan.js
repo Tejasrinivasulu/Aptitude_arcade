@@ -135,12 +135,12 @@ export const dailyLearningPlan = [
     subtitle: 'Unit Conversions, Average Speed, Proportional Relations, Relative Speed',
     topics: ['Speed Conversions (km/h to m/s)', 'Average Speed Formula', 'Relative Speed', 'Stoppage Time'],
     learningGoal: 'Master speed-distance-time relationships and relative motion problems.',
-    totalPracticeQuestions: 30,
+    totalPracticeQuestions: 25,
     tutorials: [
       { title: 'Time Speed Distance Complete Concept', url: 'https://www.youtube.com/results?search_query=time+speed+distance+aptitude' },
     ],
     studyMaterials: [
-      { topic: 'Time and Distance', practiceLabel: 'Practice Time & Distance', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-distance/' },
+      { topic: 'Time and Distance', practiceLabel: 'Practice Time & Distance', practiceCount: 25, practiceUrl: 'https://www.indiabix.com/aptitude/time-and-distance/' },
     ],
   },
   {

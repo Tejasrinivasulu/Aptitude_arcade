@@ -10,6 +10,7 @@ import { DAY6_DURATION_SECONDS, DAY6_QUESTION_BANK } from '../data/day6QuestionB
 import { DAY7_DURATION_SECONDS, DAY7_QUESTION_BANK } from '../data/day7QuestionBank';
 import { DAY8_DURATION_SECONDS, DAY8_QUESTION_BANK } from '../data/day8QuestionBank';
 import { DAY9_DURATION_SECONDS, DAY9_QUESTION_BANK } from '../data/day9QuestionBank';
+import { DAY10_DURATION_SECONDS, DAY10_QUESTION_BANK } from '../data/day10QuestionBank';
 import { getExamMeta } from '../data/examQuestions';
 import { getTestAvailability, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '../data/testSchedule';
 import { getTrustedNow } from '../utils/serverTime';
@@ -26,6 +27,7 @@ export const LOCAL_BANKS = {
   '7': { questions: DAY7_QUESTION_BANK.questions, durationSeconds: DAY7_DURATION_SECONDS, questionBankVersion: DAY7_QUESTION_BANK.questionBankVersion ?? 1 },
   '8': { questions: DAY8_QUESTION_BANK.questions, durationSeconds: DAY8_DURATION_SECONDS, questionBankVersion: DAY8_QUESTION_BANK.questionBankVersion ?? 1 },
   '9': { questions: DAY9_QUESTION_BANK.questions, durationSeconds: DAY9_DURATION_SECONDS, questionBankVersion: DAY9_QUESTION_BANK.questionBankVersion ?? 1 },
+  '10': { questions: DAY10_QUESTION_BANK.questions, durationSeconds: DAY10_DURATION_SECONDS, questionBankVersion: DAY10_QUESTION_BANK.questionBankVersion ?? 1 },
 };
 
 function generateFallbackQuestions(day) {
@@ -101,7 +103,7 @@ async function loadQuestions(testKey) {
   // 1. Check local bundled bank version
   const localBank = LOCAL_BANKS[key];
   const minRequiredVersion = localBank?.questionBankVersion ?? 1;
-  const expectedCount = ['2', '3', '4', '5', '6', '7', '8', '9'].includes(key) ? 25 : (localBank?.questions?.length || 30);
+  const expectedCount = ['2', '3', '4', '5', '6', '7', '8', '9', '10'].includes(key) ? 25 : (localBank?.questions?.length || 30);
 
   // 2. Primary: Firestore published questions (only if matching current version & question count)
   if (isFirebaseReady() && db) {
@@ -115,7 +117,7 @@ async function loadQuestions(testKey) {
           bank.questions.length === expectedCount &&
           firestoreVersion >= minRequiredVersion
         ) {
-          const defaultDur = ['2', '3', '4', '5', '6', '7', '8', '9'].includes(key) ? 25 : 30;
+          const defaultDur = ['2', '3', '4', '5', '6', '7', '8', '9', '10'].includes(key) ? 25 : 30;
           return {
             questions: bank.questions,
             durationSeconds: (bank.durationMinutes || defaultDur) * 60,
@@ -133,7 +135,7 @@ async function loadQuestions(testKey) {
     if (localSaved) {
       const parsed = JSON.parse(localSaved);
       if (Array.isArray(parsed.questions) && parsed.questions.length > 0) {
-        const defaultDur = ['2', '3', '4', '5', '6', '7', '8', '9'].includes(key) ? 25 : 30;
+        const defaultDur = ['2', '3', '4', '5', '6', '7', '8', '9', '10'].includes(key) ? 25 : 30;
         return {
           questions: parsed.questions,
           durationSeconds: (parsed.durationMinutes || defaultDur) * 60,

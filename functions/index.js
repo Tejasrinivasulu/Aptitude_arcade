@@ -70,7 +70,7 @@ function isAnswerCorrect(question, userAnswer) {
 async function loadQuestionsForTest(testKey) {
   const key = String(testKey);
   if (PROGRAM_DAY_KEYS.includes(key)) {
-    const expectedCount = ['2', '3', '4', '5', '6', '7', '8'].includes(key) ? 25 : 30;
+    const expectedCount = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].includes(key) ? 25 : 30;
     const expectedVersion = ['2', '3', '4', '5', '6', '7', '8'].includes(key) ? 2 : 1;
     const bankSnap = await db.collection('question_banks').doc(key).get();
     if (bankSnap.exists) {

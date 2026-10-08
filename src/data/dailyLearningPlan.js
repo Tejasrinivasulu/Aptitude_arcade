@@ -159,20 +159,6 @@ export const dailyLearningPlan = [
   },
   {
     day: 12,
-    title: 'Mixtures & Alligation',
-    subtitle: 'Rule of Alligation, Weighted Price, Repeated Dilution & Replacement Formula',
-    topics: ['Alligation Cross Method', 'Mean Price', 'Successive Replacement of Liquid'],
-    learningGoal: 'Apply the rule of alligation to ratios, profits, averages, and chemical mixtures.',
-    totalPracticeQuestions: 30,
-    tutorials: [
-      { title: 'Alligation & Mixtures Mastery', url: 'https://www.youtube.com/results?search_query=alligation+and+mixture+aptitude' },
-    ],
-    studyMaterials: [
-      { topic: 'Alligation or Mixture', practiceLabel: 'Practice Alligation Problems', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/alligation-or-mixture/' },
-    ],
-  },
-  {
-    day: 13,
     title: 'Permutation & Combination',
     subtitle: 'Fundamental Counting Principle, Factorials, nPr & nCr Formulas, Arrangement Rules',
     topics: ['Permutations (Arrangements)', 'Combinations (Selections)', 'Word Formations', 'Circular Permutation'],
@@ -183,6 +169,20 @@ export const dailyLearningPlan = [
     ],
     studyMaterials: [
       { topic: 'Permutation and Combination', practiceLabel: 'Practice P&C Problems', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/permutation-and-combination/' },
+    ],
+  },
+  {
+    day: 13,
+    title: 'Mixtures & Alligation',
+    subtitle: 'Rule of Alligation, Weighted Price, Repeated Dilution & Replacement Formula',
+    topics: ['Alligation Cross Method', 'Mean Price', 'Successive Replacement of Liquid'],
+    learningGoal: 'Apply the rule of alligation to ratios, profits, averages, and chemical mixtures.',
+    totalPracticeQuestions: 30,
+    tutorials: [
+      { title: 'Alligation & Mixtures Mastery', url: 'https://www.youtube.com/results?search_query=alligation+and+mixture+aptitude' },
+    ],
+    studyMaterials: [
+      { topic: 'Alligation or Mixture', practiceLabel: 'Practice Alligation Problems', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/alligation-or-mixture/' },
     ],
   },
   {

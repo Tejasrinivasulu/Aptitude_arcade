@@ -83,8 +83,8 @@ export const DAY_TOPICS = {
   '9': 'Pipes & Cisterns',
   '10': 'Time, Speed & Distance',
   '11': 'Problems on Trains',
-  '12': 'Mixtures & Alligation',
-  '13': 'Permutation & Combination',
+  '12': 'Permutations & Combinations',
+  '13': 'Mixtures & Alligation',
   '14': 'Probability',
   finale: 'Grand Finale',
 };

@@ -24,11 +24,11 @@ import AdminConsistentTab from '../components/admin/AdminConsistentTab';
 
 const TABS = [
   { id: 'overview', label: 'Overview Dashboard', icon: Activity },
-  { id: 'consistent', label: 'Consistent Champions 🏆', icon: Trophy },
   { id: 'rescue', label: 'Rescue Desk & Overrides', icon: Users },
   { id: 'results', label: 'Exam Results', icon: ClipboardList },
   { id: 'content', label: 'Content Manager', icon: FileText },
   { id: 'queries', label: 'Student Queries', icon: LifeBuoy },
+  { id: 'consistent', label: 'Consistent Champions 🏆', icon: Trophy },
 ];
 
 export default function AdminDashboard() {

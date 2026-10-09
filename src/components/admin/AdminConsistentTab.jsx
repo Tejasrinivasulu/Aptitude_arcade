@@ -13,6 +13,11 @@ import {
   ShieldCheck,
   ChevronRight,
   Eye,
+  Info,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+  HelpCircle,
 } from 'lucide-react';
 import consistentStudentsData from '../../data/consistentStudentsData.json';
 import { formatIST } from '../../utils/adminData';
@@ -47,6 +52,7 @@ export default function AdminConsistentTab() {
   const [selectedTier, setSelectedTier] = useState('all');
   const [page, setPage] = useState(1);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [showMethodology, setShowMethodology] = useState(true);
 
   const stats = useMemo(() => {
     const total = consistentStudentsData.length;
@@ -187,6 +193,20 @@ export default function AdminConsistentTab() {
             <div className="flex items-center gap-3">
               <button
                 type="button"
+                onClick={() => setShowMethodology((prev) => !prev)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  showMethodology
+                    ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-xs'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                <Info size={14} className={showMethodology ? 'text-amber-700' : 'text-gray-500'} />
+                Ranking Logic &amp; Audit Rules
+                {showMethodology ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </button>
+
+              <button
+                type="button"
                 onClick={exportCSV}
                 className="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all cursor-pointer"
               >
@@ -220,6 +240,98 @@ export default function AdminConsistentTab() {
               </div>
             </div>
           </div>
+
+          {/* Collapsible Ranking Methodology & Audit Guide */}
+          {showMethodology && (
+            <div className="mt-5 p-5 bg-white border border-amber-200 rounded-2xl shadow-xs space-y-4 animate-fade-in text-xs text-gray-700">
+              <div className="flex items-center justify-between border-b border-amber-100 pb-3">
+                <div className="flex items-center gap-2 font-black text-sm text-gray-900">
+                  <Sparkles size={16} className="text-amber-500" />
+                  Official Consistency &amp; Ranking Parameters (Days 1–12 Audit)
+                </div>
+                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                  Deterministic Multi-Factor Algorithm
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Pillar 1: Why Jinka is #1 */}
+                <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-900 mb-2">
+                    <Trophy size={15} className="text-amber-600" /> Why Jinka Goutham Vyshnavi is #1
+                  </div>
+                  <ul className="space-y-1.5 text-gray-700 text-[11px] leading-relaxed">
+                    <li>
+                      • <strong className="text-gray-900">100% Attendance:</strong> Completed 12 / 12 tests without missing any day.
+                    </li>
+                    <li>
+                      • <strong className="text-gray-900">12 / 12 On-Time:</strong> Every single test submitted on its exact live calendar date (7:30 PM – 9:50 PM IST).
+                    </li>
+                    <li>
+                      • <strong className="text-gray-900">Highest Cumulative Score:</strong> 292 / 305 marks (<strong>96% overall average</strong>).
+                    </li>
+                    <li>
+                      • <strong className="text-gray-900">Hard Topics Mastery:</strong> <strong>95%</strong> on Day 8 (Work), Day 10 (Speed &amp; Distance), Day 11 (Permutations), Day 12 (Mixtures).
+                    </li>
+                    <li>
+                      • <strong className="text-gray-900">Zero Admin Resets:</strong> 0 manual overrides/retests (fully organic first-attempts).
+                    </li>
+                    <li>
+                      • <strong className="text-gray-900">Zero Speed Flags:</strong> Natural human time gaps and organic mark distribution.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Pillar 2: 6 Deterministic Parameters */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                  <div className="flex items-center gap-1.5 font-bold text-slate-900 mb-2">
+                    <ShieldCheck size={15} className="text-slate-700" /> Parameter Hierarchy &amp; Tie-Breakers
+                  </div>
+                  <ol className="space-y-1.5 text-gray-700 text-[11px] leading-relaxed list-decimal pl-4">
+                    <li>
+                      <strong className="text-gray-900">Integrity Gate:</strong> Speed-flagged candidates pushed to the bottom.
+                    </li>
+                    <li>
+                      <strong className="text-gray-900">Total Attempted:</strong> 12/12 candidates always rank above 11, 10, etc.
+                    </li>
+                    <li>
+                      <strong className="text-gray-900">On-Time Punctuality:</strong> Tests completed during live daily window prioritized over catch-up sessions.
+                    </li>
+                    <li>
+                      <strong className="text-gray-900">Overall Accuracy:</strong> Cumulative score percentage across all tests.
+                    </li>
+                    <li>
+                      <strong className="text-gray-900">Advanced Topics:</strong> Discriminator score on high-difficulty days (8, 10, 11, 12).
+                    </li>
+                    <li>
+                      <strong className="text-gray-900">Overrides Count:</strong> Fewer admin resets preferred.
+                    </li>
+                  </ol>
+                </div>
+
+                {/* Pillar 3: Tiers & Anti-Cheat */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                  <div className="flex items-center gap-1.5 font-bold text-slate-900 mb-2">
+                    <AlertTriangle size={15} className="text-red-500" /> Tiers &amp; Anti-Speed Filter
+                  </div>
+                  <div className="space-y-2 text-gray-700 text-[11px] leading-relaxed">
+                    <p>
+                      <strong className="text-amber-800">🏆 Tier 1 Champion (8):</strong> 12/12 attempted, ≥10 on-time, ≥85% avg, 0 cheat flags.
+                    </p>
+                    <p>
+                      <strong className="text-emerald-800">⭐ Completed 12/12 (23):</strong> 12/12 tests submitted without speed flags.
+                    </p>
+                    <p>
+                      <strong className="text-blue-800">👍 Tier 2 Consistent (20):</strong> ≥10 attempted &amp; ≥75% average score.
+                    </p>
+                    <div className="p-2 bg-red-50 rounded-lg border border-red-200 text-red-800 font-medium text-[10.5px]">
+                      <strong>🚨 Speed Flag Heuristic:</strong> Same-day consecutive tests completed in &lt; 5 minutes with ≥80% score were flagged as suspicious speed submissions.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Filter Pills */}
           <div className="flex items-center gap-2 mt-5 overflow-x-auto pb-1 scrollbar-thin">
@@ -298,7 +410,14 @@ export default function AdminConsistentTab() {
                         )}
                       </td>
                       <td className="p-4 font-bold text-gray-900">
-                        <div>{s.name}</div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span>{s.name}</span>
+                          {s.rank === 1 && (
+                            <span className="px-1.5 py-0.5 bg-amber-100 text-amber-900 border border-amber-300 rounded text-[9px] font-black uppercase tracking-wider">
+                              #1 Ranked
+                            </span>
+                          )}
+                        </div>
                         <div className="text-[10px] text-gray-400 font-normal">{s.branch}</div>
                       </td>
                       <td className="p-4 font-mono text-gray-600">{s.rollNumber}</td>

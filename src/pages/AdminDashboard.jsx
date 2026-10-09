@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
-  Shield, Lock, Users, Activity, Eye, FileText, ClipboardList, LifeBuoy,
+  Shield, Lock, Users, Activity, Eye, FileText, ClipboardList, LifeBuoy, Trophy,
 } from 'lucide-react';
 import {
   listenToOverviewMetrics,
@@ -20,9 +20,11 @@ import AdminRescueTab from '../components/admin/AdminRescueTab';
 import AdminExamResultsTab from '../components/admin/AdminExamResultsTab';
 import AdminContentTab from '../components/admin/AdminContentTab';
 import AdminQueriesTab from '../components/admin/AdminQueriesTab';
+import AdminConsistentTab from '../components/admin/AdminConsistentTab';
 
 const TABS = [
   { id: 'overview', label: 'Overview Dashboard', icon: Activity },
+  { id: 'consistent', label: 'Consistent Champions 🏆', icon: Trophy },
   { id: 'rescue', label: 'Rescue Desk & Overrides', icon: Users },
   { id: 'results', label: 'Exam Results', icon: ClipboardList },
   { id: 'content', label: 'Content Manager', icon: FileText },
@@ -242,6 +244,7 @@ export default function AdminDashboard() {
                 onRescheduleStudent={handleRescheduleFromOverview}
               />
             )}
+            {activeTab === 'consistent' && <AdminConsistentTab />}
             {activeTab === 'rescue' && (
               <AdminRescueTab
                 users={users}

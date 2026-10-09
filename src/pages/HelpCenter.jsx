@@ -6,26 +6,6 @@ import { submitHelpRequest } from '../services/adminService';
 import { auth, db, isFirebaseReady } from '../utils/firebase';
 import { doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
 
-const WEB3FORMS_ACCESS_KEY = 'e3fbf152-ea11-405b-ac93-f8e6a0c10fe3';
-
-function buildEmailBody({ fullName, rollNumber, email, branch, issueType, description, submittedAtIST }) {
-  return [
-    'Aptitude Arcade — Help Center Query',
-    '-----------------------------------',
-    `Student Name: ${fullName}`,
-    `Roll Number: ${rollNumber}`,
-    `Email: ${email}`,
-    `Branch: ${branch || 'Not specified'}`,
-    `Submitted (IST): ${submittedAtIST}`,
-    `Issue Type: ${issueType}`,
-    '',
-    'Query / Description:',
-    description,
-    '',
-    '— Sent from Aptitude Arcade Help Center',
-  ].join('\n');
-}
-
 export default function HelpCenter() {
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -85,7 +65,6 @@ export default function HelpCenter() {
     const formData = new FormData(formEl);
     const issueType = formData.get('issueType');
     const description = formData.get('description');
-    const submittedAtIST = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     try {
       if (!isFirebaseReady() || !user?.id) {
@@ -107,42 +86,6 @@ export default function HelpCenter() {
         issueType,
         description,
       });
-
-      const emailBody = buildEmailBody({
-        ...student,
-        issueType,
-        description,
-        submittedAtIST,
-      });
-
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_ACCESS_KEY,
-            subject: `[Aptitude Arcade] ${issueType} — ${student.rollNumber || student.fullName}`,
-            from_name: student.fullName || 'Aptitude Arcade Student',
-            name: student.fullName || 'Aptitude Arcade Student',
-            email: student.email || 'student@aptitudearcade.com',
-            message: emailBody,
-            issueType,
-            rollNumber: student.rollNumber,
-            branch: student.branch,
-          }),
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.success) {
-          console.warn('Web3Forms email status:', result?.message || response.statusText);
-        } else {
-          console.info('Web3Forms email delivered successfully:', result);
-        }
-      } catch (e) {
-        console.warn('Web3Forms network notice:', e);
-      }
 
       setIsSuccess(true);
       formEl.reset();

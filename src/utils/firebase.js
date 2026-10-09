@@ -1,6 +1,11 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  getFirestore,
+} from 'firebase/firestore';
 
 const DEFAULT_PROJECT_ID = 'aptitudearcade';
 
@@ -66,7 +71,15 @@ if (isFirebaseReady()) {
   // Use getApps() so HMR in Vite doesn't double-initialize.
   app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   auth = getAuth(app);
-  db = getFirestore(app);
+  try {
+    db = initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager(),
+      }),
+    });
+  } catch {
+    db = getFirestore(app);
+  }
   // Analytics is intentionally deferred — it crashes on measurementId-less
   // projects and isn't needed for auth/data flow.
 } else {

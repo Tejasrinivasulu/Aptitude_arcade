@@ -34,15 +34,15 @@ export const DAY1_EXAM_WINDOW = {
   durationMinutes: 30,
 };
 
-/** Total days in the program (14 continuous daily tests) */
-export const TOTAL_PROGRAM_DAYS = 14;
+/** Total days in the daily series (concluded at 12 continuous daily tests) */
+export const TOTAL_PROGRAM_DAYS = 12;
 
 export const PROGRAM_DAY_KEYS = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, i) => String(i + 1));
 
-/** Catch-Up Grace Period: Unattempted Days 1–4 are open from Thursday 10:00 AM to Friday 11:59:59 PM IST */
-export const CATCHUP_WINDOW_START = '2026-10-01T10:00:00+05:30';
-export const CATCHUP_WINDOW_END = '2026-10-02T23:59:59+05:30';
-export const CATCHUP_MAX_DAY = 4;
+/** Catch-Up Open Window: All unattempted tests (Days 1–12) are open from Saturday 10:00 AM to Sunday 11:59:59 PM IST */
+export const CATCHUP_WINDOW_START = '2026-10-10T10:00:00+05:30';
+export const CATCHUP_WINDOW_END = '2026-10-11T23:59:59+05:30';
+export const CATCHUP_MAX_DAY = 12;
 
 export function isCatchupActive(now = getTrustedNow()) {
   const start = new Date(CATCHUP_WINDOW_START);
@@ -367,6 +367,56 @@ export function getTestAvailability({
     };
   }
 
+  if (isFinale) {
+    const finaleBounds = getWindowBoundsForDate(grandFinale.testDate);
+    const finaleCountdown = computeTestCountdown(grandFinale.testDate, now, 'finale');
+    if (now < finaleBounds.start) {
+      return {
+        status: 'locked',
+        label: 'Upcoming',
+        color: 'gray',
+        canStart: false,
+        message: `Grand Finale unlocks on Monday, October 12 at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST.`,
+        test: grandFinale,
+        countdown: finaleCountdown,
+      };
+    }
+    if (now >= finaleBounds.start && now <= finaleBounds.end) {
+      return {
+        status: 'open',
+        label: 'Open Now',
+        color: 'green',
+        canStart: true,
+        message: 'Grand Finale is LIVE! Complete your final assessment.',
+        test: grandFinale,
+        countdown: finaleCountdown,
+      };
+    }
+    return {
+      status: 'missed',
+      label: 'Expired',
+      color: 'red',
+      canStart: false,
+      message: 'Grand Finale assessment has concluded.',
+      test: grandFinale,
+      countdown: expiredCountdown,
+    };
+  }
+
+  // Weekend Open Window: All unattempted tests (Days 1–12) are unlocked from Saturday 10:00 AM to Sunday 11:59:59 PM IST
+  if (isCatchupActive(now) && isCatchupEligible(testDayNum)) {
+    const catchupCountdown = computeTestCountdown(test.testDate, now, testKey);
+    return {
+      status: 'open',
+      label: 'Open Now',
+      color: 'green',
+      canStart: true,
+      message: 'Weekend Open Window: Available until Sunday, Oct 11 at 11:59 PM IST.',
+      test,
+      countdown: catchupCountdown,
+    };
+  }
+
   // ALL FUTURE DAYS ARE STRICTLY LOCKED — NO EXCEPTIONS!
   if (!isFinale && testDayNum > activeDay) {
     return {
@@ -377,32 +427,6 @@ export function getTestAvailability({
       message: `Day ${testKey} is locked. Opens on ${formatDisplayDate(test.testDate)} at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST.`,
       test,
       countdown: computeTestCountdown(test.testDate, now, testKey),
-    };
-  }
-
-  if (isFinale) {
-    return {
-      status: 'locked',
-      label: 'Locked',
-      color: 'gray',
-      canStart: false,
-      message: `Grand Finale unlocks after all ${TOTAL_PROGRAM_DAYS} daily tests are complete.`,
-      test,
-      countdown: computeTestCountdown(test.testDate, now, testKey),
-    };
-  }
-
-  // Catch-Up Grace Period: Unattempted tests for Days 1–4 are open until Friday, Oct 2 at 11:59 PM IST
-  if (isCatchupActive(now) && isCatchupEligible(testDayNum)) {
-    const catchupCountdown = computeTestCountdown(test.testDate, now, testKey);
-    return {
-      status: 'open',
-      label: 'Open Now',
-      color: 'green',
-      canStart: true,
-      message: 'Catch-up window is open until Friday, Oct 2 at 11:59 PM IST.',
-      test,
-      countdown: catchupCountdown,
     };
   }
 

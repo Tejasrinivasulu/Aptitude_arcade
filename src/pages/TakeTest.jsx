@@ -173,12 +173,12 @@ export default function TakeTest() {
             <div>
               <h2 className="font-bold text-gray-900">📅 Daily Test Schedule</h2>
               <p className="text-xs text-gray-500">
-                Aptitude Arcade 2026 — 14-day progressive test series.
+                Aptitude Arcade 2026 — {TOTAL_PROGRAM_DAYS}-day test series and Grand Finale.
               </p>
             </div>
             {isCatchupActive() && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
-                ✨ Catch-Up Window Active (Days 1–4 open until Friday 11:59 PM)
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 animate-pulse">
+                ✨ Weekend Open Access: All Unattempted Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Open Until Sunday 11:59 PM IST
               </span>
             )}
           </div>
@@ -216,8 +216,8 @@ function DailyTestRow({ test, progress, onStart }) {
     currentDay: assignedDay,
   });
   const countdown = useTestCountdown(test.testDate, test.day);
-  const active = test.day === assignedDay;
-  const locked = test.day > assignedDay;
+  const active = test.day === assignedDay && availability.status !== 'completed';
+  const locked = availability.status === 'locked';
   const isRescheduled = progress.rescheduledTests?.[String(test.day)] === true;
   const canStart = availability.canStart && (isRescheduled || availability.status === 'open' || (countdown.isReady && !countdown.isExpired));
   const showExpired = availability.status === 'missed' || availability.label === 'Expired';

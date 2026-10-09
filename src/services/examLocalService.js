@@ -230,7 +230,7 @@ export async function startExamLocal(testKey) {
   return session;
 }
 
-export async function submitExamLocal({ sessionId, answers, proctoringViolations }) {
+export async function submitExamLocal({ sessionId, answers, proctoringViolations, violations }) {
   const devUser = localStorage.getItem('dev_bypass_user') ? JSON.parse(localStorage.getItem('dev_bypass_user')) : null;
   const uid = auth?.currentUser?.uid || devUser?.id;
   if (!uid) throw new Error('You must be logged in to submit the exam.');
@@ -252,6 +252,21 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
   const meta = getExamMeta(key);
   const correctAnswers = testData.questions.map((q) => q.answer);
   const publicQs = stripAnswers(testData.questions);
+
+  // Normalize violations payload (from Exam.jsx or Cloud Functions format)
+  const viol = violations || proctoringViolations || {};
+  const tabViolations = Number(viol.tabViolations) || 0;
+  const faceWarnings = Number(viol.faceWarnings) || 0;
+  const autoSubmit = Boolean(viol.autoSubmit);
+  const submitReason = viol.submitReason || (autoSubmit ? 'tab_limit' : 'manual');
+
+  // Exact solving duration tracking
+  const startedAt = session.startedAt || new Date().toISOString();
+  const startedAtMs = new Date(startedAt).getTime();
+  const submittedAt = new Date().toISOString();
+  const timeTakenSeconds = Math.max(0, Math.round((new Date(submittedAt).getTime() - startedAtMs) / 1000));
+  const durationSeconds = session.durationSeconds || 1500;
+
   const resultData = {
     testKey: key,
     title: meta.title,
@@ -261,8 +276,21 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
     percentage,
     performance,
     emoji,
-    submittedAt: new Date().toISOString(),
-    proctoringViolations: proctoringViolations || {},
+    startedAt,
+    submittedAt,
+    timeTakenSeconds,
+    durationSeconds,
+    tabViolations,
+    faceWarnings,
+    totalViolations: tabViolations + faceWarnings,
+    autoSubmit,
+    submitReason,
+    proctoringViolations: {
+      tabViolations,
+      faceWarnings,
+      autoSubmit,
+      submitReason,
+    },
     questions: publicQs,
     answers: answers || [],
     userAnswers: answers || [],
@@ -306,9 +334,15 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
       userAnswers: answers || [],
       questions: publicQs,
       correctAnswers,
+      startedAt,
       submittedAt: resultData.submittedAt,
-      tabViolations: proctoringViolations?.tabViolations || 0,
-      faceWarnings: proctoringViolations?.faceWarnings || 0,
+      timeTakenSeconds,
+      durationSeconds,
+      tabViolations,
+      faceWarnings,
+      totalViolations: tabViolations + faceWarnings,
+      autoSubmit,
+      submitReason,
       rollNumber: userData.rollNumber || '',
       fullName: userData.fullName || '',
       email: userData.email || '',
@@ -330,7 +364,15 @@ export async function submitExamLocal({ sessionId, answers, proctoringViolations
             performance,
             emoji,
             title: meta.title,
+            startedAt,
             submittedAt: resultData.submittedAt,
+            timeTakenSeconds,
+            durationSeconds,
+            tabViolations,
+            faceWarnings,
+            totalViolations: tabViolations + faceWarnings,
+            autoSubmit,
+            submitReason,
             answers: answers || [],
             userAnswers: answers || [],
             questions: publicQs,

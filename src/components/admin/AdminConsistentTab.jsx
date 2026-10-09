@@ -201,7 +201,7 @@ export default function AdminConsistentTab() {
                 }`}
               >
                 <Info size={14} className={showMethodology ? 'text-amber-700' : 'text-gray-500'} />
-                Ranking Logic &amp; Audit Rules
+                Parameters Considered
                 {showMethodology ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </button>
 
@@ -241,13 +241,13 @@ export default function AdminConsistentTab() {
             </div>
           </div>
 
-          {/* Collapsible Ranking Methodology & Audit Guide */}
+          {/* Collapsible Parameters Considered Guide */}
           {showMethodology && (
             <div className="mt-5 p-5 bg-white border border-amber-200 rounded-2xl shadow-xs space-y-4 animate-fade-in text-xs text-gray-700">
               <div className="flex items-center justify-between border-b border-amber-100 pb-3">
                 <div className="flex items-center gap-2 font-black text-sm text-gray-900">
                   <Sparkles size={16} className="text-amber-500" />
-                  Official Consistency &amp; Ranking Parameters (Days 1–12 Audit)
+                  Parameters Considered (Days 1–12 Evaluation)
                 </div>
                 <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                   Deterministic Multi-Factor Algorithm
@@ -255,29 +255,29 @@ export default function AdminConsistentTab() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Pillar 1: Why Jinka is #1 */}
+                {/* Pillar 1: Generalized Benchmark Example */}
                 <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4">
                   <div className="flex items-center gap-1.5 font-bold text-amber-900 mb-2">
-                    <Trophy size={15} className="text-amber-600" /> Why Jinka Goutham Vyshnavi is #1
+                    <Trophy size={15} className="text-amber-600" /> Benchmark Top Candidate Profile
                   </div>
                   <ul className="space-y-1.5 text-gray-700 text-[11px] leading-relaxed">
                     <li>
-                      • <strong className="text-gray-900">100% Attendance:</strong> Completed 12 / 12 tests without missing any day.
+                      • <strong className="text-gray-900">100% Attendance:</strong> Completed all 12 / 12 tests without missing any day.
                     </li>
                     <li>
-                      • <strong className="text-gray-900">12 / 12 On-Time:</strong> Every single test submitted on its exact live calendar date (7:30 PM – 9:50 PM IST).
+                      • <strong className="text-gray-900">12 / 12 On-Time:</strong> Every single test submitted on its exact live calendar date during scheduled hours.
                     </li>
                     <li>
-                      • <strong className="text-gray-900">Highest Cumulative Score:</strong> 292 / 305 marks (<strong>96% overall average</strong>).
+                      • <strong className="text-gray-900">Highest Cumulative Score:</strong> Highest overall average percentage (e.g. 96% cumulative performance across all 12 tests).
                     </li>
                     <li>
-                      • <strong className="text-gray-900">Hard Topics Mastery:</strong> <strong>95%</strong> on Day 8 (Work), Day 10 (Speed &amp; Distance), Day 11 (Permutations), Day 12 (Mixtures).
+                      • <strong className="text-gray-900">Hard Topics Mastery:</strong> Top-tier performance (e.g. ≥95%) on advanced discriminator tests: Day 8 (Work), Day 10 (Speed &amp; Distance), Day 11 (Permutations), Day 12 (Mixtures).
                     </li>
                     <li>
-                      • <strong className="text-gray-900">Zero Admin Resets:</strong> 0 manual overrides/retests (fully organic first-attempts).
+                      • <strong className="text-gray-900">Zero Admin Resets:</strong> 0 manual overrides/retests (fully organic first-attempt completion).
                     </li>
                     <li>
-                      • <strong className="text-gray-900">Zero Speed Flags:</strong> Natural human time gaps and organic mark distribution.
+                      • <strong className="text-gray-900">Zero Speed Flags:</strong> Natural human time gaps and realistic question review times.
                     </li>
                   </ul>
                 </div>

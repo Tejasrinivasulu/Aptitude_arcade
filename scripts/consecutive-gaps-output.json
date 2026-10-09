@@ -1,0 +1,3335 @@
+[
+  {
+    "name": "Kasa Jahnavi",
+    "rollNumber": "24102A010236",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 28,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 1,
+    "minGapMinutes": 1,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T15:17:42.397Z",
+        "toTime": "2026-10-01T15:19:06.626Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "5/25",
+        "toScore": "10/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T15:19:06.626Z",
+        "toTime": "2026-10-01T15:19:50.714Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "10/30",
+        "toScore": "7/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-01T15:19:50.714Z",
+        "toTime": "2026-10-01T15:21:04.030Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "7/25",
+        "toScore": "6/25"
+      }
+    ]
+  },
+  {
+    "name": "Vulasala yogendra",
+    "rollNumber": "25301a030068",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 10,
+    "avgPercentage": 33,
+    "sameDayTestsCount": 6,
+    "avgGapMinutes": 1,
+    "minGapMinutes": 1,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T09:40:34.517Z",
+        "toTime": "2026-10-02T09:41:56.230Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "10/30",
+        "toScore": "5/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T09:41:56.230Z",
+        "toTime": "2026-10-02T09:42:56.107Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "5/25",
+        "toScore": "11/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T09:42:56.107Z",
+        "toTime": "2026-10-02T09:43:44.279Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "11/25",
+        "toScore": "8/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T09:43:44.279Z",
+        "toTime": "2026-10-02T09:44:40.616Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "8/25",
+        "toScore": "9/25"
+      },
+      {
+        "fromDay": 7,
+        "toDay": 6,
+        "fromTime": "2026-10-04T06:03:11.642Z",
+        "toTime": "2026-10-04T06:04:04.910Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "7/25",
+        "toScore": "7/25"
+      }
+    ]
+  },
+  {
+    "name": "SIRI DASI",
+    "rollNumber": "24102A010737",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 7,
+    "avgPercentage": 29,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 1,
+    "minGapMinutes": 1,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:33:36.181Z",
+        "toTime": "2026-10-02T05:35:31.234Z",
+        "gapMinutes": 2,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "10/30",
+        "toScore": "7/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T05:35:31.234Z",
+        "toTime": "2026-10-02T05:36:58.295Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "7/25",
+        "toScore": "8/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T05:36:58.295Z",
+        "toTime": "2026-10-02T05:38:13.592Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "8/25",
+        "toScore": "3/25"
+      }
+    ]
+  },
+  {
+    "name": "kothapalli charan teja",
+    "rollNumber": "24102A010223",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 6,
+    "avgPercentage": 57,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 7,
+    "minGapMinutes": 1,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:44:34.955Z",
+        "toTime": "2026-10-02T13:56:06.467Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "22/30",
+        "toScore": "17/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:56:06.467Z",
+        "toTime": "2026-10-02T13:57:20.476Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "17/25",
+        "toScore": "1/25"
+      }
+    ]
+  },
+  {
+    "name": "P.Gopichand",
+    "rollNumber": "24101A030105",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 3,
+    "avgPercentage": 24,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 11,
+    "minGapMinutes": 1,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T09:51:06.116Z",
+        "toTime": "2026-10-01T10:11:30.477Z",
+        "gapMinutes": 20,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "10/25",
+        "toScore": "9/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T10:11:30.477Z",
+        "toTime": "2026-10-01T10:12:29.483Z",
+        "gapMinutes": 1,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "9/30",
+        "toScore": "0/25"
+      }
+    ]
+  },
+  {
+    "name": "Shaik Siva Priya",
+    "rollNumber": "25102a010382",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 97,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 8,
+    "minGapMinutes": 2,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T17:10:07.958Z",
+        "toTime": "2026-10-02T17:12:26.283Z",
+        "gapMinutes": 2,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "30/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T17:12:26.283Z",
+        "toTime": "2026-10-02T17:26:03.784Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "C Vishnu Prasad",
+    "rollNumber": "24102A010113",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 10,
+    "avgPercentage": 44,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 2,
+    "minGapMinutes": 2,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T17:06:53.903Z",
+        "toTime": "2026-10-02T17:08:40.671Z",
+        "gapMinutes": 2,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "8/25",
+        "toScore": "5/25"
+      }
+    ]
+  },
+  {
+    "name": "Balaji . R",
+    "rollNumber": "25102a010241",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 90,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 6,
+    "minGapMinutes": 3,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:10:29.827Z",
+        "toTime": "2026-10-02T15:13:52.551Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "25/25",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T15:13:52.551Z",
+        "toTime": "2026-10-02T15:23:18.998Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "23/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T15:23:18.998Z",
+        "toTime": "2026-10-02T15:29:24.408Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "B.SriGowri",
+    "rollNumber": "25102A060066",
+    "branch": "Artificial Intelligence & Data Science (AIDS)",
+    "totalAttempted": 11,
+    "avgPercentage": 99,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 6,
+    "minGapMinutes": 3,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:59:42.634Z",
+        "toTime": "2026-10-02T14:08:50.649Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:08:50.649Z",
+        "toTime": "2026-10-02T14:18:10.411Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T14:18:10.411Z",
+        "toTime": "2026-10-02T14:21:55.636Z",
+        "gapMinutes": 4,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "25/25",
+        "toScore": "30/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-02T14:21:55.636Z",
+        "toTime": "2026-10-02T14:25:13.805Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "30/30",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Harsha",
+    "rollNumber": "25102A010511",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 88,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 4,
+    "minGapMinutes": 3,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T10:53:11.814Z",
+        "toTime": "2026-10-02T10:57:27.607Z",
+        "gapMinutes": 4,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "25/30",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T10:57:27.607Z",
+        "toTime": "2026-10-02T11:01:31.698Z",
+        "gapMinutes": 4,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "19/25",
+        "toScore": "17/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T11:01:31.698Z",
+        "toTime": "2026-10-02T11:04:57.145Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "17/25",
+        "toScore": "18/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T11:04:57.145Z",
+        "toTime": "2026-10-02T11:09:55.493Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "18/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "VATTAM THANMAI",
+    "rollNumber": "25102A010574",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 5,
+    "avgPercentage": 99,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 5,
+    "minGapMinutes": 3,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:45:01.011Z",
+        "toTime": "2026-10-02T15:48:24.257Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "30/30",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:48:24.257Z",
+        "toTime": "2026-10-02T15:51:10.691Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T15:51:10.691Z",
+        "toTime": "2026-10-02T15:53:57.442Z",
+        "gapMinutes": 3,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T15:53:57.442Z",
+        "toTime": "2026-10-02T16:06:04.573Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "KETHU RISHI",
+    "rollNumber": "25102A010165",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 54,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 4,
+    "minGapMinutes": 4,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 11,
+        "toDay": 12,
+        "fromTime": "2026-10-09T04:35:40.239Z",
+        "toTime": "2026-10-09T04:39:42.025Z",
+        "gapMinutes": 4,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "17/25",
+        "toScore": "19/25"
+      }
+    ]
+  },
+  {
+    "name": "Acchu Yagna sree",
+    "rollNumber": "24102A010006",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 10,
+    "avgPercentage": 71,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 5,
+    "minGapMinutes": 4,
+    "hasSuspicious": true,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:23:10.871Z",
+        "toTime": "2026-10-02T13:28:52.584Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "17/30",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T13:28:52.584Z",
+        "toTime": "2026-10-02T13:33:19.783Z",
+        "gapMinutes": 4,
+        "status": "🚨 VERY SUSPICIOUS (<5m)",
+        "fromScore": "22/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "Gadam Satya manasa",
+    "rollNumber": "25102A020071",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 12,
+    "avgPercentage": 93,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 12,
+    "minGapMinutes": 5,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:31:33.615Z",
+        "toTime": "2026-10-02T13:36:44.606Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:36:44.606Z",
+        "toTime": "2026-10-02T13:59:37.559Z",
+        "gapMinutes": 23,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:59:37.559Z",
+        "toTime": "2026-10-02T14:08:57.589Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:08:57.589Z",
+        "toTime": "2026-10-02T14:18:00.005Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Goniganti Akshaya",
+    "rollNumber": "25102a010314",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 47,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 16,
+    "minGapMinutes": 5,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T13:18:54.232Z",
+        "toTime": "2026-10-02T13:57:49.349Z",
+        "gapMinutes": 39,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "4/25",
+        "toScore": "18/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:57:49.349Z",
+        "toTime": "2026-10-02T14:09:51.910Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "18/30",
+        "toScore": "17/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T14:09:51.910Z",
+        "toTime": "2026-10-02T14:15:58.780Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "17/25",
+        "toScore": "5/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T14:15:58.780Z",
+        "toTime": "2026-10-02T14:21:16.128Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "5/25",
+        "toScore": "9/25"
+      }
+    ]
+  },
+  {
+    "name": "Yallanoor Jyasri Sandhya",
+    "rollNumber": "25102A010167",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 95,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 6,
+    "minGapMinutes": 5,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T03:59:11.769Z",
+        "toTime": "2026-10-02T04:06:14.144Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "30/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T04:06:14.144Z",
+        "toTime": "2026-10-02T04:13:25.194Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T04:13:25.194Z",
+        "toTime": "2026-10-02T04:19:12.195Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 7,
+        "toDay": 9,
+        "fromTime": "2026-10-06T12:40:09.634Z",
+        "toTime": "2026-10-06T12:45:32.482Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "G.Joshitha",
+    "rollNumber": "25102a010513",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 85,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 6,
+    "minGapMinutes": 5,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:33:47.066Z",
+        "toTime": "2026-10-02T05:40:44.252Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "16/30",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T05:40:44.252Z",
+        "toTime": "2026-10-02T05:45:28.315Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "19/25",
+        "toScore": "16/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:45:28.315Z",
+        "toTime": "2026-10-02T05:50:06.335Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "16/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "Konaki Poshika",
+    "rollNumber": "25102A010075",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 9,
+    "avgPercentage": 93,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 7,
+    "minGapMinutes": 5,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T15:18:43.940Z",
+        "toTime": "2026-10-02T15:26:33.410Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "29/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:26:33.410Z",
+        "toTime": "2026-10-02T15:33:35.725Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:33:35.725Z",
+        "toTime": "2026-10-02T15:38:37.337Z",
+        "gapMinutes": 5,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Harika E",
+    "rollNumber": "25102A010074",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 57,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 27,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-01T13:49:24.422Z",
+        "toTime": "2026-10-01T14:25:06.755Z",
+        "gapMinutes": 36,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T12:03:29.364Z",
+        "toTime": "2026-10-02T12:10:36.404Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "21/25",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T12:10:36.404Z",
+        "toTime": "2026-10-02T12:16:33.643Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "19/25",
+        "toScore": "11/25"
+      },
+      {
+        "fromDay": 11,
+        "toDay": 12,
+        "fromTime": "2026-10-09T05:07:15.610Z",
+        "toTime": "2026-10-09T06:05:12.003Z",
+        "gapMinutes": 58,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "8/25",
+        "toScore": "7/25"
+      }
+    ]
+  },
+  {
+    "name": "Varsha Poojitha Elisetti",
+    "rollNumber": "25102A010411",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 82,
+    "sameDayTestsCount": 6,
+    "avgGapMinutes": 8,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 4,
+        "fromTime": "2026-10-02T15:39:42.710Z",
+        "toTime": "2026-10-02T15:50:38.698Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "19/25",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:50:38.698Z",
+        "toTime": "2026-10-02T15:58:14.068Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "19/25",
+        "toScore": "20/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:58:14.068Z",
+        "toTime": "2026-10-02T16:04:15.138Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "20/25",
+        "toScore": "20/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 1,
+        "fromTime": "2026-10-02T16:04:15.138Z",
+        "toTime": "2026-10-02T16:11:56.966Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "20/25",
+        "toScore": "21/30"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T05:31:06.112Z",
+        "toTime": "2026-10-04T05:37:20.987Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "19/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "SravanKumarReddyKV",
+    "rollNumber": "24101a030055",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 11,
+    "avgPercentage": 83,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 11,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T15:25:40.765Z",
+        "toTime": "2026-10-02T15:41:40.612Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 8,
+        "toDay": 9,
+        "fromTime": "2026-10-08T00:10:06.723Z",
+        "toTime": "2026-10-08T00:15:50.377Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "16/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "Pulikonda Neelisha",
+    "rollNumber": "25102A010209",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 10,
+    "avgPercentage": 73,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 15,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T16:51:46.936Z",
+        "toTime": "2026-10-01T17:06:52.879Z",
+        "gapMinutes": 15,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/30",
+        "toScore": "20/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:53:53.014Z",
+        "toTime": "2026-10-02T06:09:32.199Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "17/25",
+        "toScore": "15/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T06:09:32.199Z",
+        "toTime": "2026-10-02T06:32:04.089Z",
+        "gapMinutes": 23,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "15/25",
+        "toScore": "18/25"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T05:18:06.244Z",
+        "toTime": "2026-10-04T05:24:25.562Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "21/25",
+        "toScore": "19/25"
+      }
+    ]
+  },
+  {
+    "name": "Hemalatha",
+    "rollNumber": "25102A010218",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 9,
+    "avgPercentage": 97,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 8,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T16:26:47.924Z",
+        "toTime": "2026-10-01T16:34:34.093Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-01T16:34:34.093Z",
+        "toTime": "2026-10-01T16:42:17.803Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T16:05:14.296Z",
+        "toTime": "2026-10-02T16:16:19.525Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T05:53:43.002Z",
+        "toTime": "2026-10-04T05:59:51.591Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Shaik Mohammed Yaseen",
+    "rollNumber": "25102A010097",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 7,
+    "avgPercentage": 79,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 7,
+    "minGapMinutes": 6,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:43:43.489Z",
+        "toTime": "2026-10-02T15:50:54.859Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:50:54.859Z",
+        "toTime": "2026-10-02T15:56:39.530Z",
+        "gapMinutes": 6,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "Sriram Amulya",
+    "rollNumber": "24102A050049",
+    "branch": "Information Technology (IT)",
+    "totalAttempted": 12,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 9,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T16:42:23.772Z",
+        "toTime": "2026-10-02T16:49:50.283Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T16:49:50.283Z",
+        "toTime": "2026-10-02T17:00:25.789Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Paathuri Sruthi",
+    "rollNumber": "24102A010536",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 91,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 11,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T05:14:56.183Z",
+        "toTime": "2026-10-02T05:21:49.451Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "20/25",
+        "toScore": "22/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:21:49.451Z",
+        "toTime": "2026-10-02T05:33:17.678Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/30",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T05:33:17.678Z",
+        "toTime": "2026-10-02T05:43:58.717Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:43:58.717Z",
+        "toTime": "2026-10-02T05:56:41.529Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Harshika Ramavath",
+    "rollNumber": "25102A010095",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 95,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 8,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:32:18.638Z",
+        "toTime": "2026-10-02T13:42:14.425Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:42:14.425Z",
+        "toTime": "2026-10-02T13:49:26.123Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T13:49:26.123Z",
+        "toTime": "2026-10-02T13:57:10.335Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "patan.shahistha",
+    "rollNumber": "24102A010348",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 11,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T14:36:10.817Z",
+        "toTime": "2026-10-02T14:43:33.044Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:43:33.044Z",
+        "toTime": "2026-10-02T14:54:22.082Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 11,
+        "toDay": 8,
+        "fromTime": "2026-10-08T12:33:21.296Z",
+        "toTime": "2026-10-08T12:48:21.543Z",
+        "gapMinutes": 15,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "ISTARLA BHARGAVI",
+    "rollNumber": "25102A010160",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 6,
+    "avgPercentage": 85,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 9,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:50:06.033Z",
+        "toTime": "2026-10-02T13:57:15.244Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "21/25",
+        "toScore": "17/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T13:57:15.244Z",
+        "toTime": "2026-10-02T14:08:18.198Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "17/25",
+        "toScore": "21/25"
+      }
+    ]
+  },
+  {
+    "name": "Jinka Harshini",
+    "rollNumber": "25102A040086",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 6,
+    "avgPercentage": 38,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 9,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:42:26.095Z",
+        "toTime": "2026-10-02T15:53:10.410Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "10/25",
+        "toScore": "5/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T15:53:10.410Z",
+        "toTime": "2026-10-02T16:00:08.212Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "5/25",
+        "toScore": "7/25"
+      }
+    ]
+  },
+  {
+    "name": "K.Rakesh reddy",
+    "rollNumber": "24012A010240",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 5,
+    "avgPercentage": 45,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 7,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 12,
+        "toDay": 11,
+        "fromTime": "2026-10-09T04:54:27.025Z",
+        "toTime": "2026-10-09T05:01:22.874Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "9/25",
+        "toScore": "9/25"
+      }
+    ]
+  },
+  {
+    "name": "M PREETHI MEGHANA",
+    "rollNumber": "25102A010214",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 5,
+    "avgPercentage": 95,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 19,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T17:11:34.563Z",
+        "toTime": "2026-10-01T17:43:22.791Z",
+        "gapMinutes": 32,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-01T17:43:22.791Z",
+        "toTime": "2026-10-01T17:50:47.230Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "21/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-01T17:50:47.230Z",
+        "toTime": "2026-10-01T18:09:39.673Z",
+        "gapMinutes": 19,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "21/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Shahida Shaik",
+    "rollNumber": "24102A010513",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 3,
+    "avgPercentage": 83,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 7,
+    "minGapMinutes": 7,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 3,
+        "fromTime": "2026-10-02T16:44:09.322Z",
+        "toTime": "2026-10-02T16:50:59.298Z",
+        "gapMinutes": 7,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "23/30",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "Salla Mounika",
+    "rollNumber": "25102A010177",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 94,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 14,
+    "minGapMinutes": 8,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:37:16.482Z",
+        "toTime": "2026-10-02T14:00:21.098Z",
+        "gapMinutes": 23,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T14:00:21.098Z",
+        "toTime": "2026-10-02T14:10:00.516Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:10:00.516Z",
+        "toTime": "2026-10-02T14:18:04.217Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Gorrela Thejavathi",
+    "rollNumber": "25102A010333",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 82,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 8,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T05:26:02.682Z",
+        "toTime": "2026-10-02T05:38:29.767Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "10/25",
+        "toScore": "26/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:38:29.767Z",
+        "toTime": "2026-10-02T05:46:50.198Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "26/30",
+        "toScore": "18/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T05:46:50.198Z",
+        "toTime": "2026-10-02T05:54:44.926Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "18/25",
+        "toScore": "9/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:54:44.926Z",
+        "toTime": "2026-10-02T06:05:35.182Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "9/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "Katari Monika",
+    "rollNumber": "25102A010077",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 9,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 6,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 8,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T07:18:15.094Z",
+        "toTime": "2026-10-02T07:30:13.184Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "29/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T07:30:13.184Z",
+        "toTime": "2026-10-02T07:41:34.842Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "29/30",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T07:41:34.842Z",
+        "toTime": "2026-10-02T07:49:13.643Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T07:49:13.643Z",
+        "toTime": "2026-10-02T08:01:22.907Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T06:39:44.295Z",
+        "toTime": "2026-10-04T06:48:07.845Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "21/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Jennyfar chinthagunta",
+    "rollNumber": "25102A010379",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 9,
+    "avgPercentage": 94,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 11,
+    "minGapMinutes": 8,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T16:25:03.267Z",
+        "toTime": "2026-10-02T16:37:17.716Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "30/30",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T16:37:17.716Z",
+        "toTime": "2026-10-02T16:47:37.499Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "23/25",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T16:47:37.499Z",
+        "toTime": "2026-10-02T17:02:05.166Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T17:02:05.166Z",
+        "toTime": "2026-10-02T17:10:03.060Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "R. keerthi phani priya",
+    "rollNumber": "25101A010014",
+    "branch": "Civil Engineering",
+    "totalAttempted": 7,
+    "avgPercentage": 64,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 35,
+    "minGapMinutes": 8,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:59:30.008Z",
+        "toTime": "2026-10-02T14:07:35.904Z",
+        "gapMinutes": 8,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "17/30",
+        "toScore": "14/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T14:07:35.904Z",
+        "toTime": "2026-10-02T15:33:05.349Z",
+        "gapMinutes": 85,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "14/25",
+        "toScore": "16/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T15:33:05.349Z",
+        "toTime": "2026-10-02T15:45:43.957Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "16/25",
+        "toScore": "16/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T15:45:43.957Z",
+        "toTime": "2026-10-02T16:19:59.508Z",
+        "gapMinutes": 34,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "16/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "Manasa Tallam",
+    "rollNumber": "25102A010002",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-02T13:37:03.875Z",
+        "toTime": "2026-10-02T13:49:01.493Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "30/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:49:01.493Z",
+        "toTime": "2026-10-02T13:59:42.008Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:59:42.008Z",
+        "toTime": "2026-10-02T14:08:52.234Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:08:52.234Z",
+        "toTime": "2026-10-02T14:18:10.245Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Pilliboyana Vesusree",
+    "rollNumber": "25102A040167",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 12,
+    "avgPercentage": 95,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 21,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T16:20:05.680Z",
+        "toTime": "2026-10-01T17:05:49.726Z",
+        "gapMinutes": 46,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "25/25",
+        "toScore": "28/30"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:59:38.599Z",
+        "toTime": "2026-10-02T14:08:41.323Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:08:41.323Z",
+        "toTime": "2026-10-02T14:17:58.882Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "K.B.swathi",
+    "rollNumber": "25102A010233",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 92,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 40,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:34:14.565Z",
+        "toTime": "2026-10-02T13:49:39.324Z",
+        "gapMinutes": 15,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:49:39.324Z",
+        "toTime": "2026-10-02T15:24:47.896Z",
+        "gapMinutes": 95,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "22/25",
+        "toScore": "21/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T15:24:47.896Z",
+        "toTime": "2026-10-02T15:34:07.540Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "21/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Sai Harshitha Leburu",
+    "rollNumber": "25102A040025",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 10,
+    "avgPercentage": 93,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:52:02.025Z",
+        "toTime": "2026-10-02T16:03:15.102Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T16:03:15.102Z",
+        "toTime": "2026-10-02T16:12:49.984Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T16:12:49.984Z",
+        "toTime": "2026-10-02T16:21:22.787Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T16:21:22.787Z",
+        "toTime": "2026-10-02T16:30:10.204Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "22/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Peddiboyina Mamatha",
+    "rollNumber": "25102A010111",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 9,
+    "avgPercentage": 85,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 9,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 5,
+        "fromTime": "2026-10-02T15:19:25.703Z",
+        "toTime": "2026-10-02T15:28:53.202Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "27/30",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "J LAALITHYA",
+    "rollNumber": "24102A010600",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 7,
+    "avgPercentage": 86,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 9,
+    "minGapMinutes": 9,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 8,
+        "fromTime": "2026-10-05T15:07:08.061Z",
+        "toTime": "2026-10-05T15:16:14.635Z",
+        "gapMinutes": 9,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "20/25",
+        "toScore": "20/25"
+      }
+    ]
+  },
+  {
+    "name": "KUNCHAPU UMAKANTH",
+    "rollNumber": "24102A020040",
+    "branch": "Other",
+    "totalAttempted": 10,
+    "avgPercentage": 66,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 12,
+    "minGapMinutes": 10,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T10:09:01.491Z",
+        "toTime": "2026-10-02T10:22:54.242Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "17/30",
+        "toScore": "18/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T17:47:04.228Z",
+        "toTime": "2026-10-02T17:56:52.796Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "14/25",
+        "toScore": "15/25"
+      }
+    ]
+  },
+  {
+    "name": "Hanumanthu Meghana",
+    "rollNumber": "24102A040181",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 7,
+    "avgPercentage": 91,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 10,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 2,
+        "fromTime": "2026-10-01T17:54:15.305Z",
+        "toTime": "2026-10-01T18:04:33.801Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "R.V.Madhu Sudhan",
+    "rollNumber": "24101A030108",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 7,
+    "avgPercentage": 26,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 19,
+    "minGapMinutes": 10,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:36:13.617Z",
+        "toTime": "2026-10-02T16:03:49.806Z",
+        "gapMinutes": 28,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "5/30",
+        "toScore": "6/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T16:03:49.806Z",
+        "toTime": "2026-10-02T16:21:44.808Z",
+        "gapMinutes": 18,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "6/25",
+        "toScore": "8/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T16:21:44.808Z",
+        "toTime": "2026-10-02T16:31:17.090Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "8/25",
+        "toScore": "4/25"
+      }
+    ]
+  },
+  {
+    "name": "Lingam Janani Sai Laxmi",
+    "rollNumber": "24102A010722",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 6,
+    "avgPercentage": 54,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 12,
+    "minGapMinutes": 10,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T12:54:55.543Z",
+        "toTime": "2026-10-02T13:04:41.487Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "12/25",
+        "toScore": "10/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:04:41.487Z",
+        "toTime": "2026-10-02T13:19:11.108Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "10/25",
+        "toScore": "16/25"
+      }
+    ]
+  },
+  {
+    "name": "Vaishnavi Potlacheruvu",
+    "rollNumber": "24102A040664",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 4,
+    "avgPercentage": 93,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 10,
+    "minGapMinutes": 10,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T16:42:39.949Z",
+        "toTime": "2026-10-02T16:52:47.529Z",
+        "gapMinutes": 10,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Sushma Sree Anepakula",
+    "rollNumber": "25102A040143",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 11,
+    "avgPercentage": 73,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 15,
+    "minGapMinutes": 11,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:00:25.984Z",
+        "toTime": "2026-10-02T13:11:09.007Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "30/30",
+        "toScore": "22/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T13:11:09.007Z",
+        "toTime": "2026-10-02T13:25:05.759Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "22/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:25:05.759Z",
+        "toTime": "2026-10-02T13:42:18.253Z",
+        "gapMinutes": 17,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T13:42:18.253Z",
+        "toTime": "2026-10-02T13:58:04.277Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Jaheer Shaik",
+    "rollNumber": "24101A030121",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 10,
+    "avgPercentage": 91,
+    "sameDayTestsCount": 5,
+    "avgGapMinutes": 18,
+    "minGapMinutes": 11,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T06:07:19.640Z",
+        "toTime": "2026-10-02T06:18:38.985Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T06:18:38.985Z",
+        "toTime": "2026-10-02T06:29:59.792Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "24/25",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T06:29:59.792Z",
+        "toTime": "2026-10-02T06:41:53.052Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "19/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T05:24:38.161Z",
+        "toTime": "2026-10-04T06:01:49.042Z",
+        "gapMinutes": 37,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "K Goutam Kumar Reddy",
+    "rollNumber": "25102a010551",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 7,
+    "avgPercentage": 91,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 24,
+    "minGapMinutes": 11,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T04:06:27.851Z",
+        "toTime": "2026-10-02T04:17:05.592Z",
+        "gapMinutes": 11,
+        "status": "⚡ FAST (5-12m)",
+        "fromScore": "28/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T04:17:05.592Z",
+        "toTime": "2026-10-02T05:05:39.612Z",
+        "gapMinutes": 49,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "24/25",
+        "toScore": "21/25"
+      },
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T06:10:54.920Z",
+        "toTime": "2026-10-04T06:23:55.426Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "J MUNI GAYATHRI",
+    "rollNumber": "25102A010357",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 94,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 13,
+    "minGapMinutes": 12,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T13:35:54.446Z",
+        "toTime": "2026-10-02T13:47:50.321Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T13:47:50.321Z",
+        "toTime": "2026-10-02T14:00:54.059Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Kondeti Poojitha",
+    "rollNumber": "25102a040172",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 5,
+    "avgPercentage": 95,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 46,
+    "minGapMinutes": 12,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T07:12:26.362Z",
+        "toTime": "2026-10-02T07:30:08.701Z",
+        "gapMinutes": 18,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "28/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T07:30:08.701Z",
+        "toTime": "2026-10-02T09:16:48.809Z",
+        "gapMinutes": 107,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "28/30",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T09:16:48.809Z",
+        "toTime": "2026-10-02T09:29:06.444Z",
+        "gapMinutes": 12,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "B,Heythishwi",
+    "rollNumber": "25102a040146",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 11,
+    "avgPercentage": 64,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 13,
+    "minGapMinutes": 13,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T04:02:44.933Z",
+        "toTime": "2026-10-02T04:15:48.879Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "21/30",
+        "toScore": "15/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T04:15:48.879Z",
+        "toTime": "2026-10-02T04:29:16.131Z",
+        "gapMinutes": 13,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "15/25",
+        "toScore": "20/25"
+      }
+    ]
+  },
+  {
+    "name": "THAPPARI CHANDRA SEKHAR REDDY THAPPARI CHANDRA SEK",
+    "rollNumber": "24102A040673",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 11,
+    "avgPercentage": 84,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 19,
+    "minGapMinutes": 14,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T18:31:26.839Z",
+        "toTime": "2026-10-01T18:54:43.969Z",
+        "gapMinutes": 23,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "9/25",
+        "toScore": "26/30"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T10:43:51.686Z",
+        "toTime": "2026-10-02T10:57:38.210Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "22/25",
+        "toScore": "21/25"
+      }
+    ]
+  },
+  {
+    "name": "Battula saivani",
+    "rollNumber": "25102a010245",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 7,
+    "avgPercentage": 88,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 14,
+    "minGapMinutes": 14,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T16:10:00.677Z",
+        "toTime": "2026-10-02T16:24:06.399Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/30",
+        "toScore": "20/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T16:24:06.399Z",
+        "toTime": "2026-10-02T16:38:13.520Z",
+        "gapMinutes": 14,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "20/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "Sai Ruthika",
+    "rollNumber": "23102a030060",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 12,
+    "avgPercentage": 30,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 15,
+    "minGapMinutes": 15,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T05:50:55.641Z",
+        "toTime": "2026-10-01T06:05:59.345Z",
+        "gapMinutes": 15,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "11/25",
+        "toScore": "13/30"
+      }
+    ]
+  },
+  {
+    "name": "MAGULURI ROHITH KUMAR",
+    "rollNumber": "25101A030010",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 7,
+    "avgPercentage": 98,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 16,
+    "minGapMinutes": 16,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T05:45:19.651Z",
+        "toTime": "2026-10-02T06:01:16.974Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "30/30"
+      }
+    ]
+  },
+  {
+    "name": "PV BHARGAV",
+    "rollNumber": "25102a040155",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 7,
+    "avgPercentage": 81,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 21,
+    "minGapMinutes": 16,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-01T14:58:17.415Z",
+        "toTime": "2026-10-01T15:27:09.712Z",
+        "gapMinutes": 29,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "28/30",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T07:29:57.050Z",
+        "toTime": "2026-10-02T07:46:34.570Z",
+        "gapMinutes": 17,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "20/25",
+        "toScore": "20/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T07:46:34.570Z",
+        "toTime": "2026-10-02T08:02:49.329Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "20/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "P S Chandana Royal",
+    "rollNumber": "23102A010196",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 2,
+    "avgPercentage": 85,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 16,
+    "minGapMinutes": 16,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T15:15:05.407Z",
+        "toTime": "2026-10-02T15:30:52.541Z",
+        "gapMinutes": 16,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "27/30",
+        "toScore": "20/25"
+      }
+    ]
+  },
+  {
+    "name": "T.K.Mounisha",
+    "rollNumber": "24102A010505",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 4,
+    "avgPercentage": 92,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 18,
+    "minGapMinutes": 18,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 3,
+        "fromTime": "2026-10-02T04:46:35.447Z",
+        "toTime": "2026-10-02T05:04:28.309Z",
+        "gapMinutes": 18,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "23/25"
+      }
+    ]
+  },
+  {
+    "name": "Adimulam Bhoomika",
+    "rollNumber": "24102A010033",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 10,
+    "avgPercentage": 86,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 20,
+    "minGapMinutes": 20,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-01T17:24:01.102Z",
+        "toTime": "2026-10-01T17:44:26.245Z",
+        "gapMinutes": 20,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "22/25",
+        "toScore": "21/25"
+      }
+    ]
+  },
+  {
+    "name": "Hiranmai Alagala",
+    "rollNumber": "25102A010202",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 87,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 41,
+    "minGapMinutes": 22,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T15:20:32.685Z",
+        "toTime": "2026-10-01T15:51:36.382Z",
+        "gapMinutes": 31,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/30",
+        "toScore": "18/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-01T15:51:36.382Z",
+        "toTime": "2026-10-01T17:02:53.951Z",
+        "gapMinutes": 71,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "18/25",
+        "toScore": "19/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 3,
+        "fromTime": "2026-10-01T17:02:53.951Z",
+        "toTime": "2026-10-01T17:24:31.163Z",
+        "gapMinutes": 22,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "19/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "Damam Mukesh",
+    "rollNumber": "25102A010144",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 48,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 34,
+    "minGapMinutes": 22,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T12:01:37.988Z",
+        "toTime": "2026-10-02T12:44:24.614Z",
+        "gapMinutes": 43,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "13/30",
+        "toScore": "10/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T12:44:24.614Z",
+        "toTime": "2026-10-02T13:22:03.455Z",
+        "gapMinutes": 38,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "10/25",
+        "toScore": "10/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:22:03.455Z",
+        "toTime": "2026-10-02T13:43:43.399Z",
+        "gapMinutes": 22,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "10/25",
+        "toScore": "13/25"
+      }
+    ]
+  },
+  {
+    "name": "Ekanthika Boochiraju",
+    "rollNumber": "24102A010045",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 5,
+    "avgPercentage": 61,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 22,
+    "minGapMinutes": 22,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T13:17:47.229Z",
+        "toTime": "2026-10-01T13:40:14.029Z",
+        "gapMinutes": 22,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "15/25",
+        "toScore": "21/30"
+      }
+    ]
+  },
+  {
+    "name": "Chinnagajje priyanka",
+    "rollNumber": "24102A030014",
+    "branch": "Other",
+    "totalAttempted": 4,
+    "avgPercentage": 54,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 25,
+    "minGapMinutes": 23,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:41:02.404Z",
+        "toTime": "2026-10-02T06:07:28.489Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "9/25",
+        "toScore": "12/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T06:07:28.489Z",
+        "toTime": "2026-10-02T06:30:52.005Z",
+        "gapMinutes": 23,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "12/25",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "Kurapati Jyothi Prasanna",
+    "rollNumber": "24102A020042",
+    "branch": "Other",
+    "totalAttempted": 12,
+    "avgPercentage": 97,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 36,
+    "minGapMinutes": 24,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 1,
+        "fromTime": "2026-10-01T16:17:08.478Z",
+        "toTime": "2026-10-01T16:41:34.819Z",
+        "gapMinutes": 24,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "29/30"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T16:44:26.828Z",
+        "toTime": "2026-10-02T17:31:13.612Z",
+        "gapMinutes": 47,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "K NIKITHA",
+    "rollNumber": "25102A010494",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 8,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 30,
+    "minGapMinutes": 24,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T16:07:56.395Z",
+        "toTime": "2026-10-01T16:31:52.325Z",
+        "gapMinutes": 24,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "27/30",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:41:43.561Z",
+        "toTime": "2026-10-02T06:16:48.711Z",
+        "gapMinutes": 35,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "bhanvyshree M",
+    "rollNumber": "25301a030013",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 9,
+    "avgPercentage": 81,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 25,
+    "minGapMinutes": 25,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T06:09:04.281Z",
+        "toTime": "2026-10-04T06:34:03.019Z",
+        "gapMinutes": 25,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "Sai Likhitha",
+    "rollNumber": "25101A030170",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 8,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 25,
+    "minGapMinutes": 25,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-01T17:11:36.750Z",
+        "toTime": "2026-10-01T17:37:04.763Z",
+        "gapMinutes": 25,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Salani Madhuri",
+    "rollNumber": "23102a030104",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 2,
+    "avgPercentage": 20,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 25,
+    "minGapMinutes": 25,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 3,
+        "fromTime": "2026-10-02T05:35:35.637Z",
+        "toTime": "2026-10-02T06:00:53.949Z",
+        "gapMinutes": 25,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "1/30",
+        "toScore": "10/25"
+      }
+    ]
+  },
+  {
+    "name": "patibandla amrutha varshini",
+    "rollNumber": "24102A010361",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 40,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 26,
+    "minGapMinutes": 26,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-01T17:43:15.491Z",
+        "toTime": "2026-10-01T18:09:01.014Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "12/30",
+        "toScore": "8/25"
+      }
+    ]
+  },
+  {
+    "name": "Thune Sirisha",
+    "rollNumber": "24102A010512",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 11,
+    "avgPercentage": 56,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 33,
+    "minGapMinutes": 26,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 1,
+        "fromTime": "2026-10-01T15:41:44.169Z",
+        "toTime": "2026-10-01T16:21:40.837Z",
+        "gapMinutes": 40,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "15/25",
+        "toScore": "18/30"
+      },
+      {
+        "fromDay": 5,
+        "toDay": 9,
+        "fromTime": "2026-10-06T15:53:41.896Z",
+        "toTime": "2026-10-06T16:19:32.609Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "11/25",
+        "toScore": "14/25"
+      }
+    ]
+  },
+  {
+    "name": "MACHHAPPA GARI THIPPESWAMY",
+    "rollNumber": "23101a030097",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 10,
+    "avgPercentage": 86,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 27,
+    "minGapMinutes": 26,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 3,
+        "fromTime": "2026-10-01T15:26:52.566Z",
+        "toTime": "2026-10-01T15:53:15.204Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 7,
+        "toDay": 6,
+        "fromTime": "2026-10-04T05:56:33.363Z",
+        "toTime": "2026-10-04T06:24:28.230Z",
+        "gapMinutes": 28,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "B Poojasri",
+    "rollNumber": "25102A040106",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 10,
+    "avgPercentage": 84,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 26,
+    "minGapMinutes": 26,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 5,
+        "fromTime": "2026-10-02T14:45:49.897Z",
+        "toTime": "2026-10-02T15:11:37.653Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/30",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Harshitha Nerusu",
+    "rollNumber": "25102a010361",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 8,
+    "avgPercentage": 84,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 27,
+    "minGapMinutes": 26,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T12:47:55.218Z",
+        "toTime": "2026-10-02T13:16:19.408Z",
+        "gapMinutes": 28,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "23/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T13:16:19.408Z",
+        "toTime": "2026-10-02T13:42:27.780Z",
+        "gapMinutes": 26,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "22/25"
+      }
+    ]
+  },
+  {
+    "name": "T Chandhan",
+    "rollNumber": "24101a030129",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 6,
+    "avgPercentage": 34,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 28,
+    "minGapMinutes": 28,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 4,
+        "toDay": 2,
+        "fromTime": "2026-10-01T13:23:06.515Z",
+        "toTime": "2026-10-01T13:51:26.790Z",
+        "gapMinutes": 28,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "12/25",
+        "toScore": "13/25"
+      }
+    ]
+  },
+  {
+    "name": "Navadeep Chava",
+    "rollNumber": "25101A030037",
+    "branch": "Electronics & Communication Engineering (ECE)",
+    "totalAttempted": 3,
+    "avgPercentage": 83,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 29,
+    "minGapMinutes": 28,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 5,
+        "toDay": 1,
+        "fromTime": "2026-10-02T05:45:08.304Z",
+        "toTime": "2026-10-02T06:13:30.018Z",
+        "gapMinutes": 28,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "26/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-02T06:13:30.018Z",
+        "toTime": "2026-10-02T06:42:11.181Z",
+        "gapMinutes": 29,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "26/30",
+        "toScore": "17/25"
+      }
+    ]
+  },
+  {
+    "name": "DUVVA LIKITHA",
+    "rollNumber": "24102A020018",
+    "branch": "Other",
+    "totalAttempted": 12,
+    "avgPercentage": 99,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 47,
+    "minGapMinutes": 29,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 1,
+        "fromTime": "2026-10-02T15:58:36.094Z",
+        "toTime": "2026-10-02T16:27:28.661Z",
+        "gapMinutes": 29,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "30/30"
+      },
+      {
+        "fromDay": 1,
+        "toDay": 5,
+        "fromTime": "2026-10-02T16:27:28.661Z",
+        "toTime": "2026-10-02T17:31:51.390Z",
+        "gapMinutes": 64,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "30/30",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "BOYA SAITEJASWINI",
+    "rollNumber": "24102A010054",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 94,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 30,
+    "minGapMinutes": 30,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-01T17:15:33.965Z",
+        "toTime": "2026-10-01T17:45:11.224Z",
+        "gapMinutes": 30,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "24/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "YERURU NUZHATH ARSHIYA",
+    "rollNumber": "24102A010535",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 4,
+    "avgGapMinutes": 38,
+    "minGapMinutes": 30,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-01T16:40:49.563Z",
+        "toTime": "2026-10-01T17:10:26.720Z",
+        "gapMinutes": 30,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "29/30",
+        "toScore": "24/25"
+      },
+      {
+        "fromDay": 3,
+        "toDay": 4,
+        "fromTime": "2026-10-02T05:23:07.939Z",
+        "toTime": "2026-10-02T06:08:12.669Z",
+        "gapMinutes": 45,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      },
+      {
+        "fromDay": 4,
+        "toDay": 5,
+        "fromTime": "2026-10-02T06:08:12.669Z",
+        "toTime": "2026-10-02T06:45:54.683Z",
+        "gapMinutes": 38,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "25/25",
+        "toScore": "24/25"
+      }
+    ]
+  },
+  {
+    "name": "Lokesh Reddy Thatiparti",
+    "rollNumber": "24102A010517",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 4,
+    "avgPercentage": 71,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 120,
+    "minGapMinutes": 30,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T05:55:32.600Z",
+        "toTime": "2026-10-02T06:25:47.155Z",
+        "gapMinutes": 30,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "20/30",
+        "toScore": "16/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 4,
+        "fromTime": "2026-10-02T06:25:47.155Z",
+        "toTime": "2026-10-02T09:55:22.190Z",
+        "gapMinutes": 210,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "16/25",
+        "toScore": "20/25"
+      }
+    ]
+  },
+  {
+    "name": "Dasarath Singh",
+    "rollNumber": "24101A040029",
+    "branch": "Other",
+    "totalAttempted": 5,
+    "avgPercentage": 45,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 39,
+    "minGapMinutes": 39,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 2,
+        "fromTime": "2026-10-02T16:57:39.859Z",
+        "toTime": "2026-10-02T17:36:13.146Z",
+        "gapMinutes": 39,
+        "status": "✅ NORMAL SOLVING (12-45m)",
+        "fromScore": "16/30",
+        "toScore": "11/25"
+      }
+    ]
+  },
+  {
+    "name": "HARIJANA KARTHIK",
+    "rollNumber": "24102A030174",
+    "branch": "Artificial Intelligence & Data Science (AIDS)",
+    "totalAttempted": 4,
+    "avgPercentage": 76,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 48,
+    "minGapMinutes": 48,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 6,
+        "toDay": 7,
+        "fromTime": "2026-10-04T06:39:28.391Z",
+        "toTime": "2026-10-04T07:27:13.511Z",
+        "gapMinutes": 48,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "16/25",
+        "toScore": "18/25"
+      }
+    ]
+  },
+  {
+    "name": "puvvadi rishitha",
+    "rollNumber": "25102A010134",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 12,
+    "avgPercentage": 96,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 50,
+    "minGapMinutes": 50,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T05:25:30.104Z",
+        "toTime": "2026-10-02T06:15:17.545Z",
+        "gapMinutes": 50,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "25/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Harshavardhan Jangam",
+    "rollNumber": "24102a040168",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 5,
+    "avgPercentage": 74,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 55,
+    "minGapMinutes": 55,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-02T16:12:15.553Z",
+        "toTime": "2026-10-02T17:07:38.238Z",
+        "gapMinutes": 55,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "23/30",
+        "toScore": "14/25"
+      }
+    ]
+  },
+  {
+    "name": "Bandi Amareshwar",
+    "rollNumber": "25102A040361",
+    "branch": "Computer Science Engineering (CSE)",
+    "totalAttempted": 3,
+    "avgPercentage": 53,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 61,
+    "minGapMinutes": 61,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 7,
+        "toDay": 8,
+        "fromTime": "2026-10-05T04:37:21.425Z",
+        "toTime": "2026-10-05T05:38:43.022Z",
+        "gapMinutes": 61,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "11/25",
+        "toScore": "6/25"
+      }
+    ]
+  },
+  {
+    "name": "KUDREKARU HARSHITHA",
+    "rollNumber": "23102a010544",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 10,
+    "avgPercentage": 56,
+    "sameDayTestsCount": 3,
+    "avgGapMinutes": 89,
+    "minGapMinutes": 83,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 1,
+        "toDay": 4,
+        "fromTime": "2026-10-01T05:13:58.735Z",
+        "toTime": "2026-10-01T06:36:47.605Z",
+        "gapMinutes": 83,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "19/30",
+        "toScore": "16/25"
+      },
+      {
+        "fromDay": 2,
+        "toDay": 5,
+        "fromTime": "2026-10-02T05:21:57.316Z",
+        "toTime": "2026-10-02T06:56:38.148Z",
+        "gapMinutes": 95,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "17/25",
+        "toScore": "12/25"
+      }
+    ]
+  },
+  {
+    "name": "Naveena Uppara",
+    "rollNumber": "25102A070013",
+    "branch": "Other",
+    "totalAttempted": 8,
+    "avgPercentage": 83,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 90,
+    "minGapMinutes": 90,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 3,
+        "toDay": 5,
+        "fromTime": "2026-10-02T05:14:06.702Z",
+        "toTime": "2026-10-02T06:44:14.649Z",
+        "gapMinutes": 90,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "23/25",
+        "toScore": "25/25"
+      }
+    ]
+  },
+  {
+    "name": "Navadeep Paila",
+    "rollNumber": "25102a010158",
+    "branch": "Artificial Intelligence & Machine Learning (AIML)",
+    "totalAttempted": 4,
+    "avgPercentage": 46,
+    "sameDayTestsCount": 2,
+    "avgGapMinutes": 99,
+    "minGapMinutes": 99,
+    "hasSuspicious": false,
+    "pairs": [
+      {
+        "fromDay": 2,
+        "toDay": 3,
+        "fromTime": "2026-10-02T12:05:18.865Z",
+        "toTime": "2026-10-02T13:44:19.639Z",
+        "gapMinutes": 99,
+        "status": "⏳ SPREAD OUT (>45m)",
+        "fromScore": "17/25",
+        "toScore": "10/25"
+      }
+    ]
+  }
+]

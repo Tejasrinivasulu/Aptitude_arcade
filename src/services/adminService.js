@@ -135,7 +135,41 @@ export function listenToResultsByDay(testKey, callback) {
   };
 }
 
-function subscribeResults(callback, onError) {
+function createSharedListener(attachFn) {
+  const subscribers = new Set();
+  let unsub = null;
+  let lastData = null;
+
+  return (callback) => {
+    subscribers.add(callback);
+    if (lastData !== null) {
+      callback(lastData);
+    }
+    if (subscribers.size === 1) {
+      unsub = attachFn((data) => {
+        lastData = data;
+        subscribers.forEach((cb) => {
+          try {
+            cb(data);
+          } catch (err) {
+            console.error('Subscriber callback error:', err);
+          }
+        });
+      });
+    }
+
+    return () => {
+      subscribers.delete(callback);
+      if (subscribers.size === 0 && unsub) {
+        unsub();
+        unsub = null;
+        lastData = null;
+      }
+    };
+  };
+}
+
+function subscribeResultsRaw(callback) {
   if (!isFirebaseReady() || !db) {
     callback(readLocalResultsFallback());
     return () => {};
@@ -176,7 +210,7 @@ function readLocalResultsFallback() {
   }));
 }
 
-export const listenToUsers = (callback) => {
+function listenToUsersRaw(callback) {
   if (!isFirebaseReady() || !db) {
     callback([]);
     return () => {};
@@ -194,9 +228,11 @@ export const listenToUsers = (callback) => {
       callback([]);
     }
   );
-};
+}
 
-export const listenToResults = (callback) => subscribeResults(callback);
+export const subscribeResults = createSharedListener(subscribeResultsRaw);
+export const listenToResults = subscribeResults;
+export const listenToUsers = createSharedListener(listenToUsersRaw);
 
 export const listenToOverviewMetrics = (callback) => {
   if (!isFirebaseReady() || !db) {
@@ -352,7 +388,7 @@ export const listenToUserResults = (uid, callback) => {
   return () => unsubs.forEach((u) => u());
 };
 
-export const listenToHelpRequests = (callback) => {
+function listenToHelpRequestsRaw(callback) {
   if (!isFirebaseReady() || !db) {
     callback([]);
     return () => {};
@@ -370,7 +406,9 @@ export const listenToHelpRequests = (callback) => {
       callback([]);
     }
   );
-};
+}
+
+export const listenToHelpRequests = createSharedListener(listenToHelpRequestsRaw);
 
 export const listenToStudentProgress = (uid, callback) => {
   if (!isFirebaseReady() || !db || !uid) {

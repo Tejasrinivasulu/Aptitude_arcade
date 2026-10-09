@@ -171,34 +171,6 @@ export const dailyLearningPlan = [
       { topic: 'Permutation and Combination', practiceLabel: 'Practice P&C Problems', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/permutation-and-combination/' },
     ],
   },
-  {
-    day: 13,
-    title: 'Mixtures & Alligation',
-    subtitle: 'Rule of Alligation, Weighted Price, Repeated Dilution & Replacement Formula',
-    topics: ['Alligation Cross Method', 'Mean Price', 'Successive Replacement of Liquid'],
-    learningGoal: 'Apply the rule of alligation to ratios, profits, averages, and chemical mixtures.',
-    totalPracticeQuestions: 30,
-    tutorials: [
-      { title: 'Alligation & Mixtures Mastery', url: 'https://www.youtube.com/results?search_query=alligation+and+mixture+aptitude' },
-    ],
-    studyMaterials: [
-      { topic: 'Alligation or Mixture', practiceLabel: 'Practice Alligation Problems', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/alligation-or-mixture/' },
-    ],
-  },
-  {
-    day: 14,
-    title: 'Probability',
-    subtitle: 'Coins, Dice, Playing Cards, Balls & Urns, Mutually Exclusive & Independent Events',
-    topics: ['Sample Space', 'Coin & Dice Probability', 'Pack of Cards', 'Conditional Basics'],
-    learningGoal: 'Calculate classical probabilities for gaming, placement, and combinatorial events.',
-    totalPracticeQuestions: 30,
-    tutorials: [
-      { title: 'Probability Concepts & Shortcut Tricks', url: 'https://www.youtube.com/results?search_query=probability+aptitude' },
-    ],
-    studyMaterials: [
-      { topic: 'Probability', practiceLabel: 'Practice Probability Questions', practiceCount: 30, practiceUrl: 'https://www.indiabix.com/aptitude/probability/' },
-    ],
-  },
 ];
 
 export function getDayPlan(day) {

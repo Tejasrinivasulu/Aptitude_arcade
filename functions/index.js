@@ -27,8 +27,8 @@ const EXAM_DURATION_SECONDS = 20 * 60;
 const DAY1_DURATION_SECONDS = 30 * 60;
 const THIRTY_MIN_DURATION_SECONDS = 30 * 60;
 const FINALE_DURATION_SECONDS = 60 * 60;
-const ACTIVE_PROGRAM_DAY = 14;
-const PROGRAM_DAY_KEYS = Array.from({ length: 14 }, (_, i) => String(i + 1));
+const ACTIVE_PROGRAM_DAY = 12;
+const PROGRAM_DAY_KEYS = Array.from({ length: 12 }, (_, i) => String(i + 1));
 
 function dayDurationSeconds(testKey) {
   const k = String(testKey);
@@ -195,8 +195,8 @@ exports.startExam = onCall(async (request) => {
 
     if (testKey === 'finale') {
       const completedCount = Object.keys(attemptedTests).filter(k => k !== 'finale').length;
-      if (completedCount < 14) {
-        throw new HttpsError('failed-precondition', 'Must complete all 14 daily tests before finale.');
+      if (completedCount < 12) {
+        throw new HttpsError('failed-precondition', 'Must complete all 12 daily tests before finale.');
       }
     }
 

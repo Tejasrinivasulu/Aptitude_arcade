@@ -57,6 +57,15 @@ export function getTotalViolations(result = {}) {
   return (result.tabViolations || 0) + (result.faceWarnings || 0);
 }
 
+export function formatDuration(seconds) {
+  const safe = Number(seconds);
+  if (!safe || safe <= 0) return '—';
+  const mins = Math.floor(safe / 60);
+  const secs = safe % 60;
+  if (mins === 0) return `${secs}s`;
+  return `${mins}m ${secs}s`;
+}
+
 export function formatIST(dateValue) {
   if (!dateValue) return '—';
   try {

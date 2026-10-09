@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ClipboardList, Search, X } from 'lucide-react';
-import { filterStudents, formatIST, getTotalViolations, filterExamResults, enrichExamResults } from '../../utils/adminData';
+import { filterStudents, formatIST, formatDuration, getTotalViolations, filterExamResults, enrichExamResults } from '../../utils/adminData';
 import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
 import { listenToResultsByDay } from '../../services/adminService';
 
@@ -213,6 +213,7 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
               <th className="p-4 font-bold">Roll No</th>
               <th className="p-4 font-bold">Test</th>
               <th className="p-4 font-bold">Score</th>
+              <th className="p-4 font-bold">Duration</th>
               <th className="p-4 font-bold">Submitted At (IST)</th>
               <th className="p-4 font-bold">Tab</th>
               <th className="p-4 font-bold">Face</th>
@@ -223,7 +224,7 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
           <tbody className="divide-y divide-gray-100">
             {loading && current.length === 0 ? (
               <tr>
-                <td colSpan={9} className="p-12 text-center text-gray-500">
+                <td colSpan={10} className="p-12 text-center text-gray-500">
                   <div className="flex items-center justify-center gap-2">
                     <span className="inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
                     <span>Loading {selectedDay === 'all' ? 'results' : `Day ${selectedDay} results`}...</span>
@@ -232,7 +233,7 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
               </tr>
             ) : current.length === 0 ? (
               <tr>
-                <td colSpan={9} className="p-12 text-center text-gray-500">
+                <td colSpan={10} className="p-12 text-center text-gray-500">
                   {searchTerm
                     ? `No exam results matching "${searchTerm}" for ${selectedDay === 'all' ? 'any day' : selectedDay === 'finale' ? 'Grand Finale' : `Day ${selectedDay}`}.`
                     : selectedDay === 'all'
@@ -252,6 +253,9 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
                   </td>
                   <td className="p-4 font-bold text-gray-900">
                     {r.score}/{r.total} <span className="text-xs font-medium text-gray-500">({r.percentage}%)</span>
+                  </td>
+                  <td className="p-4 text-xs font-mono font-semibold text-gray-700">
+                    {formatDuration(r.timeTakenSeconds)}
                   </td>
                   <td className="p-4 text-xs text-gray-500">{formatIST(r.submittedAt)}</td>
                   <td className="p-4 text-gray-600">{r.tabViolations || 0}</td>

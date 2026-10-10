@@ -497,22 +497,28 @@ export function getAssignedTestSummary(currentDay) {
   };
 }
 
-/** Check if a submission was made outside the original test window (e.g. during Weekend Open Access) */
+/** Check if a submission was made during the Weekend Open Access Window (starts Oct 10, 10:00 AM IST) */
 export function isWeekendWindowSubmission(testKey, submittedAt) {
   if (!submittedAt) return false;
-  const num = Number(testKey);
-  if (!num) return false;
-
-  const test = getDailyTest(num);
-  if (!test) {
-    const subDate = new Date(submittedAt);
-    return !isNaN(subDate.getTime()) && subDate >= new Date(CATCHUP_WINDOW_START);
-  }
-
-  const { end } = getWindowBoundsForDate(test.testDate);
   const subDate = new Date(submittedAt);
   if (isNaN(subDate.getTime())) return false;
 
-  return subDate > end;
+  const weekendStart = new Date(CATCHUP_WINDOW_START);
+  // Must be submitted on or after the Weekend Window opened (Oct 10, 10:00 AM IST)
+  if (subDate < weekendStart) {
+    return false;
+  }
+
+  // For Day 12, only flag if submitted after its regular window ended at noon today (Oct 10, 12:00 PM IST)
+  const num = Number(testKey);
+  if (num === 12) {
+    const day12Test = getDailyTest(12);
+    if (day12Test) {
+      const { end } = getWindowBoundsForDate(day12Test.testDate);
+      return subDate > end;
+    }
+  }
+
+  return true;
 }
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Sparkles,
-  Clock,
   Award,
   CheckCircle2,
   X,
@@ -143,7 +141,7 @@ export default function WeekendWindowNoticeModal({ isOpen: controlledIsOpen, onC
                 <span>Grand Finale on Tuesday (In College)</span>
               </div>
               <p className="text-[11.5px] text-slate-700 leading-snug font-medium">
-                Conducted in-college on <strong>Tuesday, Oct 13 at 10 AM IST</strong> via this portal. Prepare this weekend!
+                Conducted in-college on <strong>Tuesday, Oct 13</strong> via this portal. Timing & details will be shared in the WhatsApp community.
               </p>
             </div>
           </div>

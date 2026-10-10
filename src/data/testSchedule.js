@@ -104,7 +104,7 @@ export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) =>
 export const grandFinale = {
   id: 'finale',
   title: 'Grand Finale Assessment',
-  testDate: getRelativeDateStr(14),
+  testDate: getRelativeDateStr(15), // Tuesday, October 13, 2026
   topics: TOPIC_TITLES,
   questions: 50,
   durationMinutes: 60,
@@ -376,7 +376,7 @@ export function getTestAvailability({
         label: 'Upcoming',
         color: 'gray',
         canStart: false,
-        message: `Grand Finale unlocks on Monday, October 12 at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST.`,
+        message: `Grand Finale unlocks on Tuesday, October 13 at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST (In-College Assessment).`,
         test: grandFinale,
         countdown: finaleCountdown,
       };

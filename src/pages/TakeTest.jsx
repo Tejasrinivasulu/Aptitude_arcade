@@ -123,7 +123,7 @@ export default function TakeTest() {
                   All Daily Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open!
                 </h2>
                 <p className="mt-1.5 text-sm text-gray-600 max-w-2xl leading-relaxed">
-                  The {TOTAL_PROGRAM_DAYS}-day daily test series has completed! Missed any previous assessment? You can attempt any unattempted daily tests right now to boost your score and consistency streak before Monday&apos;s Grand Finale.
+                  The {TOTAL_PROGRAM_DAYS}-day daily test series has completed! Missed any previous assessment? You can attempt any unattempted daily tests right now to boost your score and consistency streak before Tuesday&apos;s in-college Grand Finale.
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white shadow-sm animate-pulse">
@@ -135,7 +135,7 @@ export default function TakeTest() {
               <InfoChip icon={Calendar} label="Access Period" value="Oct 10 – Oct 11" />
               <InfoChip icon={Clock} label="Window Closes" value="Sunday 11:59 PM IST" />
               <InfoChip icon={FileText} label="Eligible Tests" value={`Days 1 to ${TOTAL_PROGRAM_DAYS}`} />
-              <InfoChip icon={Award} label="Next Event" value="Grand Finale (Mon, Oct 12)" />
+              <InfoChip icon={Award} label="Next Event" value="Grand Finale (Tue, Oct 13 · In-College)" />
             </div>
 
             <div className="mt-5 p-4 rounded-2xl bg-white border border-emerald-200/80 shadow-xs">

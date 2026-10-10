@@ -269,7 +269,7 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
                               This student submitted <strong>{r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}</strong> during the <strong>Weekend Catch-Up Window (Oct 10–11)</strong> after its original daily window had closed.
                             </p>
                             <p className="text-slate-400 text-[10.5px] mt-1.5 leading-normal">
-                              The test was unlocked so they could catch up on missed assessments and maintain their streak before Monday&apos;s Grand Finale.
+                              The test was unlocked so they could catch up on missed assessments and maintain their streak before Tuesday&apos;s Grand Finale.
                             </p>
                             <div className="mt-2 pt-1.5 border-t border-slate-800 text-[10px] text-slate-400 flex items-center justify-between">
                               <span>Submitted:</span>

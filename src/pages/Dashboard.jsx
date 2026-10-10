@@ -88,7 +88,7 @@ export default function Dashboard() {
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-emerald-700">
                 <span>⏱️ Window closes Sunday, Oct 11 at 11:59 PM IST</span>
                 <span>·</span>
-                <span>Grand Finale on Tuesday, Oct 13 at 10 AM (In-College)</span>
+                <span>Grand Finale on Tuesday, Oct 13 (In-College · Details in WhatsApp community)</span>
               </div>
             </div>
             <Link

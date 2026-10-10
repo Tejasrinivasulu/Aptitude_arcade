@@ -252,13 +252,32 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
                         {r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}
                       </span>
                       {isWeekendWindowSubmission(r.testKey, r.submittedAt) && (
-                        <span
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs"
-                          title="Submitted during the Weekend Open Access Window"
-                        >
-                          <Clock size={10} className="shrink-0 text-amber-600" />
-                          Weekend Window
-                        </span>
+                        <div className="relative group/weekend inline-block">
+                          <span
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs cursor-help select-none transition-transform hover:scale-105"
+                          >
+                            <Clock size={10} className="shrink-0 text-amber-600" />
+                            Weekend Window
+                          </span>
+                          {/* Rich Floating Explanatory Tooltip on hover */}
+                          <div className="absolute left-0 bottom-full mb-2 hidden group-hover/weekend:flex flex-col w-72 p-3 bg-slate-900 text-white text-xs rounded-xl shadow-2xl z-50 pointer-events-none border border-slate-700 animate-in fade-in duration-150">
+                            <div className="flex items-center gap-1.5 font-bold text-amber-400 mb-1">
+                              <Clock size={13} className="shrink-0 text-amber-400" />
+                              <span>Why Weekend Window?</span>
+                            </div>
+                            <p className="text-slate-300 text-[11px] leading-relaxed">
+                              This student submitted <strong>{r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}</strong> during the <strong>Weekend Catch-Up Window (Oct 10–11)</strong> after its original daily window had closed.
+                            </p>
+                            <p className="text-slate-400 text-[10.5px] mt-1.5 leading-normal">
+                              The test was unlocked so they could catch up on missed assessments and maintain their streak before Monday&apos;s Grand Finale.
+                            </p>
+                            <div className="mt-2 pt-1.5 border-t border-slate-800 text-[10px] text-slate-400 flex items-center justify-between">
+                              <span>Submitted:</span>
+                              <span className="font-mono text-amber-300 font-semibold">{formatIST(r.submittedAt)}</span>
+                            </div>
+                            <div className="absolute top-full left-4 border-4 border-transparent border-t-slate-900" />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </td>

@@ -496,3 +496,23 @@ export function getAssignedTestSummary(currentDay) {
     topicLabel: plan.topics.join(' · '),
   };
 }
+
+/** Check if a submission was made outside the original test window (e.g. during Weekend Open Access) */
+export function isWeekendWindowSubmission(testKey, submittedAt) {
+  if (!submittedAt) return false;
+  const num = Number(testKey);
+  if (!num) return false;
+
+  const test = getDailyTest(num);
+  if (!test) {
+    const subDate = new Date(submittedAt);
+    return !isNaN(subDate.getTime()) && subDate >= new Date(CATCHUP_WINDOW_START);
+  }
+
+  const { end } = getWindowBoundsForDate(test.testDate);
+  const subDate = new Date(submittedAt);
+  if (isNaN(subDate.getTime())) return false;
+
+  return subDate > end;
+}
+

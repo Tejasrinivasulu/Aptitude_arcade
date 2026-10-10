@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ClipboardList, Search, X } from 'lucide-react';
+import { ClipboardList, Search, X, Clock } from 'lucide-react';
 import { filterStudents, formatIST, formatDuration, getTotalViolations, filterExamResults, enrichExamResults } from '../../utils/adminData';
-import { PROGRAM_DAY_KEYS } from '../../data/testSchedule';
+import { PROGRAM_DAY_KEYS, isWeekendWindowSubmission } from '../../data/testSchedule';
 import { listenToResultsByDay } from '../../services/adminService';
 
 const PER_PAGE = 10;
@@ -247,9 +247,20 @@ export default function AdminExamResultsTab({ allResults = [], users = [] }) {
                   <td className="p-4 font-bold text-gray-900">{r.fullName || '—'}</td>
                   <td className="p-4 text-gray-600">{r.rollNumber || '—'}</td>
                   <td className="p-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">
-                      {r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">
+                        {r.testKey === 'finale' ? 'Grand Finale' : `Day ${r.testKey}`}
+                      </span>
+                      {isWeekendWindowSubmission(r.testKey, r.submittedAt) && (
+                        <span
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs"
+                          title="Submitted during the Weekend Open Access Window"
+                        >
+                          <Clock size={10} className="shrink-0 text-amber-600" />
+                          Weekend Window
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="p-4 font-bold text-gray-900">
                     {r.score}/{r.total} <span className="text-xs font-medium text-gray-500">({r.percentage}%)</span>

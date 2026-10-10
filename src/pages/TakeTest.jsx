@@ -11,6 +11,9 @@ import {
   Rocket,
   Wifi,
   Fingerprint,
+  Sparkles,
+  Award,
+  ArrowDownCircle,
 } from 'lucide-react';
 import {
   dailyTests,
@@ -22,6 +25,7 @@ import {
   formatDisplayDate,
   formatWindowRangeLabel,
   isCatchupActive,
+  CATCHUP_WINDOW_END,
 } from '../data/testSchedule';
 import { useStudentProgress } from '../context/StudentProgressContext';
 import TestVerificationModal from '../components/dashboard/TestVerificationModal';
@@ -107,68 +111,122 @@ export default function TakeTest() {
           </ul>
         </section>
 
-        <section className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-white p-6 shadow-sm">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                Today&apos;s Assigned Test
-              </p>
-              <h2 className="mt-1 text-xl font-bold text-gray-900">
-                Day {assignedDay} — {assignedTest.title}
-              </h2>
-              <p className="mt-1 text-sm text-primary">{assignedTest.topicLabel}</p>
+        {isCatchupActive() ? (
+          <section className="rounded-3xl border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/10 via-white to-amber-500/5 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  <Sparkles size={14} className="text-emerald-600 animate-pulse" />
+                  WEEKEND OPEN ACCESS · CATCH-UP WINDOW LIVE
+                </span>
+                <h2 className="mt-3 text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                  All Daily Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open!
+                </h2>
+                <p className="mt-1.5 text-sm text-gray-600 max-w-2xl leading-relaxed">
+                  The {TOTAL_PROGRAM_DAYS}-day daily test series has completed! Missed any previous assessment? You can attempt any unattempted daily tests right now to boost your score and consistency streak before Monday&apos;s Grand Finale.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white shadow-sm animate-pulse">
+                ● Window Live Now
+              </span>
             </div>
-            <StatusBadge availability={assignedAvailability} />
-          </div>
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <InfoChip icon={Calendar} label="Test Date" value={formatDisplayDate(assignedTest.testDate)} />
-            <InfoChip
-              icon={Clock}
-              label="Test Window"
-              value={formatWindowRangeLabel()}
-            />
-            <InfoChip icon={FileText} label="Questions" value={`${assignedTest.questions} Questions`} />
-            <InfoChip icon={Clock} label="Duration" value={`${assignedTest.durationMinutes} Minutes`} />
-          </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <InfoChip icon={Calendar} label="Access Period" value="Oct 10 – Oct 11" />
+              <InfoChip icon={Clock} label="Window Closes" value="Sunday 11:59 PM IST" />
+              <InfoChip icon={FileText} label="Eligible Tests" value={`Days 1 to ${TOTAL_PROGRAM_DAYS}`} />
+              <InfoChip icon={Award} label="Next Event" value="Grand Finale (Mon, Oct 12)" />
+            </div>
 
-          <div className="mt-4">
-            <TestCountdown testDate={assignedTest.testDate} testKey={assignedDay} />
-          </div>
+            <div className="mt-5 p-4 rounded-2xl bg-white border border-emerald-200/80 shadow-xs">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                Weekend Catch-Up Window Closes In
+              </p>
+              <TestCountdown testDate={CATCHUP_WINDOW_END} testKey={1} />
+            </div>
 
-          <p className="mt-4 text-sm text-gray-600">{assignedAvailability.message}</p>
-
-          <section className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
-            <h3 className="font-bold text-gray-900">Exam Verification</h3>
-            <ul className="mt-3 space-y-2">
-              {checks.map(({ icon: Icon, label }) => (
-                <li
-                  key={label}
-                  className="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-2.5 text-sm text-green-800"
-                >
-                  <Icon size={16} /> ✓ {label}
-                </li>
-              ))}
-            </ul>
-            <button
-              type="button"
-              onClick={() => openVerification(assignedDay)}
-              disabled={!canStartAssigned}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-white shadow-md shadow-primary/25 hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <Rocket size={18} />
-              {canStartAssigned
-                ? `Start Day ${assignedDay} Test`
-                : assignedAvailability.status === 'completed'
-                  ? 'Test Already Completed'
-                  : assignedCountdown.isExpired
-                    ? 'Test Expired'
-                    : 'Take Test (Wait for Countdown)'}
-            </button>
+            <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3 p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200">
+              <div className="flex items-center gap-2.5">
+                <ArrowDownCircle className="text-emerald-600 shrink-0" size={20} />
+                <p className="text-xs sm:text-sm font-semibold text-emerald-950">
+                  Select any unattempted day from the <strong>Daily Test Schedule below</strong> to start!
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  document.getElementById('daily-test-schedule')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="shrink-0 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all"
+              >
+                View Available Tests ↓
+              </button>
+            </div>
           </section>
-        </section>
+        ) : (
+          <section className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-white p-6 shadow-sm">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+                  Today&apos;s Assigned Test
+                </p>
+                <h2 className="mt-1 text-xl font-bold text-gray-900">
+                  Day {assignedDay} — {assignedTest.title}
+                </h2>
+                <p className="mt-1 text-sm text-primary">{assignedTest.topicLabel}</p>
+              </div>
+              <StatusBadge availability={assignedAvailability} />
+            </div>
 
-        <section className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <InfoChip icon={Calendar} label="Test Date" value={formatDisplayDate(assignedTest.testDate)} />
+              <InfoChip
+                icon={Clock}
+                label="Test Window"
+                value={formatWindowRangeLabel()}
+              />
+              <InfoChip icon={FileText} label="Questions" value={`${assignedTest.questions} Questions`} />
+              <InfoChip icon={Clock} label="Duration" value={`${assignedTest.durationMinutes} Minutes`} />
+            </div>
+
+            <div className="mt-4">
+              <TestCountdown testDate={assignedTest.testDate} testKey={assignedDay} />
+            </div>
+
+            <p className="mt-4 text-sm text-gray-600">{assignedAvailability.message}</p>
+
+            <section className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
+              <h3 className="font-bold text-gray-900">Exam Verification</h3>
+              <ul className="mt-3 space-y-2">
+                {checks.map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-2.5 text-sm text-green-800"
+                  >
+                    <Icon size={16} /> ✓ {label}
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={() => openVerification(assignedDay)}
+                disabled={!canStartAssigned}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-white shadow-md shadow-primary/25 hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <Rocket size={18} />
+                {canStartAssigned
+                  ? `Start Day ${assignedDay} Test`
+                  : assignedAvailability.status === 'completed'
+                    ? 'Test Already Completed'
+                    : assignedCountdown.isExpired
+                      ? 'Test Expired'
+                      : 'Take Test (Wait for Countdown)'}
+              </button>
+            </section>
+          </section>
+        )}
+
+        <section id="daily-test-schedule" className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
           <div className="border-b border-gray-100 px-6 py-4 flex flex-wrap items-center justify-between gap-2">
             <div>
               <h2 className="font-bold text-gray-900">📅 Daily Test Schedule</h2>

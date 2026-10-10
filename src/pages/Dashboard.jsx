@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock, Clock } from 'lucide-react';
+import { Calendar, TrendingUp, CheckCircle2, Award, Rocket, Check, X, Lock, Clock, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useStudentProgress, getDayResultsFromProgress } from '../context/StudentProgressContext';
 import {
@@ -11,6 +11,7 @@ import {
   getTodaysAssignedDay,
   TOTAL_PROGRAM_DAYS,
   formatDisplayDate,
+  isCatchupActive,
 } from '../data/testSchedule';
 import { getDayPlan } from '../data/dailyLearningPlan';
 
@@ -70,49 +71,80 @@ export default function Dashboard() {
         <StatCard icon={Award} title="Average Score" value={`${progress.averageScore}%`} accent />
       </div>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Current Challenge</p>
-            <h2 className="mt-1 text-xl font-bold text-gray-900">
-              Day {assignedDay} — {getDailyTest(assignedDay).title}
-            </h2>
-            <p className="mt-1 text-sm font-medium text-primary">{progress.dayTopics?.join(' · ') || getDailyTest(assignedDay).topics.join(' · ')}</p>
-            {assignedDay >= 1 && assignedDay <= TOTAL_PROGRAM_DAYS && (
-              <p className="mt-2 inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-800">
-                <Calendar size={16} className="shrink-0" />
-                Day {assignedDay} Exam: {formatExamWindowForDay(assignedDay)}
+      {isCatchupActive() ? (
+        <section className="rounded-3xl border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/10 via-white to-amber-500/5 p-6 lg:p-8 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                <Sparkles size={14} className="text-emerald-600 animate-pulse" />
+                WEEKEND OPEN ACCESS · CATCH-UP WINDOW LIVE
+              </span>
+              <h2 className="mt-2.5 text-2xl font-black text-gray-900">
+                All Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open!
+              </h2>
+              <p className="mt-1 text-sm text-gray-600 max-w-xl">
+                The {TOTAL_PROGRAM_DAYS}-day daily series has concluded. Missed any test earlier? You can attempt any unattempted daily assessments right now before Sunday 11:59 PM IST!
               </p>
-            )}
-            <div className="mt-4 flex flex-wrap gap-3 items-center">
-              <StatusBadge label="Status" value="Active" color="green" dot />
-              <StatusBadge
-                label="Test Status"
-                value={testStatus}
-                color={testDone ? 'green' : (isTestLive ? 'blue' : 'amber')}
-                icon={testDone ? '✅' : (isTestLive ? '🚀' : '⏳')}
-              />
-              {!testDone && isTestLive && timeLeft && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 shadow-sm animate-pulse">
-                  ⏱️ Closes in: {timeLeft}
-                </span>
-              )}
-              {!testDone && !isTestLive && timeLeft && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 animate-pulse shadow-sm">
-                  ⏱️ Opens in: {timeLeft}
-                </span>
-              )}
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-emerald-700">
+                <span>⏱️ Window closes Sunday, Oct 11 at 11:59 PM IST</span>
+                <span>·</span>
+                <span>Grand Finale on Monday, Oct 12 at 10 AM</span>
+              </div>
             </div>
+            <Link
+              to="/student/take-test"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-emerald-600/25 transition-all"
+            >
+              <Rocket size={18} />
+              Take Unattempted Tests
+            </Link>
           </div>
-          <Link
-            to={testDone ? '/student/results' : '/student/take-test'}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-md shadow-primary/25 transition-all hover:bg-primary-dark"
-          >
-            <Rocket size={18} />
-            {testDone ? 'View Results' : 'Take Test'}
-          </Link>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">Current Challenge</p>
+              <h2 className="mt-1 text-xl font-bold text-gray-900">
+                Day {assignedDay} — {getDailyTest(assignedDay).title}
+              </h2>
+              <p className="mt-1 text-sm font-medium text-primary">{progress.dayTopics?.join(' · ') || getDailyTest(assignedDay).topics.join(' · ')}</p>
+              {assignedDay >= 1 && assignedDay <= TOTAL_PROGRAM_DAYS && (
+                <p className="mt-2 inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-800">
+                  <Calendar size={16} className="shrink-0" />
+                  Day {assignedDay} Exam: {formatExamWindowForDay(assignedDay)}
+                </p>
+              )}
+              <div className="mt-4 flex flex-wrap gap-3 items-center">
+                <StatusBadge label="Status" value="Active" color="green" dot />
+                <StatusBadge
+                  label="Test Status"
+                  value={testStatus}
+                  color={testDone ? 'green' : (isTestLive ? 'blue' : 'amber')}
+                  icon={testDone ? '✅' : (isTestLive ? '🚀' : '⏳')}
+                />
+                {!testDone && isTestLive && timeLeft && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 shadow-sm animate-pulse">
+                    ⏱️ Closes in: {timeLeft}
+                  </span>
+                )}
+                {!testDone && !isTestLive && timeLeft && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 animate-pulse shadow-sm">
+                    ⏱️ Opens in: {timeLeft}
+                  </span>
+                )}
+              </div>
+            </div>
+            <Link
+              to={testDone ? '/student/results' : '/student/take-test'}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-md shadow-primary/25 transition-all hover:bg-primary-dark"
+            >
+              <Rocket size={18} />
+              {testDone ? 'View Results' : 'Take Test'}
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* Next 2 Days' Tests - Strictly Locked Until That Day */}
       {upcomingDays.length > 0 && (

@@ -153,14 +153,12 @@ export function formatWindowRangeLabel() {
 }
 
 export const generalRules = [
-  `14-Day Series Start Date: ${formatDisplayDate(DAY1_EXAM_DATE)}`,
-  `Daily Test Window: ${formatWindowRangeLabel()}`,
-  'Daily exam duration: 30 minutes once started.',
-  'Students can attempt each test only once.',
-  'The test remains available only during the daily window.',
-  `Each day's window opens at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} and closes at ${formatWindowTime(TEST_END_HOUR, TEST_END_MINUTE)} IST the next day.`,
-  'If you face technical difficulties, contact admin via the Help Center immediately.',
-  'After submitting the test, review your score breakdown on the results screen.',
+  '12-Day Daily Assessment Series concluded (28 September – 9 October 2026).',
+  'Weekend Open Access: All unattempted tests (Days 1–12) are open until Sunday, 11 October at 11:59 PM IST.',
+  'Students can attempt each test only once (previously submitted tests cannot be retaken).',
+  'Strict Proctoring Active: Webcam monitoring, fullscreen mode, and anti-tab switch rules enforced.',
+  'Grand Finale: Conducted in-college on Tuesday, 13 October via this portal. Timing & details in WhatsApp community.',
+  'For technical queries or issues, reach out immediately via the Help Center.',
 ];
 
 export function getTodayDateStr(now = new Date()) {
@@ -376,7 +374,7 @@ export function getTestAvailability({
         label: 'Upcoming',
         color: 'gray',
         canStart: false,
-        message: `Grand Finale unlocks on Tuesday, October 13 at ${formatWindowTime(TEST_START_HOUR, TEST_START_MINUTE)} IST (In-College Assessment).`,
+        message: 'Grand Finale will be conducted in-college on Tuesday, October 13. More details will be shared in the WhatsApp community.',
         test: grandFinale,
         countdown: finaleCountdown,
       };

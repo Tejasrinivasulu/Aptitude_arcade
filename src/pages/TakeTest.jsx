@@ -14,6 +14,9 @@ import {
   Sparkles,
   Award,
   ArrowDownCircle,
+  ShieldCheck,
+  CheckCircle2,
+  HelpCircle,
 } from 'lucide-react';
 import {
   dailyTests,
@@ -100,15 +103,77 @@ export default function TakeTest() {
         </div>
 
         <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-bold text-gray-900">General Rules</h2>
-          <ul className="mt-3 space-y-2">
-            {generalRules.map((rule) => (
-              <li key={rule} className="flex items-start gap-2 text-sm text-gray-600">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                {rule}
-              </li>
-            ))}
-          </ul>
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <span>📋 Program Guidelines & Rules</span>
+              </h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Current rules for the Weekend Catch-Up Window and Grand Finale assessment.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80">
+              <div className="flex items-center gap-2 font-bold text-emerald-950 text-xs mb-1">
+                <Clock size={15} className="text-emerald-700 shrink-0" />
+                <span>Weekend Open Access</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                All unattempted tests (Days 1–12) are open until <strong>Sunday, Oct 11 at 11:59 PM IST</strong>.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/80">
+              <div className="flex items-center gap-2 font-bold text-amber-950 text-xs mb-1">
+                <Award size={15} className="text-amber-700 shrink-0" />
+                <span>Grand Finale on Tuesday</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                Conducted on <strong>Tuesday, Oct 13 in-college</strong> via this portal. Timing & details in the WhatsApp community.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80">
+              <div className="flex items-center gap-2 font-bold text-blue-950 text-xs mb-1">
+                <ShieldCheck size={15} className="text-blue-700 shrink-0" />
+                <span>Strict Proctoring Rules</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                Webcam monitoring, fullscreen mode, and anti-tab switch detection remain active on every test.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2 font-bold text-slate-900 text-xs mb-1">
+                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                <span>Single Attempt Policy</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                Each test can only be attempted once. Previously submitted tests cannot be retaken.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-200/80">
+              <div className="flex items-center gap-2 font-bold text-purple-950 text-xs mb-1">
+                <Calendar size={15} className="text-purple-700 shrink-0" />
+                <span>12-Day Series Concluded</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                The daily 12-day aptitude training has finished. Use this weekend to complete pending tests.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-rose-50/70 border border-rose-200/80">
+              <div className="flex items-center gap-2 font-bold text-rose-950 text-xs mb-1">
+                <HelpCircle size={15} className="text-rose-700 shrink-0" />
+                <span>Technical Support</span>
+              </div>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                Facing technical difficulties? Raise a query through the <strong>Help Center</strong> immediately.
+              </p>
+            </div>
+          </div>
         </section>
 
         {isCatchupActive() ? (

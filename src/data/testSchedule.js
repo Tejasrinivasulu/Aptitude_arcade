@@ -39,9 +39,9 @@ export const TOTAL_PROGRAM_DAYS = 12;
 
 export const PROGRAM_DAY_KEYS = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, i) => String(i + 1));
 
-/** Catch-Up Open Window: All unattempted tests (Days 1–12) are open from Saturday 10:00 AM to Sunday 11:59:59 PM IST */
+/** Catch-Up Open Window: All unattempted tests (Days 1–12) are open until Tuesday 11:59:59 PM IST */
 export const CATCHUP_WINDOW_START = '2026-10-10T10:00:00+05:30';
-export const CATCHUP_WINDOW_END = '2026-10-11T23:59:59+05:30';
+export const CATCHUP_WINDOW_END = '2026-10-13T23:59:59+05:30';
 export const CATCHUP_MAX_DAY = 12;
 
 export function isCatchupActive(now = getTrustedNow()) {
@@ -104,7 +104,10 @@ export const dailyTests = Array.from({ length: TOTAL_PROGRAM_DAYS }, (_, idx) =>
 export const grandFinale = {
   id: 'finale',
   title: 'Grand Finale Assessment',
-  testDate: getRelativeDateStr(15), // Tuesday, October 13, 2026
+  testDate: getRelativeDateStr(16), // Wednesday, October 14, 2026
+  startHour: 14,
+  startMinute: 30,
+  venue: '519 MNS Block',
   topics: TOPIC_TITLES,
   questions: 50,
   durationMinutes: 60,
@@ -154,10 +157,10 @@ export function formatWindowRangeLabel() {
 
 export const generalRules = [
   '12-Day Daily Assessment Series concluded (28 September – 9 October 2026).',
-  'Weekend Open Access: All unattempted tests (Days 1–12) are open until Sunday, 11 October at 11:59 PM IST.',
+  'Catch-Up Open Access: All unattempted tests (Days 1–12) are open until Tuesday, 13 October at 11:59 PM IST.',
   'Students can attempt each test only once (previously submitted tests cannot be retaken).',
   'Strict Proctoring Active: Webcam monitoring, fullscreen mode, and anti-tab switch rules enforced.',
-  'Grand Finale: Conducted in-college on Tuesday, 13 October via this portal. Timing & details in WhatsApp community.',
+  'Grand Finale: Postponed to Wednesday, 14 October at 2:30 PM in-college (Venue: 519 MNS Block).',
   'For technical queries or issues, reach out immediately via the Help Center.',
 ];
 
@@ -366,26 +369,31 @@ export function getTestAvailability({
   }
 
   if (isFinale) {
-    const finaleBounds = getWindowBoundsForDate(grandFinale.testDate);
+    const finaleDay = parseDateOnly(grandFinale.testDate);
+    const finaleStart = new Date(finaleDay);
+    finaleStart.setHours(grandFinale.startHour ?? 14, grandFinale.startMinute ?? 30, 0, 0);
+    const finaleEnd = new Date(finaleDay);
+    finaleEnd.setHours(23, 59, 59, 999);
+
     const finaleCountdown = computeTestCountdown(grandFinale.testDate, now, 'finale');
-    if (now < finaleBounds.start) {
+    if (now < finaleStart) {
       return {
         status: 'locked',
         label: 'Upcoming',
         color: 'gray',
         canStart: false,
-        message: 'Grand Finale will be conducted in-college on Tuesday, October 13. More details will be shared in the WhatsApp community.',
+        message: 'Grand Finale postponed to Wednesday, October 14 at 2:30 PM (Venue: 519 MNS Block).',
         test: grandFinale,
         countdown: finaleCountdown,
       };
     }
-    if (now >= finaleBounds.start && now <= finaleBounds.end) {
+    if (now >= finaleStart && now <= finaleEnd) {
       return {
         status: 'open',
         label: 'Open Now',
         color: 'green',
         canStart: true,
-        message: 'Grand Finale is LIVE! Complete your final assessment.',
+        message: 'Grand Finale is LIVE at 519 MNS Block! Complete your final assessment.',
         test: grandFinale,
         countdown: finaleCountdown,
       };
@@ -401,7 +409,7 @@ export function getTestAvailability({
     };
   }
 
-  // Weekend Open Window: All unattempted tests (Days 1–12) are unlocked from Saturday 10:00 AM to Sunday 11:59:59 PM IST
+  // Open Catch-Up Window: All unattempted tests (Days 1–12) are unlocked until Tuesday 11:59:59 PM IST
   if (isCatchupActive(now) && isCatchupEligible(testDayNum)) {
     const catchupCountdown = computeTestCountdown(test.testDate, now, testKey);
     return {
@@ -409,7 +417,7 @@ export function getTestAvailability({
       label: 'Open Now',
       color: 'green',
       canStart: true,
-      message: 'Weekend Open Window: Available until Sunday, Oct 11 at 11:59 PM IST.',
+      message: 'Extended Catch-Up Window: Available until Tuesday, Oct 13 at 11:59 PM IST.',
       test,
       countdown: catchupCountdown,
     };

@@ -117,20 +117,20 @@ export default function TakeTest() {
             <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80">
               <div className="flex items-center gap-2 font-bold text-emerald-950 text-xs mb-1">
                 <Clock size={15} className="text-emerald-700 shrink-0" />
-                <span>Weekend Open Access</span>
+                <span>Catch-Up Open Access</span>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                All unattempted tests (Days 1–12) are open until <strong>Sunday, Oct 11 at 11:59 PM IST</strong>.
+                All unattempted tests (Days 1–12) are open until <strong>Tuesday, Oct 13 at 11:59 PM IST</strong>.
               </p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/80">
               <div className="flex items-center gap-2 font-bold text-amber-950 text-xs mb-1">
                 <Award size={15} className="text-amber-700 shrink-0" />
-                <span>Grand Finale on Tuesday</span>
+                <span>Grand Finale on Wednesday</span>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                Conducted on <strong>Tuesday, Oct 13 in-college</strong> via this portal. Timing & details in the WhatsApp community.
+                Postponed to <strong>Wednesday, Oct 14 at 2:30 PM (Venue: 519 MNS Block)</strong> via this portal.
               </p>
             </div>
 
@@ -160,7 +160,7 @@ export default function TakeTest() {
                 <span>12-Day Series Concluded</span>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                The daily 12-day aptitude training has finished. Use this weekend to complete pending tests.
+                The daily 12-day aptitude training has finished. Use this extended window to complete pending tests.
               </p>
             </div>
 
@@ -177,35 +177,35 @@ export default function TakeTest() {
         </section>
 
         {isCatchupActive() ? (
-          <section className="rounded-3xl border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/10 via-white to-amber-500/5 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+          <section className="rounded-3xl border-2 border-amber-400/50 bg-gradient-to-br from-amber-500/10 via-white to-orange-500/5 p-6 sm:p-8 shadow-sm relative overflow-hidden">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
-                  <Sparkles size={14} className="text-emerald-600 animate-pulse" />
-                  WEEKEND OPEN ACCESS · CATCH-UP WINDOW LIVE
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
+                  <Sparkles size={14} className="text-amber-600 animate-pulse" />
+                  OPEN ACCESS · CATCH-UP WINDOW EXTENDED
                 </span>
                 <h2 className="mt-3 text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
                   All Daily Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open!
                 </h2>
                 <p className="mt-1.5 text-sm text-gray-600 max-w-2xl leading-relaxed">
-                  The {TOTAL_PROGRAM_DAYS}-day daily test series has completed! Missed any previous assessment? You can attempt any unattempted daily tests right now to boost your score and consistency streak before Tuesday&apos;s in-college Grand Finale.
+                  The {TOTAL_PROGRAM_DAYS}-day daily test series has completed! Missed any previous assessment? You can attempt any unattempted daily tests right now to boost your score and consistency streak before Wednesday&apos;s Grand Finale (2:30 PM at 519 MNS Block).
                 </p>
               </div>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white shadow-sm animate-pulse">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500 text-white shadow-sm animate-pulse">
                 ● Window Live Now
               </span>
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <InfoChip icon={Calendar} label="Access Period" value="Oct 10 – Oct 11" />
-              <InfoChip icon={Clock} label="Window Closes" value="Sunday 11:59 PM IST" />
+              <InfoChip icon={Calendar} label="Access Period" value="Open until Oct 13" />
+              <InfoChip icon={Clock} label="Window Closes" value="Tuesday 11:59 PM IST" />
               <InfoChip icon={FileText} label="Eligible Tests" value={`Days 1 to ${TOTAL_PROGRAM_DAYS}`} />
-              <InfoChip icon={Award} label="Next Event" value="Grand Finale (Tue, Oct 13 · In-College)" />
+              <InfoChip icon={Award} label="Next Event" value="Grand Finale (Wed, Oct 14 · 2:30 PM · 519 MNS Block)" />
             </div>
 
-            <div className="mt-5 p-4 rounded-2xl bg-white border border-emerald-200/80 shadow-xs">
+            <div className="mt-5 p-4 rounded-2xl bg-white border border-amber-200/80 shadow-xs">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
-                Weekend Catch-Up Window Closes In
+                Catch-Up Window Closes In
               </p>
               <TestCountdown testDate={CATCHUP_WINDOW_END} testKey={1} />
             </div>
@@ -300,8 +300,8 @@ export default function TakeTest() {
               </p>
             </div>
             {isCatchupActive() && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 animate-pulse">
-                ✨ Weekend Open Access: All Unattempted Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Open Until Sunday 11:59 PM IST
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 animate-pulse">
+                ✨ Extended Open Access: All Unattempted Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Open Until Tuesday 11:59 PM IST
               </span>
             )}
           </div>

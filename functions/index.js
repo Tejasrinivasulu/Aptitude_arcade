@@ -168,9 +168,9 @@ exports.startExam = onCall(async (request) => {
 
     // Verify test availability according to Google Cloud atomic server time
     const serverNowMs = Date.now();
-    const catchupStart = new Date('2026-10-01T10:00:00+05:30').getTime();
-    const catchupEnd = new Date('2026-10-02T23:59:59+05:30').getTime();
-    const isCatchup = serverNowMs >= catchupStart && serverNowMs <= catchupEnd && Number(testKey) >= 1 && Number(testKey) <= 4;
+    const catchupStart = new Date('2026-10-10T10:00:00+05:30').getTime();
+    const catchupEnd = new Date('2026-10-13T23:59:59+05:30').getTime();
+    const isCatchup = serverNowMs >= catchupStart && serverNowMs <= catchupEnd && Number(testKey) >= 1 && Number(testKey) <= 12;
 
     if (!rescheduled && !isCatchup && testKey !== 'finale') {
       const dayNum = Number(testKey);

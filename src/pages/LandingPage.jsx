@@ -9,7 +9,10 @@ import {
   Clock,
   Trophy,
   BarChart3,
+  ArrowRight,
 } from "lucide-react";
+import WeekendWindowNoticeModal from "../components/dashboard/WeekendWindowNoticeModal";
+import { isCatchupActive } from "../data/testSchedule";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -27,6 +30,7 @@ const STATS = [
 export default function LandingPage() {
   // FAQ Accordion State
   const [openFaq, setOpenFaq] = useState(null);
+  const [modalOpen, setModalOpen] = useState(() => isCatchupActive());
 
   const toggleFaq = (idx) => {
     setOpenFaq(openFaq === idx ? null : idx);
@@ -41,6 +45,26 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-black flex flex-col justify-between antialiased selection:bg-[#FFE6D5]">
+      {/* Top Catch-Up Announcement Banner */}
+      {isCatchupActive() && (
+        <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-slate-900 text-white px-4 py-2 text-xs font-semibold flex items-center justify-between gap-3 shadow-xs shrink-0 z-50">
+          <div className="flex items-center gap-2 mx-auto flex-wrap justify-center text-center">
+            <span className="flex h-2 w-2 rounded-full bg-amber-300 animate-pulse shrink-0" />
+            <span>
+              <strong>🏆 Grand Finale Postponed:</strong> Wednesday 2:30 PM (Venue: 519 MNS Block) · <strong>All Tests (Days 1–12) Open</strong> until tomorrow 11:59 PM IST!
+            </span>
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="ml-2 inline-flex items-center gap-1 underline font-bold text-amber-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <span>View Announcement</span>
+              <ArrowRight size={12} />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* SECTION 1 — Navbar */}
       <header className="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-[#F0F0F0] px-6 py-4 flex items-center justify-between z-30">
         <div className="flex items-center gap-3">
@@ -359,6 +383,7 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+      <WeekendWindowNoticeModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }

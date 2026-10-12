@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AuthCardLayout from '../components/AuthCardLayout';
 import { AuthInput } from '../components/AuthInput';
 import { useAuth } from '../context/AuthContext';
+import { isCatchupActive } from '../data/testSchedule';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -49,7 +50,19 @@ export default function Login() {
   return (
     <AuthCardLayout mode="login">
       <div className="mx-auto w-full max-w-sm">
-        <h1 className="mb-8 text-3xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
+        <h1 className="mb-4 text-3xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
+
+        {isCatchupActive() && (
+          <div className="mb-5 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-amber-950 shadow-xs">
+            <div className="flex items-center gap-1.5 font-bold text-amber-900 mb-1">
+              <span className="text-sm">🏆</span>
+              <span>Grand Finale Postponed to Wednesday</span>
+            </div>
+            <p className="text-[11px] text-amber-900/90 leading-tight">
+              <strong>Wed, Oct 14 @ 2:30 PM (519 MNS Block)</strong>. All tests (Days 1–12) are open until tomorrow (Tue) 11:59 PM IST!
+            </p>
+          </div>
+        )}
 
 
         {error && (

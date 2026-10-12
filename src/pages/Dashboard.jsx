@@ -72,28 +72,28 @@ export default function Dashboard() {
       </div>
 
       {isCatchupActive() ? (
-        <section className="rounded-3xl border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/10 via-white to-amber-500/5 p-6 lg:p-8 shadow-sm">
+        <section className="rounded-3xl border-2 border-amber-400/50 bg-gradient-to-br from-amber-500/10 via-white to-orange-500/5 p-6 lg:p-8 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
-                <Sparkles size={14} className="text-emerald-600 animate-pulse" />
-                WEEKEND OPEN ACCESS · CATCH-UP WINDOW LIVE
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
+                <Sparkles size={14} className="text-amber-600 animate-pulse" />
+                OPEN ACCESS · CATCH-UP WINDOW EXTENDED
               </span>
               <h2 className="mt-2.5 text-2xl font-black text-gray-900">
-                All Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open!
+                All Tests (Days 1–{TOTAL_PROGRAM_DAYS}) Are Open Until Tomorrow Night!
               </h2>
               <p className="mt-1 text-sm text-gray-600 max-w-xl">
-                The {TOTAL_PROGRAM_DAYS}-day daily series has concluded. Missed any test earlier? You can attempt any unattempted daily assessments right now before Sunday 11:59 PM IST!
+                The 12-day daily series has concluded. Missed any test earlier? You can attempt any unattempted daily assessments right now before Tuesday, Oct 13 at 11:59 PM IST!
               </p>
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-emerald-700">
-                <span>⏱️ Window closes Sunday, Oct 11 at 11:59 PM IST</span>
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-700">
+                <span className="text-amber-800">⏱️ Window closes Tuesday, Oct 13 at 11:59 PM IST</span>
                 <span>·</span>
-                <span>Grand Finale on Tuesday, Oct 13 (In-College · Details in WhatsApp community)</span>
+                <span className="text-emerald-800">🏆 Grand Finale: Wednesday, Oct 14 at 2:30 PM (Venue: 519 MNS Block)</span>
               </div>
             </div>
             <Link
               to="/student/take-test"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-emerald-600/25 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-orange-600/25 transition-all"
             >
               <Rocket size={18} />
               Take Unattempted Tests

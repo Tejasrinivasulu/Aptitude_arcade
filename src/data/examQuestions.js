@@ -7,8 +7,8 @@ import { DAY_TOPICS } from '../utils/adminData';
 
 export const EXAM_DURATION_SECONDS = 30 * 60;
 export const EXAM_TOTAL_QUESTIONS = 30;
-export const FINALE_DURATION_SECONDS = 60 * 60;
-export const FINALE_TOTAL_QUESTIONS = 50;
+export const FINALE_DURATION_SECONDS = 30 * 60;
+export const FINALE_TOTAL_QUESTIONS = 30;
 
 export function getExamMeta(testKey) {
   if (testKey === 'finale') {
@@ -18,7 +18,7 @@ export function getExamMeta(testKey) {
       topicLabel: 'All Topics · Comprehensive Assessment',
       totalQuestions: FINALE_TOTAL_QUESTIONS,
       durationSeconds: FINALE_DURATION_SECONDS,
-      durationMinutes: 60,
+      durationMinutes: 30,
     };
   }
   const day = Number(testKey) || 1;

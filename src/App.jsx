@@ -33,7 +33,7 @@ export default function App() {
   }, []);
 
   // KILL SWITCH: Set this to true to lock down the site after event ends.
-  const isEventOver = false;
+  const isEventOver = true;
 
   // INTRO SWITCH: Temporarily disabled for testing (re-enable with isBeforeEventStart())
   const isIntroActive = false;
@@ -47,14 +47,9 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
             
-            {/* Temporary preview routes (always accessible for development) */}
-            <Route path="/thank-you-preview" element={<ThankYouPage />} />
-            <Route path="/intro-preview" element={<IntroPage />} />
-            <Route path="/landing-preview" element={<LandingPage />} />
-
             {/* Event Lock Down Logic */}
             {isEventOver ? (
-              // Event is over → Thank You page everywhere
+              // Event is over → Thank You page on every single route except admin
               <Route path="*" element={<ThankYouPage />} />
             ) : isIntroActive ? (
               // Before event start → Intro page everywhere (except admin)
@@ -62,6 +57,11 @@ export default function App() {
             ) : (
               // Event is live → Normal site
               <>
+                {/* Temporary preview routes (accessible only during live/development) */}
+                <Route path="/thank-you-preview" element={<ThankYouPage />} />
+                <Route path="/intro-preview" element={<IntroPage />} />
+                <Route path="/landing-preview" element={<LandingPage />} />
+
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />

@@ -13,6 +13,7 @@ import { DAY9_DURATION_SECONDS, DAY9_QUESTION_BANK } from '../data/day9QuestionB
 import { DAY10_DURATION_SECONDS, DAY10_QUESTION_BANK } from '../data/day10QuestionBank';
 import { DAY11_DURATION_SECONDS, DAY11_QUESTION_BANK } from '../data/day11QuestionBank';
 import { DAY12_DURATION_SECONDS, DAY12_QUESTION_BANK } from '../data/day12QuestionBank';
+import { FINALE_DURATION_SECONDS, FINALE_QUESTION_BANK } from '../data/finaleQuestionBank';
 import { getExamMeta } from '../data/examQuestions';
 import { getTestAvailability, TOTAL_PROGRAM_DAYS, DEMO_SCHEDULE_BYPASS } from '../data/testSchedule';
 import { getTrustedNow } from '../utils/serverTime';
@@ -32,6 +33,7 @@ export const LOCAL_BANKS = {
   '10': { questions: DAY10_QUESTION_BANK.questions, durationSeconds: DAY10_DURATION_SECONDS, questionBankVersion: DAY10_QUESTION_BANK.questionBankVersion ?? 1 },
   '11': { questions: DAY11_QUESTION_BANK.questions, durationSeconds: DAY11_DURATION_SECONDS, questionBankVersion: DAY11_QUESTION_BANK.questionBankVersion ?? 1 },
   '12': { questions: DAY12_QUESTION_BANK.questions, durationSeconds: DAY12_DURATION_SECONDS, questionBankVersion: DAY12_QUESTION_BANK.questionBankVersion ?? 1 },
+  'finale': { questions: FINALE_QUESTION_BANK.questions, durationSeconds: FINALE_DURATION_SECONDS, questionBankVersion: FINALE_QUESTION_BANK.questionBankVersion ?? 1 },
 };
 
 function generateFallbackQuestions(day) {

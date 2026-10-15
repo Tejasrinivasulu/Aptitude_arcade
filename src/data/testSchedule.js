@@ -109,8 +109,8 @@ export const grandFinale = {
   startMinute: 30,
   venue: '519 MNS Block',
   topics: TOPIC_TITLES,
-  questions: 50,
-  durationMinutes: 60,
+  questions: 30,
+  durationMinutes: 30,
   resultFeatures: [
     'Score',
     'Percentage',
